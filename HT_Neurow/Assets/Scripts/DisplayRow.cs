@@ -7,19 +7,25 @@ public class DisplayRow : MonoBehaviour
 {
     [SerializeField] private Text customText;
 
-    void OnTriggerEnter(Collider other) {
+	void Start(){
+		customText.enabled = false;
+	}
+
+
+
+	void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player"))
         {
             customText.enabled = true;
-            Debug.Log("Row");
+            Debug.Log("RowStart");
         }
     }
 
-    void OnTriggerExit(Collider other) {
+    void OnTriggerExit(Collider other){
         if (other.CompareTag("Player"))
         {
             customText.enabled = false;
-            Debug.Log("Row");
+            Debug.Log("RowEnd");
         }
     }
 }
