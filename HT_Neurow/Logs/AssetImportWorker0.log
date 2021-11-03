@@ -1,696 +1,349 @@
+Unity Editor version:    2020.3.18f1 (a7d1c678663c)
+Branch:                  2020.3/staging
+Build type:              Release
+Batch mode:              YES
+macOS version:           Version 10.15.7 (Build 19H1217)
+Darwin version:          19.6.0
+Architecture:            x86_64
+Running under Rosetta:   NO
+Available memory:        8192 MB
 Using pre-set license
-Built from '2020.3/staging' branch; Version is '2020.3.18f1 (a7d1c678663c) revision 10998214'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Enterprise; OS build 19042.1288; Version 2009; 64bit' Language: 'en' Physical Memory: 16274 MB
-BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+Pro License: NO
 
 COMMAND LINE ARGUMENTS:
-D:\2020.3.18f1\Editor\Unity.exe
+/Applications/Unity/Hub/Editor/2020.3.18f1/Unity.app/Contents/MacOS/Unity
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker0
 -projectPath
-D:/SimaoDEEC/HTNeurow/HT_Neurow
+/Users/simaosoares/HTNeurow/HT_Neurow
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-55161
-Successfully changed project path to: D:/SimaoDEEC/HTNeurow/HT_Neurow
-D:/SimaoDEEC/HTNeurow/HT_Neurow
+51131
+Successfully changed project path to: /Users/simaosoares/HTNeurow/HT_Neurow
+/Users/simaosoares/HTNeurow/HT_Neurow
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 178.09 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 116.67 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.18f1 (a7d1c678663c)
-[Subsystems] Discovering subsystems at path D:/2020.3.18f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path D:/SimaoDEEC/HTNeurow/HT_Neurow/Assets
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2020.3.18f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Users/simaosoares/HTNeurow/HT_Neurow/Assets
 GfxDevice: creating device client; threaded=0
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce GTX 1080 (ID=0x1b80)
-    Vendor:   
-    VRAM:     8079 MB
-    Driver:   27.21.14.5671
+2021-11-03 17:35:12.329 Unity[62069:3336625] EPSON PJ preferred device: Intel(R) Iris(TM) Graphics 6100 (low power)
+2021-11-03 17:35:12.329 Unity[62069:3336625] Metal devices available: 1
+2021-11-03 17:35:12.329 Unity[62069:3336625] 0: Intel(R) Iris(TM) Graphics 6100 (low power)
+2021-11-03 17:35:12.331 Unity[62069:3336625] Using device Intel(R) Iris(TM) Graphics 6100 (low power)
+Initializing Metal device caps: Intel(R) Iris(TM) Graphics 6100
 Initialize mono
-Mono path[0] = 'D:/2020.3.18f1/Editor/Data/Managed'
-Mono path[1] = 'D:/2020.3.18f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
-Mono config path = 'D:/2020.3.18f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56252
+Mono path[0] = '/Applications/Unity/Hub/Editor/2020.3.18f1/Unity.app/Contents/Managed'
+Mono path[1] = '/Applications/Unity/Hub/Editor/2020.3.18f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = '/Applications/Unity/Hub/Editor/2020.3.18f1/Unity.app/Contents/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56069
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: D:/2020.3.18f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.118139 seconds.
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 62.34 ms, found 3 plugins.
+Register platform support module: /Applications/Unity/Hub/Editor/2020.3.18f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Registered in 0.002858 seconds.
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 89.88 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  3.653 seconds
+- Completed reload, in  7.051 seconds
 Domain Reload Profiling:
-	ReloadAssembly (3653ms)
-		BeginReloadAssembly (2266ms)
+	ReloadAssembly (7051ms)
+		BeginReloadAssembly (130ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (750ms)
-			LoadAssemblies (2265ms)
+			CreateAndSetChildDomain (2ms)
+		EndReloadAssembly (909ms)
+			LoadAssemblies (129ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (416ms)
+			SetupTypeCache (409ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (33ms)
-			SetupLoadedEditorAssemblies (191ms)
+			RebuildScriptCaches (65ms)
+			SetupLoadedEditorAssemblies (347ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (3ms)
+				InitializePlatformSupportModulesInManaged (5ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (62ms)
-				BeforeProcessingInitializeOnLoad (11ms)
-				ProcessInitializeOnLoadAttributes (80ms)
-				ProcessInitializeOnLoadMethodAttributes (34ms)
+				RefreshPlugins (90ms)
+				BeforeProcessingInitializeOnLoad (15ms)
+				ProcessInitializeOnLoadAttributes (179ms)
+				ProcessInitializeOnLoadMethodAttributes (57ms)
 				AfterProcessingInitializeOnLoad (0ms)
-				EditorAssembliesLoaded (0ms)
+				EditorAssembliesLoaded (1ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.475332 seconds.
+Registered in 0.006291 seconds.
 Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 83.08 ms, found 3 plugins.
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 93.77 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  4.048 seconds
+- Completed reload, in  2.444 seconds
 Domain Reload Profiling:
-	ReloadAssembly (4054ms)
-		BeginReloadAssembly (150ms)
+	ReloadAssembly (2446ms)
+		BeginReloadAssembly (267ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
+			DisableScriptedObjects (9ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (19ms)
-		EndReloadAssembly (3844ms)
-			LoadAssemblies (2203ms)
+			CreateAndSetChildDomain (47ms)
+		EndReloadAssembly (2065ms)
+			LoadAssemblies (199ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (798ms)
+			SetupTypeCache (727ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (72ms)
-			SetupLoadedEditorAssemblies (599ms)
+			RebuildScriptCaches (115ms)
+			SetupLoadedEditorAssemblies (735ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (4ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (83ms)
-				BeforeProcessingInitializeOnLoad (92ms)
-				ProcessInitializeOnLoadAttributes (410ms)
-				ProcessInitializeOnLoadMethodAttributes (7ms)
-				AfterProcessingInitializeOnLoad (3ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (6ms)
-Platform modules already initialized, skipping
-========================================================================
-Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.13 seconds
-Refreshing native plugins compatible for Editor in 0.71 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 137.5 MB.
-System memory in use after: 137.4 MB.
-
-Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 3502.
-Total: 3.638600 ms (FindLiveObjects: 0.309400 ms CreateObjectMapping: 0.167000 ms MarkObjects: 2.856200 ms  DeleteObjects: 0.305300 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  path: Assets/NeuHands/Models/RiggedPepperCutHands.FBX
-  artifactKey: Guid(2fd862f812aa846649cab0657317a4ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models/RiggedPepperCutHands.FBX using Guid(2fd862f812aa846649cab0657317a4ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2f14126e78589f01b3503c7b55be560f') in 0.360111 seconds 
-  Import took 0.365298 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000363 seconds.
-  path: Assets/NeuHands/Models/RiggedPepperRoundedHands.FBX
-  artifactKey: Guid(06a03f94a657c44148be0dd2e6bf16dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models/RiggedPepperRoundedHands.FBX using Guid(06a03f94a657c44148be0dd2e6bf16dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f1c85592bdb49267472a9d359d87445') in 0.050272 seconds 
-  Import took 0.055608 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000357 seconds.
-  path: Assets/NeuHands/blendedV3.fbx
-  artifactKey: Guid(d3a933d032f9e4fd1b62a0f3bff7d76a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/blendedV3.fbx using Guid(d3a933d032f9e4fd1b62a0f3bff7d76a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f032b16e6b1a1adebc0f7df02f72e8b') in 0.057196 seconds 
-  Import took 0.061842 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000431 seconds.
-  path: Assets/NeuHands/Models/RiggedSaltCutHands.FBX
-  artifactKey: Guid(0f21e392b49da41c2baf8f6718ac14b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models/RiggedSaltCutHands.FBX using Guid(0f21e392b49da41c2baf8f6718ac14b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68903afd57c00383e9f69fe75a81053f') in 0.043487 seconds 
-  Import took 0.047760 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000247 seconds.
-  path: Assets/NeuHands/Models/RiggedSaltCutHandsSeparateNails.FBX
-  artifactKey: Guid(a263540df2704495e91da11beb21885a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models/RiggedSaltCutHandsSeparateNails.FBX using Guid(a263540df2704495e91da11beb21885a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99bc6c421db6e1d3df47717544107af7') in 0.073812 seconds 
-  Import took 0.078812 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000283 seconds.
-  path: Assets/NeuHands/blendedV4.fbx
-  artifactKey: Guid(e49803a38de1e4fb4b45f9abc64640ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/blendedV4.fbx using Guid(e49803a38de1e4fb4b45f9abc64640ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '553b1a9de9c5866b3cdbd41b426b1a22') in 0.039220 seconds 
-  Import took 0.044495 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000232 seconds.
-  path: Assets/NeuHands/Models/RiggedHandsV1.fbx
-  artifactKey: Guid(82348a3a09a7147bf82330652c31eb40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models/RiggedHandsV1.fbx using Guid(82348a3a09a7147bf82330652c31eb40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba7c7ccb8a97b60ae9aa481f6c1a7060') in 0.047533 seconds 
-  Import took 0.052166 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000339 seconds.
-  path: Assets/NeuHands/blendedV2.fbx
-  artifactKey: Guid(3f93ce8e69b3047d6900837d53dc427b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/blendedV2.fbx using Guid(3f93ce8e69b3047d6900837d53dc427b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '978f85d64a42209b59d26e4887c2bacd') in 0.035052 seconds 
-  Import took 0.039600 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000228 seconds.
-  path: Assets/NeuHands/notCutBlended.fbx
-  artifactKey: Guid(ad2d39fea7f0c4ed38132cea8dc70276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/notCutBlended.fbx using Guid(ad2d39fea7f0c4ed38132cea8dc70276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc08010ed891d97c92af8aa4979f804c') in 0.035641 seconds 
-  Import took 0.040592 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000233 seconds.
-  path: Assets/NeuHands/Models/RiggedPepperFullHands.FBX
-  artifactKey: Guid(1140de03f648349c6976a0ad6bce907c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models/RiggedPepperFullHands.FBX using Guid(1140de03f648349c6976a0ad6bce907c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd905c8a7ac8942a35729afbb20c04796') in 0.041610 seconds 
-  Import took 0.046157 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000210 seconds.
-  path: Assets/NeuHands/Models/RiggedSaltFullHands.FBX
-  artifactKey: Guid(874df97fdb36a446a82d4d369d8d3729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models/RiggedSaltFullHands.FBX using Guid(874df97fdb36a446a82d4d369d8d3729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ef1c949699542726c667c211d49bd4fc') in 0.068445 seconds 
-  Import took 0.073593 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000306 seconds.
-  path: Assets/NeuHands/Models/RiggedSaltRoundedHands.FBX
-  artifactKey: Guid(7b535b19dc44e4f52a4946878af873de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models/RiggedSaltRoundedHands.FBX using Guid(7b535b19dc44e4f52a4946878af873de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3845013ea4685c38de7fa31b47d57e01') in 0.051018 seconds 
-  Import took 0.056266 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000362 seconds.
-  path: Assets/NeuHands/Models
-  artifactKey: Guid(fef246450f85047eb920c67ea1611062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Models using Guid(fef246450f85047eb920c67ea1611062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '266dfcf96f2659496dc750268e1e2171') in 0.007209 seconds 
-  Import took 0.012526 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000208 seconds.
-  path: Assets/NeuHands
-  artifactKey: Guid(90e4c16d64c6d4ccfa16fb69a2699193) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands using Guid(90e4c16d64c6d4ccfa16fb69a2699193) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c648f10bbc1f345cbc23efcc1dbfa5b0') in 0.005451 seconds 
-  Import took 0.011124 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 43.940140 seconds.
-  path: Assets/NeuHands/Materials
-  artifactKey: Guid(92981f5c255a54f8d84ccc0ccb4300f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials using Guid(92981f5c255a54f8d84ccc0ccb4300f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ba25507fe163ef33c9cc0919e2245ad') in 0.006654 seconds 
-  Import took 0.012144 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.058017 seconds.
-  path: Assets/NeuHands/Materials/BlackReflectiveMat.mat
-  artifactKey: Guid(364695700348a4051a4b5f432ec91276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/BlackReflectiveMat.mat using Guid(364695700348a4051a4b5f432ec91276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab1356752b56f7cb4c0a861f999cdde9') in 0.020708 seconds 
-  Import took 0.025861 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000227 seconds.
-  path: Assets/NeuHands/Materials/GlowRobotEmissive.mat
-  artifactKey: Guid(336f558c8e82f4b8aa9fe530bf8bcfea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/GlowRobotEmissive.mat using Guid(336f558c8e82f4b8aa9fe530bf8bcfea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ef74101cf7dc09efe7b49ee95470b4b3') in 0.025271 seconds 
-  Import took 0.030485 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000296 seconds.
-  path: Assets/NeuHands/Materials/HandRimLighting.mat
-  artifactKey: Guid(6505cdca8fb8241d5b5f5d8ac3b247e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/HandRimLighting.mat using Guid(6505cdca8fb8241d5b5f5d8ac3b247e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45679a3e753d9556579bf682b588a372') in 0.018367 seconds 
-  Import took 0.023692 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000245 seconds.
-  path: Assets/NeuHands/Materials/SkinLightPepperModelFull.mat
-  artifactKey: Guid(b3a8edcacceac4925b9a4516d95faea6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinLightPepperModelFull.mat using Guid(b3a8edcacceac4925b9a4516d95faea6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0dac55778e7bb9c1acadbe5530bf0d3a') in 0.030657 seconds 
-  Import took 0.036477 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000400 seconds.
-  path: Assets/NeuHands/Materials/CleanHandInner.mat
-  artifactKey: Guid(3b66e0324423c42fdba887556ea3ee3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/CleanHandInner.mat using Guid(3b66e0324423c42fdba887556ea3ee3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '346598caa40df0c07f996f4c475e2acd') in 0.018367 seconds 
-  Import took 0.024347 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000360 seconds.
-  path: Assets/NeuHands/Materials/CleanHandOuter.mat
-  artifactKey: Guid(76436aa3d3f424193a42ff2ab9083b27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/CleanHandOuter.mat using Guid(76436aa3d3f424193a42ff2ab9083b27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '123f605e3ba976ffcd35b8d00926bb5c') in 0.017549 seconds 
-  Import took 0.022914 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000367 seconds.
-  path: Assets/NeuHands/Materials/SkinDarkSaltModel.mat
-  artifactKey: Guid(b6700e5d3cf11403a92f1dc16e604f17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinDarkSaltModel.mat using Guid(b6700e5d3cf11403a92f1dc16e604f17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3064a3d181fed8c75236b29bf8b733c2') in 0.028690 seconds 
-  Import took 0.034649 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000264 seconds.
-  path: Assets/NeuHands/Materials/SkinDarkSaltModelFull.mat
-  artifactKey: Guid(a4689828cf3a24cfba4ac4bdde3bdb2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinDarkSaltModelFull.mat using Guid(a4689828cf3a24cfba4ac4bdde3bdb2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52ff005f82e8452af895248e1dbd6c54') in 0.028869 seconds 
-  Import took 0.034078 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000296 seconds.
-  path: Assets/NeuHands/Materials/SkinLightPepperModel.mat
-  artifactKey: Guid(4d6e87a85a0584bcc92c25d07afa9d44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinLightPepperModel.mat using Guid(4d6e87a85a0584bcc92c25d07afa9d44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42da2bb8524e2b7666ca05daa9c6885b') in 0.028233 seconds 
-  Import took 0.033583 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000342 seconds.
-  path: Assets/NeuHands/Materials/ToonyNails.mat
-  artifactKey: Guid(84b9e1d19d11078d11005b9844295342) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/ToonyNails.mat using Guid(84b9e1d19d11078d11005b9844295342) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc1a0992f8fe840da74e6fc77461017c') in 0.025523 seconds 
-  Import took 0.030540 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000352 seconds.
-  path: Assets/NeuHands/Materials/SkinMediumSaltModelFull.mat
-  artifactKey: Guid(dde83b71b16064d459c58142c4c0b30a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinMediumSaltModelFull.mat using Guid(dde83b71b16064d459c58142c4c0b30a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aaab98fc29cde3040ddd7ea662faaa75') in 0.027647 seconds 
-  Import took 0.032694 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000234 seconds.
-  path: Assets/NeuHands/Materials/CleanRobotHandTextured.mat
-  artifactKey: Guid(5ba08d5056d4b43a99bc4faa4915c18a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/CleanRobotHandTextured.mat using Guid(5ba08d5056d4b43a99bc4faa4915c18a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '29279275e3baa94ab9aeb491ab97c487') in 0.018630 seconds 
-  Import took 0.023772 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000261 seconds.
-  path: Assets/NeuHands/Materials/GlowRobot.mat
-  artifactKey: Guid(2162c6034ab5442e3ad58b99dff29055) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/GlowRobot.mat using Guid(2162c6034ab5442e3ad58b99dff29055) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74f9c05e9a7cfbe05419017c3fe29d8e') in 0.017810 seconds 
-  Import took 0.023643 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000305 seconds.
-  path: Assets/NeuHands/Materials/SkinDarkPepperModelFull.mat
-  artifactKey: Guid(c4fa9e51bb1fb47ab90ae093e7181689) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinDarkPepperModelFull.mat using Guid(c4fa9e51bb1fb47ab90ae093e7181689) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd3aa9257291878cd71f83a792e29732') in 0.044262 seconds 
-  Import took 0.048993 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000267 seconds.
-  path: Assets/NeuHands/Materials/GlowRobotForearm.mat
-  artifactKey: Guid(f5671a210f2174f05b63e79f43c40f42) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/GlowRobotForearm.mat using Guid(f5671a210f2174f05b63e79f43c40f42) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d18332eeff8bfd1c2a51ba518e19090') in 0.019244 seconds 
-  Import took 0.023719 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000267 seconds.
-  path: Assets/NeuHands/Materials/DistortMat.mat
-  artifactKey: Guid(05f94f2c3868b4469b61a71f45b3e1a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/DistortMat.mat using Guid(05f94f2c3868b4469b61a71f45b3e1a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd407a57a0af514a951025d0459d6200e') in 0.018699 seconds 
-  Import took 0.023821 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000224 seconds.
-  path: Assets/NeuHands/Materials/SkinMediumPepperModelFull.mat
-  artifactKey: Guid(7ed98fd84461048b4800b6190a5dcb39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinMediumPepperModelFull.mat using Guid(7ed98fd84461048b4800b6190a5dcb39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '76631f7c26220ca262c846c5ddc67a12') in 0.020918 seconds 
-  Import took 0.027320 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000207 seconds.
-  path: Assets/NeuHands/Materials/ToonyHand.mat
-  artifactKey: Guid(215977489d11178d11005b9844295342) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/ToonyHand.mat using Guid(215977489d11178d11005b9844295342) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f1c20b9cf09cf22f88fc69f7266058c') in 0.017063 seconds 
-  Import took 0.022182 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000195 seconds.
-  path: Assets/NeuHands/Materials/CubeWave.mat
-  artifactKey: Guid(f8d68c85189544dc6b9210213329cb9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/CubeWave.mat using Guid(f8d68c85189544dc6b9210213329cb9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52e72b00f56707a1b0462eb7f54487ba') in 0.016328 seconds 
-  Import took 0.020929 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000227 seconds.
-  path: Assets/NeuHands/Materials/spatula.mat
-  artifactKey: Guid(87dd8d6cf06a54e40bad498391ba19af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/spatula.mat using Guid(87dd8d6cf06a54e40bad498391ba19af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'daff42d96e9b6c8815654be0a97466ba') in 0.023410 seconds 
-  Import took 0.028060 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000209 seconds.
-  path: Assets/NeuHands/Materials/SkinMediumPepperModel.mat
-  artifactKey: Guid(b29a42ef1fa6b45eb897a15a2477db77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinMediumPepperModel.mat using Guid(b29a42ef1fa6b45eb897a15a2477db77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a59bef43b7e57d26f5d894a5baa6cb02') in 0.022172 seconds 
-  Import took 0.027015 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000265 seconds.
-  path: Assets/NeuHands/Materials/SkinDarkPepperModel.mat
-  artifactKey: Guid(44633cae08dad401f8a16c3833b77507) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinDarkPepperModel.mat using Guid(44633cae08dad401f8a16c3833b77507) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '546ba17c0f4c05f8ec73fdb71072b6b1') in 0.026151 seconds 
-  Import took 0.031966 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000199 seconds.
-  path: Assets/NeuHands/Materials/Pepper_Arm_MediumSkin_color.mat
-  artifactKey: Guid(9a366541c624847629c8e64a72cb7186) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/Pepper_Arm_MediumSkin_color.mat using Guid(9a366541c624847629c8e64a72cb7186) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '86060b726b3ba6765ebb2b23c813b3f6') in 0.019268 seconds 
-  Import took 0.024552 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000251 seconds.
-  path: Assets/NeuHands/Materials/SkinLightSaltModel.mat
-  artifactKey: Guid(969e3d510a4ca4085a7ac44a30c8b796) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinLightSaltModel.mat using Guid(969e3d510a4ca4085a7ac44a30c8b796) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '794132b132498ef2cd3e46e2c65f478d') in 0.028986 seconds 
-  Import took 0.033880 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000344 seconds.
-  path: Assets/NeuHands/Materials/SkinLightSaltModelFull.mat
-  artifactKey: Guid(2d02657322cdc456b92717c2787020cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinLightSaltModelFull.mat using Guid(2d02657322cdc456b92717c2787020cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8053ac75d2b2e9711dff7615592bbd22') in 0.027146 seconds 
-  Import took 0.031911 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000207 seconds.
-  path: Assets/NeuHands/Materials/MetalHand.mat
-  artifactKey: Guid(bf80319dac15241128782f687535d4f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/MetalHand.mat using Guid(bf80319dac15241128782f687535d4f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b7b5b6986201bb6bab3cecfc337c4a9b') in 0.016755 seconds 
-  Import took 0.022292 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000216 seconds.
-  path: Assets/NeuHands/Materials/SkinMediumSaltModel.mat
-  artifactKey: Guid(266f59b16c37045e3a84665fc34a05f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NeuHands/Materials/SkinMediumSaltModel.mat using Guid(266f59b16c37045e3a84665fc34a05f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'afba0447b96bec1cfa29145e293670ae') in 0.023710 seconds 
-  Import took 0.028844 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003247 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.57 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.113 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1114ms)
-		BeginReloadAssembly (127ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (7ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (40ms)
-		EndReloadAssembly (926ms)
-			LoadAssemblies (91ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (338ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (45ms)
-			SetupLoadedEditorAssemblies (301ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (4ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (93ms)
-				ProcessInitializeOnLoadAttributes (195ms)
-				ProcessInitializeOnLoadMethodAttributes (4ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (94ms)
+				BeforeProcessingInitializeOnLoad (137ms)
+				ProcessInitializeOnLoadAttributes (487ms)
+				ProcessInitializeOnLoadMethodAttributes (8ms)
 				AfterProcessingInitializeOnLoad (2ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (18ms)
+			AwakeInstancesAfterBackupRestoration (12ms)
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
+Validating Project structure ... 0.028182 seconds.
+Shader import version has changed; will reimport all shaders...
+Upgrading shader files ...0.041883 seconds.
+Application.AssetDatabase Initial Script Refresh Start
+RefreshInfo: InitialScriptRefreshV2(NoUpdateAssetOptions) scanfilter:  ... 1 filters
+RefreshProfiler: Total: 0.000ms
+Application.AssetDatabase Initial Script Refresh End
+Application.AssetDatabase.Refresh Start
+Application.AssetDatabase.Refresh End
+RefreshInfo: StopAssetImportingV2(ForceSynchronousImport) scanfilter: 
+RefreshProfiler: Total: 0.000ms
+Launching external process: /Applications/Unity/Hub/Editor/2020.3.18f1/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.06 seconds
+Initializing Unity extensions:
+========================================================================
+Worker process is ready to serve import requests
+Refreshing native plugins compatible for Editor in 0.78 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2936 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 149.4 MB.
-System memory in use after: 149.4 MB.
+Unloading 3069 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 252.2 MB.
+System memory in use after: 251.5 MB.
 
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3590.
-Total: 3.936600 ms (FindLiveObjects: 0.437600 ms CreateObjectMapping: 0.204200 ms MarkObjects: 3.022300 ms  DeleteObjects: 0.271700 ms)
+Unloading 220 unused Assets to reduce memory usage. Loaded Objects now: 3547.
+Total: 7.231790 ms (FindLiveObjects: 0.419483 ms CreateObjectMapping: 0.291689 ms MarkObjects: 5.634807 ms  DeleteObjects: 0.884454 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
   custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
   custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:framework-osx-AVFoundation: b23960f63f64bdc6ff669e2cdcee2391 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003817 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.95 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.413 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1414ms)
-		BeginReloadAssembly (136ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (45ms)
-		EndReloadAssembly (1198ms)
-			LoadAssemblies (121ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (445ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (59ms)
-			SetupLoadedEditorAssemblies (386ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (6ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (121ms)
-				ProcessInitializeOnLoadAttributes (248ms)
-				ProcessInitializeOnLoadMethodAttributes (6ms)
-				AfterProcessingInitializeOnLoad (3ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (20ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.09 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2936 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 149.5 MB.
-System memory in use after: 149.4 MB.
+Received Import Request.
+  path: Assets/Plugins/LeapMotion
+  artifactKey: Guid(aa623342d89b78f47b01580cc2710fdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion using Guid(aa623342d89b78f47b01580cc2710fdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '836bed5be5f9fa59345a7e18173a67ac') in 0.008313 seconds 
+  Import took 0.021154 seconds .
 
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3592.
-Total: 4.066600 ms (FindLiveObjects: 0.271500 ms CreateObjectMapping: 0.137300 ms MarkObjects: 3.280500 ms  DeleteObjects: 0.375900 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003768 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.62 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.465 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1466ms)
-		BeginReloadAssembly (171ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (65ms)
-		EndReloadAssembly (1184ms)
-			LoadAssemblies (131ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (446ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (61ms)
-			SetupLoadedEditorAssemblies (355ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (5ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (112ms)
-				ProcessInitializeOnLoadAttributes (228ms)
-				ProcessInitializeOnLoadMethodAttributes (5ms)
-				AfterProcessingInitializeOnLoad (3ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (19ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.67 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2936 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 149.5 MB.
-System memory in use after: 149.5 MB.
+Received Import Request.
+  Time since last request: 0.000478 seconds.
+  path: Assets/Plugins/LeapMotion/Modules/Hands/Models
+  artifactKey: Guid(82c0ff55e49b61a4082d0c51135a5840) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Modules/Hands/Models using Guid(82c0ff55e49b61a4082d0c51135a5840) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a221e8b550dc63aae1f0f05c124c8b8a') in 0.001474 seconds 
+  Import took 0.015464 seconds .
 
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3594.
-Total: 4.588200 ms (FindLiveObjects: 0.604600 ms CreateObjectMapping: 0.251600 ms MarkObjects: 3.447700 ms  DeleteObjects: 0.283400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003816 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.96 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.452 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1452ms)
-		BeginReloadAssembly (158ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (62ms)
-		EndReloadAssembly (1211ms)
-			LoadAssemblies (147ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (433ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (65ms)
-			SetupLoadedEditorAssemblies (386ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (5ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (119ms)
-				ProcessInitializeOnLoadAttributes (251ms)
-				ProcessInitializeOnLoadMethodAttributes (6ms)
-				AfterProcessingInitializeOnLoad (3ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (21ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2936 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 149.6 MB.
-System memory in use after: 149.5 MB.
+Received Import Request.
+  Time since last request: 0.001508 seconds.
+  path: Assets/Plugins/LeapMotion/Core/Examples
+  artifactKey: Guid(001ede72c107fa341b188b31a4d8de01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Core/Examples using Guid(001ede72c107fa341b188b31a4d8de01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ac3efb4f8bc57c445b10f20694a61c3') in 0.001081 seconds 
+  Import took 0.009184 seconds .
 
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3596.
-Total: 4.195900 ms (FindLiveObjects: 0.389900 ms CreateObjectMapping: 0.275100 ms MarkObjects: 3.239000 ms  DeleteObjects: 0.290500 ms)
+========================================================================
+Received Import Request.
+  Time since last request: 0.000300 seconds.
+  path: Assets/Plugins/LeapMotion/Modules/Hands/Models/Skeleton
+  artifactKey: Guid(22c14549f09603441bb22aec5d595f55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Modules/Hands/Models/Skeleton using Guid(22c14549f09603441bb22aec5d595f55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8395d1774e19df83c7bcefd50902d2b') in 0.004020 seconds 
+  Import took 0.018837 seconds .
 
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+========================================================================
+Received Import Request.
+  Time since last request: 0.000569 seconds.
+  path: Assets/Plugins/LeapMotion/Core
+  artifactKey: Guid(7763a30277d0c1c448026a33fb273c2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Core using Guid(7763a30277d0c1c448026a33fb273c2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19459d640ec7544acf96c117c0e6bfec') in 0.001139 seconds 
+  Import took 0.008955 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000366 seconds.
+  path: Assets/Plugins/LeapMotion/Modules/Hands/Models/Skeleton/SkeletonArm_MeshUnderBones.fbx
+  artifactKey: Guid(371992c1d2372234b968dc6c00d250c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Modules/Hands/Models/Skeleton/SkeletonArm_MeshUnderBones.fbx using Guid(371992c1d2372234b968dc6c00d250c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2cbd7567354544ad11179c97c47a972c') in 1.446930 seconds 
+  Import took 1.454590 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.007867 seconds.
+  path: Assets/Plugins/LeapMotion/Modules/Hands/Models/Skeleton/Textures
+  artifactKey: Guid(c7de5b900ae2e264e9659eba0f6ca9dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Modules/Hands/Models/Skeleton/Textures using Guid(c7de5b900ae2e264e9659eba0f6ca9dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cebb5311a5785c567543a397c26badd0') in 0.001067 seconds 
+  Import took 0.012064 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000314 seconds.
+  path: Assets/Plugins/LeapMotion/Modules/Hands
+  artifactKey: Guid(0a49871325d81384ea8d7c7fa8c038cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Modules/Hands using Guid(0a49871325d81384ea8d7c7fa8c038cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ba33a7a0a3df6b7c7042315f119772a') in 0.005564 seconds 
+  Import took 0.017731 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000376 seconds.
+  path: Assets/Plugins/LeapMotion/Modules
+  artifactKey: Guid(65e4532267cb4624e8a29b3716eea366) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Modules using Guid(65e4532267cb4624e8a29b3716eea366) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '985ebde168ea8ab9b713c46995809326') in 0.000967 seconds 
+  Import took 0.015548 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001166 seconds.
+  path: Assets/Plugins/LeapMotion/Modules/Hands/Models/LeapReferenceHand.fbx
+  artifactKey: Guid(61ff45a45c97aa040b65877017d51fc8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Modules/Hands/Models/LeapReferenceHand.fbx using Guid(61ff45a45c97aa040b65877017d51fc8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f0ae75421319f5064bba83fe1866e39') in 0.048737 seconds 
+  Import took 0.067757 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.065949 seconds.
+  path: Assets/Plugins/LeapMotion/Modules/Hands/Models/Skeleton/SkeletonArm.mat
+  artifactKey: Guid(fc295eba5abda994e8e9dd730218fa31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/LeapMotion/Modules/Hands/Models/Skeleton/SkeletonArm.mat using Guid(fc295eba5abda994e8e9dd730218fa31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9b86a0b9024fcc3f1005c821291279d') in 0.447287 seconds 
+  Import took 0.464011 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1080.668874 seconds.
+  path: Assets/NeuHands/blendedV2.fbx
+  artifactKey: Guid(3f93ce8e69b3047d6900837d53dc427b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/blendedV2.fbx using Guid(3f93ce8e69b3047d6900837d53dc427b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '964e1fea90e89a0ff3f092f2d76476aa') in 0.222010 seconds 
+  Import took 0.296067 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000991 seconds.
+  path: Assets/NeuHands/blendedV3.fbx
+  artifactKey: Guid(d3a933d032f9e4fd1b62a0f3bff7d76a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/blendedV3.fbx using Guid(d3a933d032f9e4fd1b62a0f3bff7d76a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57341eb3803d31acfd3a74179de7ca99') in 0.166934 seconds 
+  Import took 0.202220 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000536 seconds.
+  path: Assets/NeuHands/blendedV4.fbx
+  artifactKey: Guid(e49803a38de1e4fb4b45f9abc64640ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/blendedV4.fbx using Guid(e49803a38de1e4fb4b45f9abc64640ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '822f0b80c2cb370cf015aa65981f5f47') in 0.166174 seconds 
+  Import took 0.184039 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000897 seconds.
+  path: Assets/NeuHands/notCutBlended.fbx
+  artifactKey: Guid(ad2d39fea7f0c4ed38132cea8dc70276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/notCutBlended.fbx using Guid(ad2d39fea7f0c4ed38132cea8dc70276) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '131a8ed0c287e72379c779e7550d9e78') in 0.140545 seconds 
+  Import took 0.151114 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.561761 seconds.
+  path: Assets/NeuHands/Models
+  artifactKey: Guid(fef246450f85047eb920c67ea1611062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models using Guid(fef246450f85047eb920c67ea1611062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '269c0d3014ff9e6903a75450f1375f98') in 0.002066 seconds 
+  Import took 0.015373 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.015140 seconds.
+  path: Assets/NeuHands/Models
+  artifactKey: Guid(fef246450f85047eb920c67ea1611062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models using Guid(fef246450f85047eb920c67ea1611062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '269c0d3014ff9e6903a75450f1375f98') in 0.001246 seconds 
+  Import took 0.012493 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.796749 seconds.
+  path: Assets/NeuHands/Models/RiggedHandsV1.fbx
+  artifactKey: Guid(82348a3a09a7147bf82330652c31eb40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models/RiggedHandsV1.fbx using Guid(82348a3a09a7147bf82330652c31eb40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d3c434d6695240daa70b6d39c8bb744') in 0.216799 seconds 
+  Import took 0.232149 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000585 seconds.
+  path: Assets/NeuHands/Models/RiggedPepperRoundedHands.FBX
+  artifactKey: Guid(06a03f94a657c44148be0dd2e6bf16dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models/RiggedPepperRoundedHands.FBX using Guid(06a03f94a657c44148be0dd2e6bf16dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb4638b4045230564aa57633b86d2a6b') in 0.522049 seconds 
+  Import took 0.534766 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.023861 seconds.
+  path: Assets/NeuHands/Models/RiggedSaltCutHands.FBX
+  artifactKey: Guid(0f21e392b49da41c2baf8f6718ac14b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models/RiggedSaltCutHands.FBX using Guid(0f21e392b49da41c2baf8f6718ac14b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ef3b74967d72c4446bce5549b4c1e691') in 0.162458 seconds 
+  Import took 0.178625 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001365 seconds.
+  path: Assets/NeuHands/Models/RiggedSaltCutHandsSeparateNails.FBX
+  artifactKey: Guid(a263540df2704495e91da11beb21885a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models/RiggedSaltCutHandsSeparateNails.FBX using Guid(a263540df2704495e91da11beb21885a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '727a3a6b7e635499d7419ec60cc0c24e') in 0.212253 seconds 
+  Import took 0.224674 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000592 seconds.
+  path: Assets/NeuHands/Models/RiggedSaltRoundedHands.FBX
+  artifactKey: Guid(7b535b19dc44e4f52a4946878af873de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models/RiggedSaltRoundedHands.FBX using Guid(7b535b19dc44e4f52a4946878af873de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59a5c312325e3b49a6903bdef8fe12dc') in 0.179088 seconds 
+  Import took 0.188692 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000643 seconds.
+  path: Assets/NeuHands/Models/RiggedPepperFullHands.FBX
+  artifactKey: Guid(1140de03f648349c6976a0ad6bce907c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models/RiggedPepperFullHands.FBX using Guid(1140de03f648349c6976a0ad6bce907c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d3d32db63d23fcfdfe152b135ef2109') in 0.154935 seconds 
+  Import took 0.169050 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000506 seconds.
+  path: Assets/NeuHands/Models/RiggedSaltFullHands.FBX
+  artifactKey: Guid(874df97fdb36a446a82d4d369d8d3729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models/RiggedSaltFullHands.FBX using Guid(874df97fdb36a446a82d4d369d8d3729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a1404b6c96d826b7e43227558779304') in 0.225569 seconds 
+  Import took 0.234564 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000654 seconds.
+  path: Assets/NeuHands/Models/RiggedPepperCutHands.FBX
+  artifactKey: Guid(2fd862f812aa846649cab0657317a4ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NeuHands/Models/RiggedPepperCutHands.FBX using Guid(2fd862f812aa846649cab0657317a4ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0c7dc59edf5960015e0256a3ced6c46') in 0.156515 seconds 
+  Import took 0.170047 seconds .
+
