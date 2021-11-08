@@ -247,7 +247,6 @@ GameObject:
   - component: {fileID: 180231432}
   - component: {fileID: 180231435}
   - component: {fileID: 180231434}
-  - component: {fileID: 180231433}
   m_Layer: 0
   m_Name: PepperCutHandsMediumLeft
   m_TagString: Untagged
@@ -263,26 +262,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180231431}
   m_LocalRotation: {x: -0, y: -0.9989796, z: 0.04516305, w: 0}
-  m_LocalPosition: {x: -0.741, y: -0.48820266, z: -0.293}
+  m_LocalPosition: {x: -0.3892693, y: -0.38373116, z: 0.2695187}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1633744789}
   - {fileID: 831766048}
-  m_Father: {fileID: 1280662495}
-  m_RootOrder: 3
+  m_Father: {fileID: 906148044}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 5.177, y: -180, z: 0}
---- !u!114 &180231433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 180231431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bcd03e00992e084c8be61565d44b8bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &180231434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2532,6 +2519,53 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0765834, y: 0.016248837, z: 0.015659798}
     m_Extent: {x: 0.10471593, y: 0.0589301, z: 0.08204223}
   m_DirtyAABB: 0
+--- !u!1 &906148043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 906148044}
+  - component: {fileID: 906148045}
+  m_Layer: 0
+  m_Name: PepperCutHandsMedium
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &906148044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906148043}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.3517307, y: -0.104471505, z: -0.5625187}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4840139410358998293}
+  - {fileID: 180231432}
+  m_Father: {fileID: 1280662495}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &906148045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906148043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb53883037a54763b3109c91976c05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myHandPointList:
+    handPoint: []
 --- !u!1 &909651579
 GameObject:
   m_ObjectHideFlags: 0
@@ -3967,10 +4001,9 @@ Transform:
   m_Children:
   - {fileID: 5784352914033713611}
   - {fileID: 1026102268}
-  - {fileID: 4840139410358998293}
-  - {fileID: 180231432}
   - {fileID: 543450651990609590}
   - {fileID: 7124493111487328311}
+  - {fileID: 906148044}
   m_Father: {fileID: 297200874}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3994,7 +4027,7 @@ MonoBehaviour:
     IsLeftToBeSpawned: 0
     RightModel: {fileID: 7124493111487426008}
     IsRightToBeSpawned: 0
-    IsEnabled: 1
+    IsEnabled: 0
     CanDuplicate: 0
   - GroupName: MaleMedium
     _handModelManager: {fileID: 0}
@@ -4002,7 +4035,7 @@ MonoBehaviour:
     IsLeftToBeSpawned: 0
     RightModel: {fileID: 4840139410359355703}
     IsRightToBeSpawned: 0
-    IsEnabled: 0
+    IsEnabled: 1
     CanDuplicate: 0
   - GroupName: Female Medium
     _handModelManager: {fileID: 0}
@@ -5192,7 +5225,7 @@ Transform:
   - {fileID: 3627678020147692809}
   - {fileID: 1576387214400942168}
   m_Father: {fileID: 1280662495}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -360.841, y: 180, z: 0.053}
 --- !u!1 &656869160240869866
 GameObject:
@@ -5871,8 +5904,8 @@ MonoBehaviour:
   GlobalFingerRotationOffset: {x: 359.99078, y: 357.73984, z: 350.02063}
   WristRotationOffset: {x: 359.99078, y: 357.73984, z: 350.02063}
   SetEditorPose: 0
-  SetPositions: 1
-  UseMetaBones: 1
+  SetPositions: 0
+  UseMetaBones: 0
   DebugLeapHand: 1
   DebugLeapRotationAxis: 0
   DebugModelTransforms: 1
@@ -6829,13 +6862,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4840139410359355701}
   m_LocalRotation: {x: -0, y: -0.9989796, z: 0.04516305, w: 0}
-  m_LocalPosition: {x: -0.80724066, y: -0.4853907, z: -0.29401812}
+  m_LocalPosition: {x: -0.45550996, y: -0.3809192, z: 0.2685006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4840139410358998301}
   - {fileID: 4840139410358998299}
-  m_Father: {fileID: 1280662495}
-  m_RootOrder: 2
+  m_Father: {fileID: 906148044}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 5.177, y: -180, z: 0}
 --- !u!4 &4840139410358998299
 Transform:
@@ -7360,7 +7393,6 @@ GameObject:
   - component: {fileID: 4840139410358998293}
   - component: {fileID: 4840139410350013101}
   - component: {fileID: 4840139410359355703}
-  - component: {fileID: 4840139410359355702}
   m_Layer: 0
   m_Name: PepperCutHandsMediumRight
   m_TagString: Untagged
@@ -7368,18 +7400,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &4840139410359355702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4840139410359355701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bcd03e00992e084c8be61565d44b8bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4840139410359355703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10666,6 +10686,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5784352914033713613}
+  - component: {fileID: 5784352914034015728}
   m_Layer: 0
   m_Name: Bip01 L Hand
   m_TagString: Untagged
@@ -10694,6 +10715,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5784352914033713615}
+  - component: {fileID: 5784352914034015730}
   m_Layer: 0
   m_Name: Bip01 R Hand
   m_TagString: Untagged
@@ -10701,6 +10723,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5784352914034015728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5784352914034015725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb53883037a54763b3109c91976c05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myHandPointList:
+    handPoint: []
 --- !u!1 &5784352914034015729
 GameObject:
   m_ObjectHideFlags: 0
@@ -10717,6 +10753,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5784352914034015730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5784352914034015727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb53883037a54763b3109c91976c05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myHandPointList:
+    handPoint: []
 --- !u!1 &5784352914034015731
 GameObject:
   m_ObjectHideFlags: 0
@@ -11397,7 +11447,7 @@ Transform:
   - {fileID: 7124493111487328267}
   - {fileID: 7124493111487328299}
   m_Father: {fileID: 1280662495}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -85.299, y: 330.667, z: -150.75}
 --- !u!4 &7124493111487328313
 Transform:
