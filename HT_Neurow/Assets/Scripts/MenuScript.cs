@@ -5,16 +5,34 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
+    
+    public GameObject main;
+    public GameObject optCamera;
+
+
+    public GameObject optPanel;
+
+    public GameObject mainPanel;
+    
+    
+    
     public void StartGame(){
-        float aux = Time.deltaTime;
-        while (true){
-            if(Time.deltaTime - aux > 3f){
-                SceneManager.LoadScene("RowingSim");
-            }
-        }
+        SceneManager.LoadScene("RowingSim");
     }
 
     public void QuitGame(){
         Application.Quit();
     }
+
+    public void Options(){
+        optCamera.SetActive(true);
+        main.SetActive(false);
+        optCamera.GetComponent<CPC_CameraPath>().PlayPath(3);
+
+        mainPanel.SetActive(false);
+        optPanel.SetActive(true);
+
+    }
+
+
 }
