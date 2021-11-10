@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571336, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2821,6 +2821,10 @@ MonoBehaviour:
       RightObject: {fileID: 4840139410359355709}
       LeftID: RWrist
       LeftObject: {fileID: 1633744788}
+    - RightID: RThumbT
+      RightObject: {fileID: 4840139410359355753}
+      LeftID: LThumbT
+      LeftObject: {fileID: 967591923}
     - RightID: RThumbT
       RightObject: {fileID: 4840139410359355753}
       LeftID: LThumbT
