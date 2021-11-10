@@ -1911,8 +1911,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     chained: 1
-  - position: {x: 0, y: 0.7546309, z: -0.8}
-    rotation: {x: -0.043496594, y: 0.013946387, z: -0.0071923025, w: 0.9989304}
+  - position: {x: 0, y: 0.768881, z: -0.8438954}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
     handleprev: {x: 0.01586655, y: 0.12038702, z: -4.9345903}
     handlenext: {x: -0.01586655, y: -0.12038702, z: 4.9345903}
     curveTypeRotation: 0
@@ -1998,7 +1998,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775466315}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: -0.409, z: 0}
+  m_LocalPosition: {x: 0, y: -0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1840460333}
@@ -2347,7 +2347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 415310, guid: 3dc82f88b805ff142b804693e2585a17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.041
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 415310, guid: 3dc82f88b805ff142b804693e2585a17, type: 3}
       propertyPath: m_LocalPosition.z

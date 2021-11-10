@@ -32,6 +32,8 @@ public class DataLogger : MonoBehaviour
         public string LeftID;
         public GameObject LeftObject;
 
+		//private TextWriter tw;
+
 
         
     }
@@ -54,6 +56,9 @@ public class DataLogger : MonoBehaviour
     void Start()
     {
         filename = Application.dataPath + "/dataLog.csv";
+		TextWriter tw = new StreamWriter(filename, false);
+		tw.WriteLine("RightPointID, RPosX, RPosY, RPosZ, RRotX, RRotY, RRotZ, , LeftPointID, LPosX, LPosY, LPosZ, LRotX, LRotY, LRotZ");
+
 
     }
 
@@ -76,13 +81,8 @@ public class DataLogger : MonoBehaviour
         //there is data to write
         if(myHandPointList.handPoint.Length > 0)
         {
-            TextWriter tw = new StreamWriter(filename, false);
-            //false deletes everything the first time that the file is opened
-
-            tw.WriteLine("RightPointID, RPosX, RPosY, RPosZ, RRotX, RRotY, RRotZ, , LeftPointID, LPosX, LPosY, LPosZ, LRotX, LRotY, LRotZ");
-            tw.Close();
-
-            tw = new StreamWriter(filename, true);
+			TextWriter tw = new StreamWriter(filename, true);
+            
             Vector3 auxPosR;
             Vector3 auxPosL;
             Quaternion auxRotR;
