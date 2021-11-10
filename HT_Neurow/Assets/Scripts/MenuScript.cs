@@ -6,44 +6,58 @@ using UnityEngine.SceneManagement;
 public class MenuScript : MonoBehaviour
 {
     
-    public GameObject main;
-    public GameObject optCamera;
+    public GameObject mainCam;
+    public GameObject optCam;
 
 
     public GameObject optPanel;
 
     public GameObject mainPanel;
 
+	public GameObject buttons;
+	public GameObject titleElements;
+
     private bool playAux = false;
-    
-    
-    
-    public void StartGame(){
+	private bool optAux = false;
+
+
+	public void QuitGame(){
+		Application.Quit();
+	}
+
+	private void Update() {
+		if(optAux) StartCoroutine(Options());
+		if(playAux) StartCoroutine(StartGame());
+	}
+
+	public void StartPressed(){
+		playAux = true;
+	}
+
+	public void OptPressed(){
+		optAux = true;
+	}
+
+
+    IEnumerator StartGame(){
+		buttons.SetActive(false);
+		mainCam.GetComponent<CPC_CameraPath>().PlayPath(3);
+		playAux = false;
+		yield return new WaitForSeconds(3f);
+		titleElements.SetActive(false);
+		yield return new WaitForSeconds(.1f);
         SceneManager.LoadScene("RowingSim");
     }
+		
 
-    public void StartPressed(){
-        playAux = true;
-    }
-
-    public void QuitGame(){
-        Application.Quit();
-    }
-
-    public void Options(){
-        optCamera.SetActive(true);
-        main.SetActive(false);
-
+    IEnumerator Options(){
+        optCam.SetActive(true);
+        mainCam.SetActive(false);
         mainPanel.SetActive(false);
-        optCamera.GetComponent<CPC_CameraPath>().PlayPath(3);
-
-        
+        optCam.GetComponent<CPC_CameraPath>().PlayPath(3);
+		optAux = false;
+		yield return new WaitForSeconds(3f);
         optPanel.SetActive(true);
-
-    }
-
-    private void Update() {
-        //COROUTINE WITH PlayIsPressed
     }
 
 

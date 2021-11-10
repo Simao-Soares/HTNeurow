@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571336, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -621,7 +621,7 @@ Transform:
   - {fileID: 811671080}
   - {fileID: 42885124}
   m_Father: {fileID: 1947337178}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &117831162
 GameObject:
@@ -840,15 +840,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 731765963}
-        m_TargetAssemblyTypeName: CPC_CameraPath, Assembly-CSharp
-        m_MethodName: PlayPath
-        m_Mode: 4
+      - m_Target: {fileID: 439022343}
+        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
+        m_MethodName: StartPressed
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 3
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -915,11 +915,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244912232}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1947337178}
+  m_Father: {fileID: 322360806}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -965,6 +965,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244912232}
   m_CullTransparentMesh: 1
+--- !u!1 &322360805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 322360806}
+  m_Layer: 5
+  m_Name: TitleElems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &322360806
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322360805}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1140647895}
+  - {fileID: 1934533461}
+  - {fileID: 244912233}
+  - {fileID: 594926121}
+  m_Father: {fileID: 1947337178}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &439022338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,10 +1118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7714fc037a30f4d50adf7937efd1f279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  main: {fileID: 731765958}
-  optCamera: {fileID: 1333840426}
+  mainCam: {fileID: 731765958}
+  optCam: {fileID: 1333840426}
   optPanel: {fileID: 617809710}
   mainPanel: {fileID: 1947337177}
+  buttons: {fileID: 82199659}
+  titleElements: {fileID: 322360805}
 --- !u!1 &467455510
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,11 +1530,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594926120}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1947337178}
+  m_Father: {fileID: 322360806}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1808,8 +1849,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2edac0b6f5e12204bbc4b9f4391db7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMainCamera: 1
-  selectedCamera: {fileID: 0}
+  useMainCamera: 0
+  selectedCamera: {fileID: 731765960}
   lookAtTarget: 0
   target: {fileID: 0}
   playOnAwake: 0
@@ -1870,8 +1911,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     chained: 1
-  - position: {x: 0.00094920397, y: 0.79758173, z: -1.2248628}
-    rotation: {x: -0.04349659, y: 0.013946394, z: -0.0071921814, w: 0.99893034}
+  - position: {x: 0, y: 0.7546309, z: -0.8}
+    rotation: {x: -0.043496594, y: 0.013946387, z: -0.0071923025, w: 0.9989304}
     handleprev: {x: 0.01586655, y: 0.12038702, z: -4.9345903}
     handlenext: {x: -0.01586655, y: -0.12038702, z: 4.9345903}
     curveTypeRotation: 0
@@ -2162,7 +2203,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 439022343}
         m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
-        m_MethodName: Options
+        m_MethodName: OptPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2767,11 +2808,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140647894}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1947337178}
+  m_Father: {fileID: 322360806}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4301,7 +4342,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1947337178}
+  m_Father: {fileID: 322360806}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4451,10 +4492,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1140647895}
-  - {fileID: 1934533461}
-  - {fileID: 244912233}
-  - {fileID: 594926121}
+  - {fileID: 322360806}
   - {fileID: 82199660}
   m_Father: {fileID: 439022342}
   m_RootOrder: 0
