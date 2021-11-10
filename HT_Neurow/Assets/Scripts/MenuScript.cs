@@ -13,11 +13,17 @@ public class MenuScript : MonoBehaviour
     public GameObject optPanel;
 
     public GameObject mainPanel;
+
+    private bool playAux = false;
     
     
     
     public void StartGame(){
         SceneManager.LoadScene("RowingSim");
+    }
+
+    public void StartPressed(){
+        playAux = true;
     }
 
     public void QuitGame(){
@@ -27,11 +33,17 @@ public class MenuScript : MonoBehaviour
     public void Options(){
         optCamera.SetActive(true);
         main.SetActive(false);
-        optCamera.GetComponent<CPC_CameraPath>().PlayPath(3);
 
         mainPanel.SetActive(false);
+        optCamera.GetComponent<CPC_CameraPath>().PlayPath(3);
+
+        
         optPanel.SetActive(true);
 
+    }
+
+    private void Update() {
+        //COROUTINE WITH PlayIsPressed
     }
 
 
