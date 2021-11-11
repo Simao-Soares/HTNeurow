@@ -7,6 +7,10 @@ public class DisplayRow : MonoBehaviour
 {
     [SerializeField] private Text customText;
 
+	public float rotA;
+	private bool rAux = false;
+	private bool lAux = false;
+
 
 	//Array of Water GameObjects
 	[System.Serializable]
@@ -19,6 +23,12 @@ public class DisplayRow : MonoBehaviour
 
 	void Start(){
 		customText.enabled = false;
+	}
+
+	void FixedUpdate()
+	{
+		if(lAux) StartCoroutine(TurnRight());
+		if(rAux) StartCoroutine(TurnLeft());
 	}
 
 
@@ -38,18 +48,49 @@ public class DisplayRow : MonoBehaviour
             //Debug.Log("RowEnd");
 
 			if(gameObject.name == "R_RowCollider"){
-				for(int i = 0; i < myTerrainList.water.Length ; i++){
-					myTerrainList.water[i].transform.Rotate(Vector3.up * 100f * Time.deltaTime);
-				}
+//				for(int i = 0; i < myTerrainList.water.Length ; i++){
+//					myTerrainList.water[i].transform.Rotate(Vector3.up * 100f * Time.deltaTime);
+//				}
+				lAux = true;  //right row turns left
 			}
 
 			if(gameObject.name == "L_RowCollider"){
-				for(int i = 0; i < myTerrainList.water.Length ; i++){
-					myTerrainList.water[i].transform.Rotate(Vector3.down * 100f * Time.deltaTime);
-				}
+//				for(int i = 0; i < myTerrainList.water.Length ; i++){
+//					myTerrainList.water[i].transform.Rotate(Vector3.down * 100f * Time.deltaTime);
+//				}
+				rAux = true;  //left row turns right
 			}
-
-
         }
     }
+
+	//TENTATIVA DE DEFINIR A SPEED OF ROTATION, mas e uma merda
+	IEnumerator TurnRight(){
+		for (float ang = 0f; ang > -rotA; ang-= 1f){
+			yield return null;
+			for(int i = 0; i < myTerrainList.water.Length ; i++){
+				myTerrainList.water[0].transform.Rotate(0, 1, 0, Space.Self);
+
+			}
+			yield return null;
+			lAux = false;
+		}
+
+		
+	}
+
+	IEnumerator TurnLeft(){
+		for (float ang = 0f; ang < rotA; ang+= 1f){
+			yield return null;
+			for(int i = 0; i < myTerrainList.water.Length ; i++){
+				myTerrainList.water[0].transform.Rotate(0, -1, 0, Space.Self);
+
+			}
+			yield return null;
+			rAux = false;
+		}
+
+	}
+
+
+
 }

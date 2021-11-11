@@ -8,13 +8,9 @@ public class BoatMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		Debug.Log("oi");
 		rb = GetComponent<Rigidbody>(); 
-		rb.AddForce(0, 0, -1.0f, ForceMode.Impulse);
+		rb.AddForce(0, 0, 1.0f, ForceMode.Impulse);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

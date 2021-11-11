@@ -63,11 +63,11 @@ public class DataLogger : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         elapsed += Time.deltaTime;
         if (elapsed >= 1f) {
             elapsed = elapsed % 1f;
-            OutputTime();
+            //OutputTime();   //uncomment to show print time instances
             WriteCSV();
         }
     }

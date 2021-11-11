@@ -81,8 +81,5 @@ public class MenuScript : MonoBehaviour
 		mainCam.SetActive(true);
 		
     }
-
-	
-
-
+		
 }
