@@ -9,6 +9,8 @@ public class MenuScript : MonoBehaviour
     public GameObject mainCam;
     public GameObject optCam;
 
+	public GameObject optBackCam;
+
 
     public GameObject optPanel;
 
@@ -20,6 +22,8 @@ public class MenuScript : MonoBehaviour
     private bool playAux = false;
 	private bool optAux = false;
 
+	private bool optBackAux = false;
+
 
 	public void QuitGame(){
 		Application.Quit();
@@ -28,6 +32,7 @@ public class MenuScript : MonoBehaviour
 	private void Update() {
 		if(optAux) StartCoroutine(Options());
 		if(playAux) StartCoroutine(StartGame());
+		if(optBackAux) StartCoroutine(OptBack());
 	}
 
 	public void StartPressed(){
@@ -36,6 +41,10 @@ public class MenuScript : MonoBehaviour
 
 	public void OptPressed(){
 		optAux = true;
+	}
+
+	public void OptBackPressed(){
+		optBackAux = true;
 	}
 
 
@@ -59,6 +68,21 @@ public class MenuScript : MonoBehaviour
 		yield return new WaitForSeconds(3f);
         optPanel.SetActive(true);
     }
+
+	IEnumerator OptBack(){
+        optBackCam.SetActive(true);
+        optCam.SetActive(false);
+		optPanel.SetActive(false);
+		optBackCam.GetComponent<CPC_CameraPath>().PlayPath(1);
+		optBackAux = false;
+		yield return new WaitForSeconds(1f);
+        mainPanel.SetActive(true);
+		optBackCam.SetActive(false);
+		mainCam.SetActive(true);
+		
+    }
+
+	
 
 
 }

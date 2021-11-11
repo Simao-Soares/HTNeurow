@@ -15,7 +15,7 @@ public class DisplayRow : MonoBehaviour
 		public GameObject[] water;
 	}
 
-	public TerrainList myTerrainList = new TerrainList();  //List of handPoints
+	public TerrainList myTerrainList = new TerrainList();  //List of terrain elements
 
 	void Start(){
 		customText.enabled = false;

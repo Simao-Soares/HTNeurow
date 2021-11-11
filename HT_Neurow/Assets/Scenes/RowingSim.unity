@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: b20bf58f0d94d4f859cd5dc3fad04ede, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5482,6 +5482,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zone: {fileID: 1231529855}
+  water: {fileID: 1573443800}
+  player: {fileID: 1993805481}
 --- !u!4 &1702770710
 Transform:
   m_ObjectHideFlags: 0
