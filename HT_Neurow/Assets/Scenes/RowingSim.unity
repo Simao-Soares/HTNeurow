@@ -1894,7 +1894,7 @@ PrefabInstance:
     - target: {fileID: 2535954103604261516, guid: 838c0bef810bfe94d8e33947c3cba7c6, type: 3}
       propertyPath: reflectionPlane
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1682578637}
     - target: {fileID: 2535954103604261519, guid: 838c0bef810bfe94d8e33947c3cba7c6, type: 3}
       propertyPath: m_Name
       value: WaterReflectionCamera
@@ -5113,7 +5113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zone: {fileID: 1231529855}
-  water: {fileID: 0}
+  water: {fileID: 1706981025}
   player: {fileID: 1993805481}
 --- !u!4 &1702770710
 Transform:
@@ -5438,6 +5438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bf84eb6f6c49a4da6ee026ad144e0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotAngle: 20
+  spinningTime: 1
 --- !u!1 &2024443982
 GameObject:
   m_ObjectHideFlags: 0

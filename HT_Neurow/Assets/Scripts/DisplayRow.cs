@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Displays Row + Movement V1
+
 public class DisplayRow : MonoBehaviour
 {
     [SerializeField] private Text customText;
@@ -69,13 +71,10 @@ public class DisplayRow : MonoBehaviour
 			yield return null;
 			for(int i = 0; i < myTerrainList.water.Length ; i++){
 				myTerrainList.water[0].transform.Rotate(0, 1, 0, Space.Self);
-
 			}
 			yield return null;
 			lAux = false;
 		}
-
-		
 	}
 
 	IEnumerator TurnLeft(){
