@@ -9,7 +9,6 @@ public class PickedUp : MonoBehaviour
     private void OnTriggerEnter(Collider collisionInfo) {
         if (collisionInfo.GetComponent<Collider>().tag == "PlayerPos")
         {
-            Debug.Log("+1");
             BaseEventData eventData = new BaseEventData(EventSystem.current);
             this.CoinPickup.Invoke(eventData);
         }

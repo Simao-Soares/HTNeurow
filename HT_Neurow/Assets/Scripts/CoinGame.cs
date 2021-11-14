@@ -45,7 +45,6 @@ public class CoinGame : MonoBehaviour
 	}
 
     public void Score(){
-        Debug.Log("tamu ai");
         playerScore = playerScore + 1;
         this.playerScoreText.text = playerScore.ToString();
     }
