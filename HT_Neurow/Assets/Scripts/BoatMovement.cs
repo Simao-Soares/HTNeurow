@@ -9,6 +9,9 @@ public class BoatMovement : MonoBehaviour
   public float rotAngle;  //angle of rotation with 1 press
   public float spinningTime; //time it takes takes to rotate
 
+  public float forwardForce; //time it takes takes to rotate
+
+
   bool cooldownActivated;
   
   float timeStarted;
@@ -27,7 +30,7 @@ public class BoatMovement : MonoBehaviour
     void Start()
     {
       rb = GetComponent<Rigidbody>(); 
-      rb.AddForce(0, 0, 1.0f, ForceMode.Impulse);
+      rb.AddForce(0, 0, forwardForce, ForceMode.Impulse); //sketchy
     }
 
     private void FixedUpdate() {
@@ -46,7 +49,6 @@ public class BoatMovement : MonoBehaviour
 
     public void Turn(bool side)
     {
-      spinningTime = 1;
       cooldownActivated = true;
       timeStarted = Time.time;
       
@@ -55,17 +57,17 @@ public class BoatMovement : MonoBehaviour
 
       rotateA.eulerAngles = this.transform.rotation.eulerAngles;
 
-      Debug.Log(rotateA.eulerAngles);
+      //Debug.Log(rotateA.eulerAngles);
 
       if(side){
         countl++;
         rotateB.eulerAngles = rotateA * new Vector3(0, rotAngle * (countr-countl), 0);
-        Debug.Log(rotateB.eulerAngles);
+        //Debug.Log(rotateB.eulerAngles);
       }
       else if(side==false) {
         countr++;
         rotateB.eulerAngles = rotateA * new Vector3(0, rotAngle * (countr-countl), 0);
-        Debug.Log(rotateB.eulerAngles);
+        //Debug.Log(rotateB.eulerAngles);
       }
     }
 
@@ -80,9 +82,10 @@ public class BoatMovement : MonoBehaviour
       {
           cooldownActivated = false;
       }
+      
+      //Change movement direction
+      rb.velocity=Vector3.zero;
+      rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse); 
     }
-    
-
-
 
 }

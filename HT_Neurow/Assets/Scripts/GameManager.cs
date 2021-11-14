@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        reloadAssets();
+        //trying to solve reflections bug:
+        //reloadAssets(); 
     }
 
     // Update is called once per frame

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class DisplayRow : MonoBehaviour
 {
-    [SerializeField] private Text customText;
+    [SerializeField] Text customText;
 
 	public float rotA;
 	private bool rAux = false;
