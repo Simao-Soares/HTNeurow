@@ -12,7 +12,7 @@ public class CoinGame : MonoBehaviour
     public GameObject tempScoreUI;
     public GameObject scoreUI;
     public float coinGameArea = 400f; // length of the side of playable area
-    public float distanceBetween = 50f;
+    public float minDistance = 50f;
 
     public GameObject Coin;
 
@@ -29,6 +29,10 @@ public class CoinGame : MonoBehaviour
         public GameObject CoinObject;
 
     }
+    public List<CoinClass> listCoins = new List<CoinClass>();
+
+    private int auxList;
+
     //Array of Coins aka Objectives
 /* 	[System.Serializable]
 	public class CoinList
@@ -54,6 +58,14 @@ public class CoinGame : MonoBehaviour
         if(auxI == true) StartCoroutine(ShowInstructions(instructionsTime));
         //show instructions for instructionsTime seconds when i key is pressed
         if(Input.GetKeyDown("i")) StartCoroutine(ShowInstructions(instructionsTime)); //not perfect but enough
+
+        auxList = UpdateList();
+        //auxList = numberOfCoins - listCoins.Count;
+        //Debug.Log(auxList);
+
+        if(auxList!= -1){
+             GenerateNewObjective(auxList);
+        }
     }
 
     IEnumerator ShowInstructions(float time){
@@ -71,19 +83,18 @@ public class CoinGame : MonoBehaviour
         this.playerScoreText.text = playerScore.ToString();
     }
 
+
+
     public static CoinClass FactoryOfCoin(string coinID)
     {
         CoinClass newCoin = new CoinClass();
         newCoin.CoinID = coinID;
-        //Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
-       
-        //newCoin.CoinObject.transform = newCoords;
         return newCoin;
     }
         
 
     private void GenerateObjectives(){
-        List<CoinClass> listCoins = new List<CoinClass>();
+        //List<CoinClass> listCoins = new List<CoinClass>();
 
         for (int i = 0; i < numberOfCoins; i++)
         {
@@ -94,7 +105,7 @@ public class CoinGame : MonoBehaviour
             {
                 for (int j = 0; j < i; j++)
                 {
-                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < distanceBetween)
+                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance)
                     {
                         newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
                     }
@@ -103,13 +114,41 @@ public class CoinGame : MonoBehaviour
             GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
             listCoins[i].CoinObject = aux;
         }
-
     }
 
+    private void GenerateNewObjective(int newID){
+        //List<CoinClass> listCoins = new List<CoinClass>();
 
-    
-            
+        listCoins.Add(FactoryOfCoin(newID.ToString()));
+        Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
 
+        if(listCoins.Count > 0)
+        {
+            for (int j = 0; j < listCoins.Count; j++)
+            {
+                if(listCoins[j].CoinObject != null) //verify if any coin has been destroyed but hasnt been eliminated from the list yet
+                {
+                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance)
+                    {
+                        newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
+                    }
+                }
+            }
+        }
+        GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
+        listCoins[newID].CoinObject = aux;
+        
+    }
 
-
+    private int UpdateList(){ 
+        for (int i = 0; i < listCoins.Count; i++)
+        {
+            if(listCoins[i].CoinObject == null) //verify if any coin has been destroyed but hasnt been eliminated from the list yet
+            {
+                listCoins.Remove(listCoins[i]);
+                return(i); //does position on list always correspond to lisCoins[i].CoinID ???
+            }
+        }
+        return(-1);
+    }
 }

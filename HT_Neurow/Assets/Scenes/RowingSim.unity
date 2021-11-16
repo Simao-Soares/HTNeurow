@@ -6270,7 +6270,7 @@ MonoBehaviour:
   tempScoreUI: {fileID: 303523490}
   scoreUI: {fileID: 221113771}
   coinGameArea: 100
-  distanceBetween: 20
+  minDistance: 50
   Coin: {fileID: 1984066232398637530}
   numberOfCoins: 4
   playerScoreText: {fileID: 1409450628}
@@ -14722,6 +14722,14 @@ PrefabInstance:
     - target: {fileID: 7004367013575315657, guid: a1988a20e17324e6ca5721d9aac7d210, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004367013575315659, guid: a1988a20e17324e6ca5721d9aac7d210, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1993805481}
+    - target: {fileID: 7004367013575315659, guid: a1988a20e17324e6ca5721d9aac7d210, type: 3}
+      propertyPath: shrinkStep
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7004367013575315659, guid: a1988a20e17324e6ca5721d9aac7d210, type: 3}
       propertyPath: CoinPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Target
