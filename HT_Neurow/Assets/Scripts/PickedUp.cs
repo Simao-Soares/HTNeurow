@@ -36,6 +36,8 @@ public class PickedUp : MonoBehaviour
     private void OnTriggerEnter(Collider collisionInfo) {
         if (collisionInfo.GetComponent<Collider>().tag == "PlayerPos")
         {
+            Collider collider = GetComponent<Collider>();
+            collider.enabled = false; //fix double points bug
             
             BaseEventData eventData = new BaseEventData(EventSystem.current);
             this.CoinPickup.Invoke(eventData);

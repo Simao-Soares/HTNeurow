@@ -16,8 +16,7 @@ public class CoinGame : MonoBehaviour
 
     public GameObject Coin;
 
-    public int numberOfCoins;
-
+    public int numberOfCoins; 
     public TMP_Text playerScoreText;
     private int playerScore = 0;
     
@@ -25,7 +24,7 @@ public class CoinGame : MonoBehaviour
     private bool auxI;
 
     public class CoinClass{
-        public string CoinID;
+        public int CoinID;
         public GameObject CoinObject;
 
     }
@@ -59,11 +58,13 @@ public class CoinGame : MonoBehaviour
         //show instructions for instructionsTime seconds when i key is pressed
         if(Input.GetKeyDown("i")) StartCoroutine(ShowInstructions(instructionsTime)); //not perfect but enough
 
+        
         auxList = UpdateList();
+        
         //auxList = numberOfCoins - listCoins.Count;
         //Debug.Log(auxList);
 
-        if(auxList!= -1){
+        if(auxList != -1){
              GenerateNewObjective(auxList);
         }
     }
@@ -85,7 +86,7 @@ public class CoinGame : MonoBehaviour
 
 
 
-    public static CoinClass FactoryOfCoin(string coinID)
+    public static CoinClass FactoryOfCoin(int coinID)
     {
         CoinClass newCoin = new CoinClass();
         newCoin.CoinID = coinID;
@@ -98,7 +99,7 @@ public class CoinGame : MonoBehaviour
 
         for (int i = 0; i < numberOfCoins; i++)
         {
-            listCoins.Add(FactoryOfCoin(i.ToString()));
+            listCoins.Add(FactoryOfCoin(i));
             Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
 
             if(listCoins.Count > 0)
@@ -119,25 +120,17 @@ public class CoinGame : MonoBehaviour
     private void GenerateNewObjective(int newID){
         //List<CoinClass> listCoins = new List<CoinClass>();
 
-        listCoins.Add(FactoryOfCoin(newID.ToString()));
+        listCoins.Add(FactoryOfCoin(newID)); //add new element to end of the list with CoinID of element that was removed
         Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
 
-        if(listCoins.Count > 0)
-        {
-            for (int j = 0; j < listCoins.Count; j++)
+        for (int j = 0; j < listCoins.Count-1; j++){ 
+            while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance)
             {
-                if(listCoins[j].CoinObject != null) //verify if any coin has been destroyed but hasnt been eliminated from the list yet
-                {
-                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance)
-                    {
-                        newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
-                    }
-                }
+                newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
             }
         }
         GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
-        listCoins[newID].CoinObject = aux;
-        
+        listCoins[listCoins.Count-1].CoinObject = aux; //is listCoins.Count-1 the last position of the list? I think so
     }
 
     private int UpdateList(){ 
@@ -145,10 +138,22 @@ public class CoinGame : MonoBehaviour
         {
             if(listCoins[i].CoinObject == null) //verify if any coin has been destroyed but hasnt been eliminated from the list yet
             {
+                int auxUpdate = listCoins[i].CoinID;
                 listCoins.Remove(listCoins[i]);
-                return(i); //does position on list always correspond to lisCoins[i].CoinID ???
+                PrintList();
+                //Debug.Log(i);
+                return(auxUpdate); //position on list corresponds to listCoins[i].CoinID 
             }
         }
         return(-1);
+    }
+    
+    void PrintList(){
+        for (int i = 0; i < listCoins.Count; i++)
+        {
+            Debug.Log(listCoins[i].CoinID);
+
+        }
+
     }
 }
