@@ -41,13 +41,13 @@ public class BoatMovement : MonoBehaviour
       {
         Turn(true); //turn to the left side=true
         cooldownActivated = true;
-		turnLeft = false;
+		    turnLeft = false;
       }
 		else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false)||(turnRight == true && cooldownActivated == false))
       {
         Turn(false); //turn to the right side=false
         cooldownActivated = true;
-		turnRight = false;
+		    turnRight = false;
       }
       if(cooldownActivated) RunCooldownTimer();
 

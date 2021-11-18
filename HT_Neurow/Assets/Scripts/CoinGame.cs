@@ -21,6 +21,13 @@ public class CoinGame : MonoBehaviour
     private int playerScore = 0;
     
     public float instructionsTime;
+
+    public float timeRemaining = 10;
+    public bool timerIsRunning = false;
+
+    public TMP_Text timeText;
+
+
     private bool auxI;
 
     public class CoinClass{
@@ -49,6 +56,7 @@ public class CoinGame : MonoBehaviour
         tempScoreUI.SetActive(false);
         auxI = true;
         GenerateObjectives();
+        timerIsRunning = true;
     }
 
     void FixedUpdate()
@@ -58,16 +66,52 @@ public class CoinGame : MonoBehaviour
         //show instructions for instructionsTime seconds when i key is pressed
         if(Input.GetKeyDown("i")) StartCoroutine(ShowInstructions(instructionsTime)); //not perfect but enough
 
-        
         auxList = UpdateList();
+        if(auxList != -1) GenerateNewObjective(auxList);
         
-        //auxList = numberOfCoins - listCoins.Count;
-        //Debug.Log(auxList);
 
-        if(auxList != -1){
-             GenerateNewObjective(auxList);
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                DisplayTime(timeRemaining);
+            }
+            else
+            {
+                Debug.Log("Time has run out!");
+                timeRemaining = 0;
+                timerIsRunning = false;
+            }
         }
+    
     }
+
+    void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay += 1;
+
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);  
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+
+
+    
+    
+
+    
+
+
+
+
+
+
+
+
+
 
     IEnumerator ShowInstructions(float time){
 		instructions.SetActive(true);
