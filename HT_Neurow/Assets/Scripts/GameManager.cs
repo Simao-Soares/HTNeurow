@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
         else{
             zone.SetActive(false);
         }
+		if (Input.GetKey("escape")) Application.Quit();
     }
 
     void reloadAssets(){

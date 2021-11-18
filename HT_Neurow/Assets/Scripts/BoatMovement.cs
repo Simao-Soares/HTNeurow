@@ -9,13 +9,16 @@ public class BoatMovement : MonoBehaviour
   public float rotAngle;  //angle of rotation with 1 press
   public float spinningTime; //time it takes takes to rotate
 
-  public float forwardForce; //time it takes takes to rotate
+  public float forwardForce; 
 
 
   bool cooldownActivated;
   
   float timeStarted;
   float timeSinceStarted;
+
+  public bool turnLeft = false;
+  public bool turnRight = false;
 
    
 
@@ -33,19 +36,27 @@ public class BoatMovement : MonoBehaviour
       rb.AddForce(0, 0, forwardForce, ForceMode.Impulse); //sketchy
     }
 
-    private void FixedUpdate() {
-      if (Input.GetKeyDown(KeyCode.LeftArrow) && cooldownActivated == false)
+    private void Update() {
+		if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false)||(turnLeft == true && cooldownActivated == false))
       {
         Turn(true); //turn to the left side=true
         cooldownActivated = true;
+		turnLeft = false;
       }
-      else if (Input.GetKeyDown(KeyCode.RightArrow)&& cooldownActivated == false)
+		else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false)||(turnRight == true && cooldownActivated == false))
       {
         Turn(false); //turn to the right side=false
         cooldownActivated = true;
+		turnRight = false;
       }
       if(cooldownActivated) RunCooldownTimer();
-    }
+
+		//Change movement direction
+		rb.velocity=Vector3.zero;
+		rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse); 
+		}
+
+
 
     public void Turn(bool side)
     {
@@ -82,10 +93,5 @@ public class BoatMovement : MonoBehaviour
       {
           cooldownActivated = false;
       }
-      
-      //Change movement direction
-      rb.velocity=Vector3.zero;
-      rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse); 
     }
-
 }

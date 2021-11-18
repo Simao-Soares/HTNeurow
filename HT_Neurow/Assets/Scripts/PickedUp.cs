@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class PickedUp : MonoBehaviour
 {
     public EventTrigger.TriggerEvent CoinPickup;
-    public float shrinkStep = 0.1f;
+    public float shrinkStep;
 
     public GameObject player;
 
@@ -15,7 +15,7 @@ public class PickedUp : MonoBehaviour
 
     
 
-    private void Update() {
+    private void FixedUpdate() {
         if(aux == true) StartCoroutine(ShrinkCoin());
         
     }
@@ -23,7 +23,7 @@ public class PickedUp : MonoBehaviour
     IEnumerator ShrinkCoin(){
 
         float initRadius = gameObject.transform.localScale.x;
-        for (float i = initRadius; i >= 0; i -= shrinkStep) 
+        for (float i = initRadius; i >= 0; i -= shrinkStep/100) 
         {
             gameObject.transform.localScale = new Vector3(i, 100f, i);
             yield return null;

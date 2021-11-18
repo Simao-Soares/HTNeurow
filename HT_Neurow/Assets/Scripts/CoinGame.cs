@@ -140,7 +140,7 @@ public class CoinGame : MonoBehaviour
             {
                 int auxUpdate = listCoins[i].CoinID;
                 listCoins.Remove(listCoins[i]);
-                PrintList();
+                //PrintList();
                 //Debug.Log(i);
                 return(auxUpdate); //position on list corresponds to listCoins[i].CoinID 
             }

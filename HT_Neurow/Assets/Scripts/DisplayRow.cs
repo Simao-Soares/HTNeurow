@@ -12,7 +12,10 @@ public class DisplayRow : MonoBehaviour
 	public float rotA;
 	private bool rAux = false;
 	private bool lAux = false;
+	public GameObject myPlayer;
 
+
+	public BoatMovement _playerScript;
 
 	//Array of Water GameObjects
 	[System.Serializable]
@@ -25,12 +28,25 @@ public class DisplayRow : MonoBehaviour
 
 	void Start(){
 		customText.enabled = false;
+		_playerScript = myPlayer.GetComponent<BoatMovement>();
+
 	}
 
 	void FixedUpdate()
 	{
-		if(lAux) StartCoroutine(TurnRight());
-		if(rAux) StartCoroutine(TurnLeft());
+		//if(lAux) StartCoroutine(TurnRight());
+		//if(rAux) StartCoroutine(TurnLeft());
+		if(lAux)
+		{
+			_playerScript.turnLeft = true;
+			lAux=false;
+		}
+
+		if(rAux)
+		{
+			_playerScript.turnRight = true;
+			rAux=false;
+		} 
 	}
 
 
