@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+	//for the reload function
     [SerializeField] private GameObject zone;
     public GameObject water;
     public GameObject player;
+
+
+	public GameObject myPlayer;
+	public BoatMovement _playerScript;
 
 
 
@@ -14,6 +19,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		_playerScript = myPlayer.GetComponent<BoatMovement>();
         //trying to solve reflections bug:
         //reloadAssets(); 
     }
@@ -36,4 +42,13 @@ public class GameManager : MonoBehaviour
         player.SetActive(false);
         player.SetActive(true);
     }
+
+
+	void SetBCIControlMethod(){
+		_playerScript.ControlMethod = 1;
+	}
+
+	void SetHTControlMethod(){
+		_playerScript.ControlMethod = -1;
+	}
 }

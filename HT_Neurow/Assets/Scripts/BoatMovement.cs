@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoatMovement : MonoBehaviour
 {
 	Rigidbody rb;
+	public int ControlMethod;
 
   public float rotAngle;  //angle of rotation with 1 press
   public float spinningTime; //time it takes takes to rotate
@@ -19,6 +20,8 @@ public class BoatMovement : MonoBehaviour
 
   public bool turnLeft = false;
   public bool turnRight = false;
+
+
 
    
 
