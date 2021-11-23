@@ -15,6 +15,9 @@ public class CoinGame : MonoBehaviour
     public float minDistance = 50f;
 
     public GameObject Coin;
+    public GameObject boat;
+    public GameObject GameOverUI;
+    public GameObject NormalUI;
 
     public int numberOfCoins; 
     public TMP_Text playerScoreText;
@@ -82,6 +85,10 @@ public class CoinGame : MonoBehaviour
                 Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
+                NormalUI.SetActive(false);
+                GameOverUI.SetActive(true);
+                
+
             }
         }
     
@@ -96,20 +103,6 @@ public class CoinGame : MonoBehaviour
 
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
-
-
-    
-    
-
-    
-
-
-
-
-
-
-
 
 
 
@@ -150,8 +143,8 @@ public class CoinGame : MonoBehaviour
             {
                 for (int j = 0; j < i; j++)
                 {
-                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance)
-                    {
+                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance ||
+                           Vector3.Distance(boat.transform.position, newCoords) < minDistance){
                         newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
                     }
                 }

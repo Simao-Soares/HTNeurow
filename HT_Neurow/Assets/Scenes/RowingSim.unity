@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571336, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7616,8 +7616,11 @@ MonoBehaviour:
   tempScoreUI: {fileID: 303523490}
   scoreUI: {fileID: 221113771}
   coinGameArea: 100
-  minDistance: 50
+  minDistance: 10
   Coin: {fileID: 1984066232398637530}
+  boat: {fileID: 1993805481}
+  GameOverUI: {fileID: 1000009300}
+  NormalUI: {fileID: 1854319647}
   numberOfCoins: 4
   playerScoreText: {fileID: 1409450628}
   instructionsTime: 2
