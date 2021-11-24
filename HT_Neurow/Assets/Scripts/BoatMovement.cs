@@ -5,7 +5,7 @@ using UnityEngine;
 public class BoatMovement : MonoBehaviour
 {
 	Rigidbody rb;
-	public int ControlMethod;
+	public int ControlMethod = 1; // 1 -> BCI   -1 -> HT
 
   public float rotAngle;  //angle of rotation with 1 press
   public float spinningTime; //time it takes takes to rotate
@@ -40,23 +40,24 @@ public class BoatMovement : MonoBehaviour
     }
 
     private void Update() {
-		if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false)||(turnLeft == true && cooldownActivated == false))
-      {
-        Turn(true); //turn to the left side=true
-        cooldownActivated = true;
-		    turnLeft = false;
-      }
-		else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false)||(turnRight == true && cooldownActivated == false))
-      {
-        Turn(false); //turn to the right side=false
-        cooldownActivated = true;
-		    turnRight = false;
-      }
-      if(cooldownActivated) RunCooldownTimer();
+      //checks input + if cooldown is over + selected ontrol method corresponds to the input 
+      if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && ControlMethod == 1)||(turnLeft == true && cooldownActivated == false && ControlMethod == -1))
+        {
+          Turn(true); //turn to the left side=true
+          cooldownActivated = true;
+          turnLeft = false;
+        }
+      else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && ControlMethod == 1)||(turnRight == true && cooldownActivated == false && ControlMethod == -1))
+        {
+          Turn(false); //turn to the right side=false
+          cooldownActivated = true;
+          turnRight = false;
+        }
+        if(cooldownActivated) RunCooldownTimer();
 
-		//Change movement direction
-		rb.velocity=Vector3.zero;
-		rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse); 
+      //Change movement direction
+      rb.velocity=Vector3.zero;
+      rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse); 
 		}
 
 
