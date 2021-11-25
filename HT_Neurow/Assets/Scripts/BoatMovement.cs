@@ -28,18 +28,8 @@ public class BoatMovement : MonoBehaviour
     public Animator L_rowAnimator; 
     public Animator R_rowAnimator;
 
-
-
-
-
     Quaternion rotateB;
     Quaternion rotateA;
-
-    Quaternion paddleA;
-    Quaternion paddleB;
-    Quaternion paddleC;
-    Quaternion paddleD;
-
 
     int countl = 0;
     int countr = 0;
@@ -59,21 +49,21 @@ public class BoatMovement : MonoBehaviour
 
     private void Update(){
 
+		int cm = GameManager.ControlMethod; 
+
         //checks input + if cooldown is over + selected ontrol method corresponds to the input 
-        if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && GameManager.ControlMethod == 1) ||(turnLeft == true && cooldownActivated == false && GameManager.ControlMethod == -1)){
+        if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1) ||(turnLeft == true && cooldownActivated == false && cm == -1)){
             Turn(true); //turn to the left side=true
             cooldownActivated = true;
             turnLeft = false;
-            R_rowAnimator.SetBool("Turning", true);
-
-
+			if(cm == 1) R_rowAnimator.SetBool("Turning", true);
         }
 
-        else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && GameManager.ControlMethod == 1) ||(turnRight == true && cooldownActivated == false && GameManager.ControlMethod == -1)){
+        else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1) ||(turnRight == true && cooldownActivated == false && cm == -1)){
             Turn(false); //turn to the right side=false
             cooldownActivated = true;
             turnRight = false;
-            L_rowAnimator.SetBool("Turning", true);
+			if(cm == 1) L_rowAnimator.SetBool("Turning", true);
         }
 
         if(cooldownActivated) RunCooldownTimer(GameManager.ControlMethod);
@@ -88,7 +78,6 @@ public class BoatMovement : MonoBehaviour
     public void Turn(bool side){
         cooldownActivated = true;
         timeStarted = Time.time;
-        //Transform thisTransform = gameObject.transform;
         rotateA.eulerAngles = this.transform.rotation.eulerAngles;
 
         //Debug.Log(rotateA.eulerAngles);
@@ -109,23 +98,8 @@ public class BoatMovement : MonoBehaviour
     void RunCooldownTimer(int auxControl){  //runs until rotation is complete and 
         float timeSinceStarted = Time.time - timeStarted;
         float percentageComplete = timeSinceStarted / spinningTime;
-      
-        float initY = 0;    //goes to -15 then 15 then back to 0
-        float initZ = -65;  //goes to -65 and back
-
-        //paddleA.eulerAngles = new Vector3(0, initY, initZ);
-        //paddleB.eulerAngles = new Vector3(0, -15f, -77.5f);
-        //paddleC.eulerAngles = new Vector3(0, 0, -90);
-        //paddleD.eulerAngles = new Vector3(0, 15f, -77.5f);
 
         transform.rotation = Quaternion.Lerp(rotateA, rotateB, percentageComplete);
-
-        //need to call this inside the if in Update and pass the side as an argument!!
-        //leftPaddle.transform.rotation = Quaternion.Lerp(paddleA, paddleB, percentageComplete);
-        //leftPaddle.transform.rotation = Quaternion.Lerp(paddleB, paddleC, percentageComplete);
-        //leftPaddle.transform.rotation = Quaternion.Lerp(paddleC, paddleD, percentageComplete);
-        //leftPaddle.transform.rotation = Quaternion.Lerp(paddleD, paddleA, percentageComplete);
-
 
         if (percentageComplete >= 1)
         {
