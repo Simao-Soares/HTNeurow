@@ -25,8 +25,9 @@ public class BoatMovement : MonoBehaviour
     public GameObject leftPaddle;
     public GameObject rightPaddle;
 
-    public Animator rowAnim; // ver o video do mpto brackeys
-    
+    public Animator L_rowAnimator; 
+    public Animator R_rowAnimator;
+
 
 
 
@@ -51,6 +52,9 @@ public class BoatMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>(); 
         rb.AddForce(0, 0, forwardForce, ForceMode.Impulse); //sketchy
 
+        L_rowAnimator.SetFloat("Time", 0.7f/spinningTime ); //0.7 was trial and error
+        R_rowAnimator.SetFloat("Time", 0.7f/spinningTime );
+
     }
 
     private void Update(){
@@ -60,14 +64,16 @@ public class BoatMovement : MonoBehaviour
             Turn(true); //turn to the left side=true
             cooldownActivated = true;
             turnLeft = false;
-            
-            
+            R_rowAnimator.SetBool("Turning", true);
+
+
         }
 
         else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && GameManager.ControlMethod == 1) ||(turnRight == true && cooldownActivated == false && GameManager.ControlMethod == -1)){
             Turn(false); //turn to the right side=false
             cooldownActivated = true;
             turnRight = false;
+            L_rowAnimator.SetBool("Turning", true);
         }
 
         if(cooldownActivated) RunCooldownTimer(GameManager.ControlMethod);
@@ -121,13 +127,11 @@ public class BoatMovement : MonoBehaviour
         //leftPaddle.transform.rotation = Quaternion.Lerp(paddleD, paddleA, percentageComplete);
 
 
-        
-
-
-
         if (percentageComplete >= 1)
         {
             cooldownActivated = false;
+            L_rowAnimator.SetBool("Turning", false);
+            R_rowAnimator.SetBool("Turning", false);
         }
     }
 }
