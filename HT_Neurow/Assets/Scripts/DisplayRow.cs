@@ -18,13 +18,13 @@ public class DisplayRow : MonoBehaviour
 	public BoatMovement _playerScript;
 
 	//Array of Water GameObjects
-	[System.Serializable]
-	public class TerrainList
-	{
-		public GameObject[] water;
-	}
+	//[System.Serializable]
+	//public class TerrainList
+	//{
+	//	public GameObject[] water;
+	//}
 
-	public TerrainList myTerrainList = new TerrainList();  //List of terrain elements
+	//public TerrainList myTerrainList = new TerrainList();  //List of terrain elements
 
 	void Start(){
 		customText.enabled = false;
@@ -80,32 +80,4 @@ public class DisplayRow : MonoBehaviour
 			}
         }
     }
-
-	//TENTATIVA DE DEFINIR A SPEED OF ROTATION, mas e uma merda
-	IEnumerator TurnRight(){
-		for (float ang = 0f; ang > -rotA; ang-= 1f){
-			yield return null;
-			for(int i = 0; i < myTerrainList.water.Length ; i++){
-				myTerrainList.water[0].transform.Rotate(0, 1, 0, Space.Self);
-			}
-			yield return null;
-			lAux = false;
-		}
-	}
-
-	IEnumerator TurnLeft(){
-		for (float ang = 0f; ang < rotA; ang+= 1f){
-			yield return null;
-			for(int i = 0; i < myTerrainList.water.Length ; i++){
-				myTerrainList.water[0].transform.Rotate(0, -1, 0, Space.Self);
-
-			}
-			yield return null;
-			rAux = false;
-		}
-
-	}
-
-
-
 }

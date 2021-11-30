@@ -6,10 +6,31 @@ public class GameManager : MonoBehaviour
 {
     public GameObject zone; //interaction zone
 
-    //for the reload function
-    public GameObject water;
-    public GameObject player;
-    
+    [System.Serializable]
+    public class BCI_Hands
+    {
+        public GameObject RightHand;
+        public GameObject LeftHand;
+    }
+
+    [System.Serializable]
+    public class BCI_Hands_List
+    {
+        public BCI_Hands[] BCI_HandModels;
+    }
+
+    public BCI_Hands_List myBCI_Hands_List = new BCI_Hands_List();  //List of handPoints
+
+    //Contact zones for Hemiparetic Limb Support
+    public GameObject leftPaddleZone;
+    public GameObject rightPaddleZone;
+
+
+
+
+
+
+
 
     //-------------------------------------------------- GAME SETTINGS --------------------------------------------------
 
@@ -17,7 +38,7 @@ public class GameManager : MonoBehaviour
                                          //  1 -> BCI (arrowKeys)
                                          // -1 -> HT (leapMotion)
 
-    public static int HemiLimb = 0;      //  0 -> No hemiparethic limb
+    public static int HemiLimb = -1;     //  0 -> No hemiparethic limb                                                                  // FOR TESTING
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
 
@@ -33,10 +54,38 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		
-        //trying to solve reflections bug:
-        //reloadAssets(); 
+        //------------------------------------------------- SCENE SETUP -------------------------------------------------
+        rightPaddleZone.SetActive(false);
+        leftPaddleZone.SetActive(false);
+        //---------------------------------------------------------------------------------------------------------------
+
+
+
+
+        if (GameManager.Gender == 1) //activate MALE hand models
+        {
+            myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(true);
+            myBCI_Hands_List.BCI_HandModels[0].LeftHand.SetActive(true);
+        }
+
+        else if (GameManager.Gender == -1) //activate FEMALE hand models
+        {
+            myBCI_Hands_List.BCI_HandModels[1].RightHand.SetActive(true);
+            myBCI_Hands_List.BCI_HandModels[1].LeftHand.SetActive(true);
+        }
+
+        if (GameManager.HemiLimb == 1) //activate RIGHT hemiparetic limb support
+        {
+            rightPaddleZone.SetActive(true);
+        }
+
+        else if (GameManager.HemiLimb == -1) //activate LEFT hemiparetic limb support
+        {
+            leftPaddleZone.SetActive(true);
+        }
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -47,15 +96,15 @@ public class GameManager : MonoBehaviour
         else{
             zone.SetActive(false);
         }
-		if (Input.GetKey("escape")) Application.Quit();
+        if (Input.GetKey("escape")) Application.Quit();
     }
 
-    void reloadAssets(){
-        water.SetActive(false);
-        water.SetActive(true);
-        player.SetActive(false);
-        player.SetActive(true);
-    }
+    //void reloadAssets(){
+    //    water.SetActive(false);
+    //    water.SetActive(true);
+    //    player.SetActive(false);
+    //    player.SetActive(true);
+    //}
 
 
 	public void SetBCIControlMethod(){
