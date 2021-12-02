@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -128,5 +130,11 @@ public class GameManager : MonoBehaviour
     public void SetForward(int ForwardAux)
     {
         Forward = ForwardAux;
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+
     }
 }

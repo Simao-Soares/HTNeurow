@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using Random = System.Random;
 
@@ -19,10 +20,11 @@ public class CoinGame : MonoBehaviour
     public GameObject GameOverUI;
     public GameObject NormalUI;
 
-    public int numberOfCoins; 
+    public int numberOfCoins;
     public TMP_Text playerScoreText;
+    public TMP_Text finalScoreText;
     private int playerScore = 0;
-    
+
     public float instructionsTime;
 
     public float timeRemaining = 10;
@@ -33,7 +35,7 @@ public class CoinGame : MonoBehaviour
 
     private bool auxI;
 
-    public class CoinClass{
+    public class CoinClass {
         public int CoinID;
         public GameObject CoinObject;
 
@@ -42,14 +44,13 @@ public class CoinGame : MonoBehaviour
 
     private int auxList;
 
-    //Array of Coins aka Objectives
-/* 	[System.Serializable]
-	public class CoinList
-	{
-		public CoinClass[] coinClass;
-	} */
+    //Screen Freeze Couroutine
+    public float freezeDuration = 10f;
+    private bool isFrozen = false;
+    private float pendingFreezeDuration = 0f;
 
-	//public CoinList myCoinList = new CoinList();  
+
+
 
 
     // Start is called before the first frame update
@@ -64,64 +65,64 @@ public class CoinGame : MonoBehaviour
 
     void FixedUpdate()
     {
-        //always show instructions for instructionsTime seconds at the start
-        if(auxI == true) StartCoroutine(ShowInstructions(instructionsTime));
-        //show instructions for instructionsTime seconds when i key is pressed
-        if(Input.GetKeyDown("i")) StartCoroutine(ShowInstructions(instructionsTime)); //not perfect but enough
-
-        auxList = UpdateList();
-        if(auxList != -1) GenerateNewObjective(auxList);
-        
-
         if (timerIsRunning)
         {
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
                 DisplayTime(timeRemaining);
+
+                //always show instructions for instructionsTime seconds at the start
+                if (auxI == true) StartCoroutine(ShowInstructions(instructionsTime));
+                //show instructions for instructionsTime seconds when i key is pressed
+                if (Input.GetKeyDown("i")) StartCoroutine(ShowInstructions(instructionsTime)); //not perfect but enough
+
+                auxList = UpdateList();
+                if (auxList != -1) GenerateNewObjective(auxList);
             }
-            else
+            else //TIME IS UP
             {
-                Debug.Log("Time has run out!");
+                Debug.Log("Time has run out!");  
                 timeRemaining = 0;
                 timerIsRunning = false;
                 NormalUI.SetActive(false);
-                GameOverUI.SetActive(true);
-                
+                this.finalScoreText.text = playerScore.ToString();
 
+                GameOverUI.SetActive(true);
+
+                pendingFreezeDuration = freezeDuration; //freeze screen on GameOver
+                if (pendingFreezeDuration > 0 && !isFrozen) StartCoroutine(DoFreeze());
+
+                
             }
         }
-    
+
     }
 
     void DisplayTime(float timeToDisplay)
     {
         timeToDisplay += 1;
 
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60);  
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-
-
-    IEnumerator ShowInstructions(float time){
-		instructions.SetActive(true);
+    IEnumerator ShowInstructions(float time) {
+        instructions.SetActive(true);
         tempScoreUI.SetActive(true);
-		yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time);
         auxI = false;
-		instructions.SetActive(false);
+        instructions.SetActive(false);
         tempScoreUI.SetActive(false);
         //scoreUI.transform.localPosition = new Vector3(0,450f,0);  //tried to move the score up a bit but didnt work 
-	}
+    }
 
-    public void Score(){
+    public void Score() {
         playerScore = playerScore + 1;
         this.playerScoreText.text = playerScore.ToString();
     }
-
-
 
     public static CoinClass FactoryOfCoin(int coinID)
     {
@@ -129,23 +130,22 @@ public class CoinGame : MonoBehaviour
         newCoin.CoinID = coinID;
         return newCoin;
     }
-        
 
-    private void GenerateObjectives(){
+    private void GenerateObjectives() {
         //List<CoinClass> listCoins = new List<CoinClass>();
 
         for (int i = 0; i < numberOfCoins; i++)
         {
             listCoins.Add(FactoryOfCoin(i));
-            Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
+            Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
 
-            if(listCoins.Count > 0)
+            if (listCoins.Count > 0)
             {
                 for (int j = 0; j < i; j++)
                 {
                     while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance ||
-                           Vector3.Distance(boat.transform.position, newCoords) < minDistance){
-                        newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
+                           Vector3.Distance(boat.transform.position, newCoords) < minDistance) {
+                        newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
                     }
                 }
             }
@@ -154,38 +154,39 @@ public class CoinGame : MonoBehaviour
         }
     }
 
-    private void GenerateNewObjective(int newID){
+    private void GenerateNewObjective(int newID) {
         //List<CoinClass> listCoins = new List<CoinClass>();
 
         listCoins.Add(FactoryOfCoin(newID)); //add new element to end of the list with CoinID of element that was removed
-        Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
+        Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
 
-        for (int j = 0; j < listCoins.Count-1; j++){ 
+        for (int j = 0; j < listCoins.Count - 1; j++) {
             while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance)
             {
-                newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2), 100f, UnityEngine.Random.Range(-coinGameArea/2, coinGameArea/2));
+                newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
             }
         }
         GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
-        listCoins[listCoins.Count-1].CoinObject = aux; //is listCoins.Count-1 the last position of the list? I think so
+        listCoins[listCoins.Count - 1].CoinObject = aux; //is listCoins.Count-1 the last position of the list? I think so
     }
 
-    private int UpdateList(){ 
+    private int UpdateList() {
         for (int i = 0; i < listCoins.Count; i++)
         {
-            if(listCoins[i].CoinObject == null) //verify if any coin has been destroyed but hasnt been eliminated from the list yet
+            if (listCoins[i].CoinObject == null) //verify if any coin has been destroyed but hasnt been eliminated from the list yet
             {
                 int auxUpdate = listCoins[i].CoinID;
                 listCoins.Remove(listCoins[i]);
                 //PrintList();
                 //Debug.Log(i);
-                return(auxUpdate); //position on list corresponds to listCoins[i].CoinID 
+                return (auxUpdate); //position on list corresponds to listCoins[i].CoinID 
             }
         }
-        return(-1);
+        return (-1);
     }
-    
-    void PrintList(){
+
+    //aux function for debugging
+    void PrintList() {
         for (int i = 0; i < listCoins.Count; i++)
         {
             Debug.Log(listCoins[i].CoinID);
@@ -193,4 +194,21 @@ public class CoinGame : MonoBehaviour
         }
 
     }
+
+
+    IEnumerator DoFreeze()
+    {
+        isFrozen = true;
+        var original = Time.timeScale;
+        Time.timeScale = 0f;
+
+        yield return new WaitForSecondsRealtime(freezeDuration);
+        Time.timeScale = original;
+        pendingFreezeDuration = 0;
+        isFrozen = false;
+        SceneManager.LoadScene("Menu");
+    }
+
+
+
 }
