@@ -35,22 +35,19 @@ public class HemiSupport : MonoBehaviour
 
     void OnTriggerEnter(Collider other) 
     {
-                               //no idea if this is it     
-        if (gameObject.name == "Interaction Hand (Left)") 
+                 
+		if (other.gameObject.name == "Contact Fingerbone" && gameObject.name == "HemiZone_L")  //HOW TO DISTINGUISH LEFT FROM RIGHT HAND
         {
-            openLeft.SetActive(false);   
+			openLeft.SetActive(false);
             animatedLeft.SetActive(true);
             leftAnimator.SetBool("startGrab", true); 
-            animatedLeft.SetActive(false);
-            openLeft.SetActive(false);
-            closedLeft.SetActive(true);
-
-
         }
-                                //no idea if this is it
-        if (gameObject.name == "Interaction Hand (Right)") 
-        {
 
+		if (other.gameObject.name == "Contact Fingerbone" && gameObject.name == "HemiZone_R") //HOW TO DISTINGUISH LEFT FROM RIGHT HAND
+        {
+			openRight.SetActive(false);
+			animatedRight.SetActive(true);
+			rightAnimator.SetBool("startGrab", true); 
         }
     }
 
