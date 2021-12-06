@@ -43,8 +43,9 @@ public class GameManager : MonoBehaviour
     public static int HemiLimb = -1;     //  0 -> No hemiparethic limb                                                                  // FOR TESTING
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
+                                         //  2 -> Both
 
-    public static int Gender = 1;        //  1 -> Male
+    public static int Gender = -1;        //  1 -> Male
                                          // -1 -> Female
 
     public static int Forward = 1;       //  1 -> Auto (always moving forward)
@@ -56,35 +57,53 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //------------------------------------------------- SCENE SETUP -------------------------------------------------
-        rightPaddleZone.SetActive(false);
-        leftPaddleZone.SetActive(false);
-        //---------------------------------------------------------------------------------------------------------------
+        // Create a temporary reference to the current scene.
+        Scene currentScene = SceneManager.GetActiveScene();
 
+        // Retrieve the name of this scene.
+        string sceneName = currentScene.name;
 
-
-
-        if (GameManager.Gender == 1) //activate MALE hand models
+        if (sceneName == "RowingSim")
         {
-            myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(true);
-            myBCI_Hands_List.BCI_HandModels[0].LeftHand.SetActive(true);
+            //------------------------------------------- RowingSim SCENE SETUP ---------------------------------------------
+
+            rightPaddleZone.SetActive(false);
+            leftPaddleZone.SetActive(false);
+
+            if (GameManager.Gender == 1) //activate MALE hand models
+            {
+                myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(true);
+                myBCI_Hands_List.BCI_HandModels[0].LeftHand.SetActive(true);
+            }
+
+            else if (GameManager.Gender == -1) //activate FEMALE hand models
+            {
+                myBCI_Hands_List.BCI_HandModels[1].RightHand.SetActive(true);
+                myBCI_Hands_List.BCI_HandModels[1].LeftHand.SetActive(true);
+            }
+
+            switch (GameManager.HemiLimb)
+            {
+                case 1:
+                    rightPaddleZone.SetActive(true);
+                    break;
+
+                case -1:
+                    leftPaddleZone.SetActive(true);
+                    break;
+
+                case 2:
+                    rightPaddleZone.SetActive(true);
+                    leftPaddleZone.SetActive(true);
+                    break;
+            }
+
+            //---------------------------------------------------------------------------------------------------------------
         }
 
-        else if (GameManager.Gender == -1) //activate FEMALE hand models
-        {
-            myBCI_Hands_List.BCI_HandModels[1].RightHand.SetActive(true);
-            myBCI_Hands_List.BCI_HandModels[1].LeftHand.SetActive(true);
-        }
+        
 
-        if (GameManager.HemiLimb == 1) //activate RIGHT hemiparetic limb support
-        {
-            rightPaddleZone.SetActive(true);
-        }
-
-        else if (GameManager.HemiLimb == -1) //activate LEFT hemiparetic limb support
-        {
-            leftPaddleZone.SetActive(true);
-        }
+        
     }
 
 
@@ -119,7 +138,21 @@ public class GameManager : MonoBehaviour
 
     public void SetHemiLimb(int HemiAux)
     {
-        HemiLimb = HemiAux;
+        switch (HemiLimb)
+        {
+            case 0:
+                HemiLimb = HemiAux;
+                break;
+            case 1:
+                HemiLimb = -HemiAux + 1;
+                break;
+            case -1:
+                HemiLimb = HemiAux + 1;
+                break;
+            case 2:
+                HemiLimb = - HemiAux;
+                break;
+        }
     }
 
     public void SetGender(int GenderAux)

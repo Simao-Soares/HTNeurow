@@ -145,7 +145,7 @@ public class CoinGame : MonoBehaviour
                 {
                     while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance ||
                            Vector3.Distance(boat.transform.position, newCoords) < minDistance) {
-                        newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
+                        newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100.5f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
                     }
                 }
             }

@@ -75,13 +75,13 @@ public class MenuScript : MonoBehaviour
 		
 
     IEnumerator Options(){
-        optCam.SetActive(true);
+		optCam.SetActive(true);
         mainCam.SetActive(false);
         mainPanel.SetActive(false);
         optCam.GetComponent<CPC_CameraPath>().PlayPath(3);
 		optAux = false;
 		yield return new WaitForSeconds(3f);
-        optPanel.SetActive(true);
+		optPanel.SetActive(true);
     }
 
 	IEnumerator OptBack(){
@@ -107,6 +107,11 @@ public class MenuScript : MonoBehaviour
 
 		if (GameManager.HemiLimb == 1) hemiButtonRight.Select();
 		else if (GameManager.HemiLimb == -1) hemiButtonLeft.Select();
+		else if (GameManager.HemiLimb == 2) {
+			hemiButtonLeft.Select();
+			hemiButtonRight.Select();
+
+		}
 
 		if (GameManager.Forward == 1) forwardButtonA.Select();
 		else forwardButtonM.Select();
