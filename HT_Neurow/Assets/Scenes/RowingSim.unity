@@ -13700,7 +13700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotAngle: 30
   spinningTime: 1
-  forwardForce: 1
+  forwardForce: 3
   turnLeft: 0
   turnRight: 0
   leftPaddle: {fileID: 643954153}

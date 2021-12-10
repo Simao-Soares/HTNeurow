@@ -42,16 +42,16 @@ public class GameManager : MonoBehaviour
 
 	//-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 // NOT DEFAULT, ONLY FOR TESTING
 
-    public static int ControlMethod = -1; //static -> instances of GameObject will share this value 
+    public static int ControlMethod = 1; //static -> instances of GameObject will share this value 
                                          //  1 -> BCI (arrowKeys)
                                          // -1 -> HT (leapMotion)
 
-    public static int HemiLimb = 2;     //  0 -> No hemiparethic limb                                                                 
+    public static int HemiLimb = 0;     //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
 
-    public static int Gender = -1;        //  1 -> Male
+    public static int Gender = 1;        //  1 -> Male
                                          // -1 -> Female
 
     public static int Forward = 1;       //  1 -> Auto (always moving forward)
