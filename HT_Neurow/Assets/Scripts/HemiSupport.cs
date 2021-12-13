@@ -17,6 +17,12 @@ public class HemiSupport : MonoBehaviour
     public GameObject openRight; 
     public GameObject closedRight;
 
+	public GameObject rightWrist;
+
+	public GameObject rightPaddle;
+
+	private bool auxR = false;
+
 
 
     private void Update()
@@ -29,21 +35,35 @@ public class HemiSupport : MonoBehaviour
         {
             TestingRight();
         }
+
+		while(auxR){
+			RotRightPaddle();
+
+
+			
+		}
     }
+
+	void RotRightPaddle()
+	{
+		
+	}
 
 
 
     void OnTriggerEnter(Collider other) 
     {
                  
-		if (other.gameObject.name == "Contact Fingerbone" && gameObject.name == "HemiZone_L")  //HOW TO DISTINGUISH LEFT FROM RIGHT HAND
+		if (other.gameObject.name == "Contact Fingerbone" && gameObject.name == "HemiZone_L")  //HOW TO DISTINGUISH LEFT FROM RIGHT HAND??    -------------->          IMPLENT TRIGGER WITH ATTACHMENT HANDS Objects
         {
 			openLeft.SetActive(false);
             animatedLeft.SetActive(true);
-            leftAnimator.SetBool("startGrab", true); 
+            leftAnimator.SetBool("startGrab", true);
+			auxR = true;
+
         }
 
-		if (other.gameObject.name == "Contact Fingerbone" && gameObject.name == "HemiZone_R") //HOW TO DISTINGUISH LEFT FROM RIGHT HAND
+		if (other.gameObject.name == "Contact Fingerbone" && gameObject.name == "HemiZone_R") //HOW TO DISTINGUISH LEFT FROM RIGHT HAND??
         {
 			openRight.SetActive(false);
 			animatedRight.SetActive(true);
