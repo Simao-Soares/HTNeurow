@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
 	//-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 // NOT DEFAULT, ONLY FOR TESTING
 
-    public static int ControlMethod = -1; //static -> instances of GameObject will share this value 
+    public static int ControlMethod = 1; //static -> instances of GameObject will share this value 
                                          //  1 -> BCI (arrowKeys)
                                          // -1 -> HT (leapMotion)
 

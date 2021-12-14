@@ -17,11 +17,18 @@ public class HemiSupport : MonoBehaviour
     public GameObject openRight; 
     public GameObject closedRight;
 
+
+    /// <summary>
+    /// wow
+    /// </summary>
+
 	public GameObject rightWrist;
 
 	public GameObject rightPaddle;
 
 	private bool auxR = false;
+
+    public float shift; //maximum delta z  
 
 
 
@@ -46,6 +53,27 @@ public class HemiSupport : MonoBehaviour
 
 	void RotRightPaddle()
 	{
+        //float xAngle = 30f;
+        float yAngle = 0;
+        float zAngle = -90f;
+
+        float initPos = rightWrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
+        float currentPos = rightWrist.transform.position.z;
+        float delta;
+
+
+        if (rightWrist.transform.position.z > currentPos) {
+
+            delta = rightWrist.transform.position.z - currentPos;
+            yAngle += (delta / shift) * -15f; //wont work for second part of forward motion (0 -> -15 -> 0) 
+            zAngle += (delta / shift) * -30f;
+
+            rightPaddle.transform.Rotate(0, yAngle, zAngle, Space.Self);
+
+
+
+        }
+
 		
 	}
 
