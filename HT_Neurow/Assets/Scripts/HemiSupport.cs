@@ -28,14 +28,27 @@ public class HemiSupport : MonoBehaviour
 
 	private bool auxR = false;
 
-    public float shift = 1f; //maximum delta z  
+    public float maxReach = 0.2f; //maximum delta z  
 
-	private float oldPos;
+	private float initPos;
 
-	private void Start()
+
+
+
+    private float testDistance;
+    private float delta = 0;
+    private float deltaRot = 0;
+    private bool forward;
+
+
+
+
+
+
+    private void Start()
 	{
-		oldPos = rightWrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
-
+		initPos = rightWrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
+        
 	}
 
 
@@ -51,56 +64,85 @@ public class HemiSupport : MonoBehaviour
             TestingRight();
         }
 
-		//oldPos = rightWrist.transform.position.z;
-		RotRightPaddle();
+
+
+        // ------------------------------ Override with arrowKeys ---------------------------------
+        testDistance = rightWrist.transform.position.z + 0.2155255f;
+
+        if (Input.GetKey(KeyCode.UpArrow) && testDistance <= maxReach) 
+        {
+            rightWrist.transform.Translate(Vector3.forward * 0.5f * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow) && rightWrist.transform.position.z >= -0.2155255)
+        {
+            rightWrist.transform.Translate(Vector3.back * 0.5f * Time.deltaTime);
+        }
+        //-----------------------------------------------------------------------------------------
+
+        
+        RotRightPaddle(initPos, delta, forward);
+        //oldPos = rightWrist.transform.position.z;
 
     }
 
-	void RotRightPaddle()
-	{
-        //float xAngle = 30f;
-        float yRot = 0;
-        float zRot = -90f;
+    void RotRightPaddle(float oldPos, float delta, bool forward)
+    {
+        // -------------------- 4 phases of rowing movement: --------------------
+        //  phase 1 (y:  0  -> -15) (z: -90  -> -105)
+        //  phase 2 (y: -15 ->  0 ) (z: -105 -> -120)
+        //  phase 3 (y:  0  -> -15) (z: -120 -> -105)
+        //  phase 4 (y: -15 ->  0 ) (z: -105 ->  -90)
 
-		float yAngle = rightPaddle.transform.eulerAngles.y;
-		float zAngle = rightPaddle.transform.eulerAngles.z;
+        //phases 1 and 2 with forward wrist motion  => forward = true
+        //phases 3 and 4 with backward wrist motion => forward = false
+
+        float currentPos = rightWrist.transform.position.z;
+        Quaternion target;
+
+        delta = (currentPos - initPos);
+        deltaRot = (2*delta / maxReach) * 15f;                                                      //dont know why i need the 2* but i'll take it 
+
+        if (delta == 0) forward = true;
+
+        else if (delta >= maxReach) {
+            forward = false;
+            
+        } 
+
+        //phase 1
+        else if (delta > 0 && delta < maxReach/2 && forward)
+        {
+            target = Quaternion.Euler(0, -deltaRot, -90-deltaRot);
+            rightPaddle.transform.rotation = Quaternion.Slerp(rightPaddle.transform.rotation, target, 500f * Time.deltaTime);
+        }
+
+        //phase 2
+        else if ( delta > maxReach/2 && forward)
+        {
+            target = Quaternion.Euler(0, -30+deltaRot, -90-deltaRot);
+            rightPaddle.transform.rotation = Quaternion.Slerp(rightPaddle.transform.rotation, target, 500f * Time.deltaTime);
+        }
+
+        //phase 3
+        else if (delta < maxReach/2 && !forward)
+        {
+            target = Quaternion.Euler(0, deltaRot, -90+deltaRot);
+            rightPaddle.transform.rotation = Quaternion.Slerp(rightPaddle.transform.rotation, target, 500f * Time.deltaTime);
+            Debug.Log("mekieee");
+        }
+
+        //phase 4
+        else if (delta > maxReach/2 && !forward)
+        {
+            target = Quaternion.Euler(0, 30-deltaRot, -90+deltaRot);
+            rightPaddle.transform.rotation = Quaternion.Slerp(rightPaddle.transform.rotation, target, 1f * Time.deltaTime);
+        }
+    }
 
 
-        float delta;
 
 
-		if(auxR){
-			
-
-	        if (rightWrist.transform.position.z > oldPos) {
-
-	            delta = rightWrist.transform.position.z - oldPos;
-
-	            yRot += (delta / shift) * -15f; //wont work for second part of forward motion (0 -> -15 -> 0) 
-
-	            zRot += (delta / shift) * -30f;
-
-				Debug.Log(yAngle);
-				Debug.Log(zAngle);
-
-				if(  (yAngle <= 0) && (zAngle <= 270) && (zAngle >= 245))  // (yAngle >= -15) &&
-				{
-					rightPaddle.transform.Rotate(yRot/1000, 0, zRot/1000, Space.Self);
-
-					Debug.Log(rightPaddle.transform.eulerAngles.y);
-				}
-					
-				oldPos = rightWrist.transform.position.z;
-			
-	        }
-
-			else {
-				oldPos = rightWrist.transform.position.z;
-			}
-		}
-
-		
-	}
 
 
 
