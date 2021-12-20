@@ -3895,7 +3895,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579999593}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c186b0a7f2a4e4646bbee38e1f773635, type: 3}
   m_Name: 
@@ -3908,9 +3908,9 @@ MonoBehaviour:
   animatedRight: {fileID: 468565256}
   openRight: {fileID: 4840139410359355701}
   closedRight: {fileID: 0}
-  rightWrist: {fileID: 0}
-  rightPaddle: {fileID: 0}
-  maxReach: 0.1
+  wrist: {fileID: 1796535330}
+  paddle: {fileID: 643954153}
+  maxReach: 0.2
 --- !u!114 &579999599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4614,7 +4614,7 @@ Transform:
   m_GameObject: {fileID: 767945116}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.206, y: 0.165, z: -0.2155255}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children: []
   m_Father: {fileID: 1993805482}
   m_RootOrder: 13
@@ -8193,8 +8193,8 @@ MonoBehaviour:
   animatedRight: {fileID: 468565256}
   openRight: {fileID: 4840139410359355701}
   closedRight: {fileID: 0}
-  rightWrist: {fileID: 767945116}
-  rightPaddle: {fileID: 392357539}
+  wrist: {fileID: 767945116}
+  paddle: {fileID: 392357539}
   maxReach: 0.2
 --- !u!114 &1220089299
 MonoBehaviour:
@@ -12074,8 +12074,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796535330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.211, y: 0.165, z: -0.2155255}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: -0.184, y: 0.165, z: -0.2155255}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children: []
   m_Father: {fileID: 1993805482}
   m_RootOrder: 14

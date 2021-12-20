@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
                                          //  1 -> BCI (arrowKeys)
                                          // -1 -> HT (leapMotion)
 
-    public static int HemiLimb = 1;     //  0 -> No hemiparethic limb                                                                 
+    public static int HemiLimb = 2;     //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both

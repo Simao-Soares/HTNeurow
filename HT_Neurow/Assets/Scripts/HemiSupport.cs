@@ -9,36 +9,33 @@ public class HemiSupport : MonoBehaviour
     public GameObject openLeft; //opened hand model with hand binder
     public GameObject closedLeft; //opened hand model with hand binder
 
-
-    //it may be possible to only have one object and disable/enable its components
-
     public Animator rightAnimator;
     public GameObject animatedRight;
     public GameObject openRight; 
     public GameObject closedRight;
 
 
-    /// <summary>
-    /// wow
-    /// </summary>
 
-	public GameObject rightWrist;
+    bool rightSide;  //defines hemi side for rotations;
+    bool aux = true; //signals beggining of wrist tracking
 
-	public GameObject rightPaddle;
+	public GameObject wrist;
+	public GameObject paddle;
 
-	private bool auxR = false;
+	
 
     public float maxReach = 0.2f; //maximum delta z  
 
 	private float initPos;
-
+    private float oldPos;
 
 
 
     private float testDistance;
     private float delta = 0;
     private float deltaRot = 0;
-    private bool forward;
+    private bool forward = true;
+    bool forwardAux = true;
 
 
 
@@ -47,14 +44,19 @@ public class HemiSupport : MonoBehaviour
 
     private void Start()
 	{
-		initPos = rightWrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
-        
-	}
+		initPos = wrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
+        oldPos = initPos;
+        if (gameObject.name == "HemiZone_L") rightSide = false;
+        else if (gameObject.name == "HemiZone_R") rightSide = true;
+
+    }
 
 
 
     private void Update()
     {
+        //---------------------  Test animations without the hand collisions: ---------------------
+
         if (Input.GetKey("a"))
         {
             TestingLeft();
@@ -66,27 +68,28 @@ public class HemiSupport : MonoBehaviour
 
 
 
-        // ------------------------------ Override with arrowKeys ---------------------------------
-        testDistance = rightWrist.transform.position.z + 0.2155255f;
+        // ----------------------- Override wrist movement with arrowKeys --------------------------
 
-        if (Input.GetKey(KeyCode.UpArrow) && testDistance <= maxReach) 
+        testDistance = wrist.transform.position.z - initPos;
+
+        if (Input.GetKey(KeyCode.UpArrow) && testDistance < maxReach) 
         {
-            rightWrist.transform.Translate(Vector3.forward * 0.5f * Time.deltaTime);
+            wrist.transform.Translate(Vector3.forward * 0.5f * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.DownArrow) && rightWrist.transform.position.z >= -0.2155255)
+        if (Input.GetKey(KeyCode.DownArrow) && wrist.transform.position.z > initPos) 
         {
-            rightWrist.transform.Translate(Vector3.back * 0.5f * Time.deltaTime);
+            wrist.transform.Translate(Vector3.back * 0.5f * Time.deltaTime);
         }
-        //-----------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
 
         
-        RotRightPaddle(initPos, delta, forward);
-        //oldPos = rightWrist.transform.position.z;
+        RotPaddle(oldPos, delta, forward, forwardAux);
+        oldPos = wrist.transform.position.z;
 
     }
 
-    void RotRightPaddle(float oldPos, float delta, bool forward)
+    void RotPaddle(float oldPos, float delta, bool forward, bool forwardAux)
     {
         // -------------------- 4 phases of rowing movement: --------------------
         //  phase 1 (y:  0  -> -15) (z: -90  -> -105)
@@ -97,47 +100,79 @@ public class HemiSupport : MonoBehaviour
         //phases 1 and 2 with forward wrist motion  => forward = true
         //phases 3 and 4 with backward wrist motion => forward = false
 
-        float currentPos = rightWrist.transform.position.z;
+        float currentPos = wrist.transform.position.z;
+        float currentRotY = paddle.transform.eulerAngles.y;
+        float currentRotZ = paddle.transform.eulerAngles.z;
+        
         Quaternion target;
 
-        delta = (currentPos - initPos);
-        deltaRot = (2*delta / maxReach) * 15f;                                                      //dont know why i need the 2* but i'll take it 
+        delta = (currentPos - oldPos);
+        deltaRot = (2*delta / maxReach) * 15f;  //dont know why i need the 2* but i'll take it
 
-        if (delta == 0) forward = true;
 
-        else if (delta >= maxReach) {
+        if (currentPos >= initPos + maxReach) forwardAux = false;               //trying to implement the need to complete the whole movement!!!!!!!!!!!!
+        else if (currentPos <= initPos) forwardAux = true;
+
+
+        if (currentPos > oldPos)
+        {
+            forward = true;
+            //Debug.Log("forward");
+        }
+
+        else if (currentPos < oldPos)
+        {
             forward = false;
-            
-        } 
+            //Debug.Log("backward");
+        }
 
         //phase 1
-        else if (delta > 0 && delta < maxReach/2 && forward)
+        if (forward && currentPos <= initPos + maxReach/2)
         {
-            target = Quaternion.Euler(0, -deltaRot, -90-deltaRot);
-            rightPaddle.transform.rotation = Quaternion.Slerp(rightPaddle.transform.rotation, target, 500f * Time.deltaTime);
+            if(rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
+            else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
+
+            paddle.transform.rotation = Quaternion.Slerp(paddle.transform.rotation, target, 500f * Time.deltaTime);
+            Debug.Log("p1");
         }
 
         //phase 2
-        else if ( delta > maxReach/2 && forward)
+        else if (forward && currentPos > initPos + maxReach/2)
         {
-            target = Quaternion.Euler(0, -30+deltaRot, -90-deltaRot);
-            rightPaddle.transform.rotation = Quaternion.Slerp(rightPaddle.transform.rotation, target, 500f * Time.deltaTime);
-        }
+            if (rightSide) target = Quaternion.Euler(-30f, currentRotY+(1.5f*deltaRot), currentRotZ-deltaRot);
+            else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
 
+            paddle.transform.rotation = Quaternion.Slerp(paddle.transform.rotation, target, 500f * Time.deltaTime);
+            Debug.Log("p2");
+        }
+        
         //phase 3
-        else if (delta < maxReach/2 && !forward)
+        else if (!forward && currentPos >= initPos + maxReach/2)
         {
-            target = Quaternion.Euler(0, deltaRot, -90+deltaRot);
-            rightPaddle.transform.rotation = Quaternion.Slerp(rightPaddle.transform.rotation, target, 500f * Time.deltaTime);
-            Debug.Log("mekieee");
+            if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
+            else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
+
+            paddle.transform.rotation = Quaternion.Slerp(paddle.transform.rotation, target, 500f * Time.deltaTime);
+            Debug.Log("p3");
         }
 
         //phase 4
-        else if (delta > maxReach/2 && !forward)
+        else if (!forward && currentPos < initPos + maxReach/2)
         {
-            target = Quaternion.Euler(0, 30-deltaRot, -90+deltaRot);
-            rightPaddle.transform.rotation = Quaternion.Slerp(rightPaddle.transform.rotation, target, 1f * Time.deltaTime);
+            if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
+            else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
+
+            paddle.transform.rotation = Quaternion.Slerp(paddle.transform.rotation, target, 500f * Time.deltaTime);
+            Debug.Log("p4");
+
         }
+
+        
+        //Debug.Log("initpos -> " + initPos);
+        //Debug.Log("halfway -> " + (initPos + maxReach/2));
+        //Debug.Log("currentpos -> " + currentPos);
+
+        //Debug.Log("RotY -> " + currentRotY);
     }
 
 
@@ -163,27 +198,21 @@ public class HemiSupport : MonoBehaviour
 			openRight.SetActive(false);
 			animatedRight.SetActive(true);
 			rightAnimator.SetBool("startGrab", true); 
-			auxR = true;
+			aux = true;
         }
     }
 
+
+
     void TestingRight()
     {
-        //openLeft.SetActive(false);
         animatedRight.SetActive(true);
         rightAnimator.SetBool("startGrab", true);
-        //animatedRight.SetActive(false);
-        //openRight.SetActive(false);
-        //closedRight.SetActive(true);
     }
 
     void TestingLeft()
     {
-        //openLeft.SetActive(false);
         animatedLeft.SetActive(true);
         leftAnimator.SetBool("startGrab", true);
-        //animatedRight.SetActive(false);
-        //openRight.SetActive(false);
-        //closedRight.SetActive(true);
     }
 }
