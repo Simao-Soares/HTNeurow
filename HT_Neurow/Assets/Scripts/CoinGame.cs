@@ -152,7 +152,6 @@ public class CoinGame : MonoBehaviour
                 }
             }
             GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
-            Debug.Log(Vector3.Distance(boat.transform.position, newCoords));
             listCoins[i].CoinObject = aux;
         }
     }

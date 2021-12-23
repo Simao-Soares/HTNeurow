@@ -6,7 +6,7 @@ public class HemiSupport : MonoBehaviour
 {
     public Animator animator;
     public GameObject animatedModel; //hand model with animator
-    public GameObject hemiModel; //opened hand model with hand binder
+    public GameObject handModel; //opened hand model with hand binder
 
 
     private bool rightSide;
@@ -39,8 +39,8 @@ public class HemiSupport : MonoBehaviour
 
     private void Start()
 	{
-		initPos = wrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
-        oldPos = initPos;
+		//initPos = wrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
+        //oldPos = initPos;
         if (gameObject.name == "HemiZone_L") rightSide = false;
         else if (gameObject.name == "HemiZone_R") rightSide = true;
 
@@ -77,9 +77,10 @@ public class HemiSupport : MonoBehaviour
 
         
 
-        if (auxTrack) {
+		if (auxTrack && oldPos >= initPos && oldPos <= initPos + maxReach) {
             RotPaddle(oldPos, delta, forward, forwardAux);
-            oldPos = wrist.transform.localPosition.z;
+            oldPos = wrist.transform.position.z;
+			//Debug.Log(oldPos);
         }
 
 
@@ -106,7 +107,7 @@ public class HemiSupport : MonoBehaviour
         //phases 1 and 2 with forward wrist motion  => forward = true
         //phases 3 and 4 with backward wrist motion => forward = false
 
-        float currentPos = wrist.transform.localPosition.z;
+        float currentPos = wrist.transform.position.z;
         float currentRotY = paddle.transform.localEulerAngles.y;
         float currentRotZ = paddle.transform.localEulerAngles.z;
         
@@ -133,7 +134,7 @@ public class HemiSupport : MonoBehaviour
         }
 
         //phase 1
-        if (forward && currentPos <= initPos + maxReach/2) //&& forwardAux
+		if (forward && forwardAux && currentPos <= initPos + maxReach/2) //&& forwardAux
         {
             if(rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
             else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -143,17 +144,17 @@ public class HemiSupport : MonoBehaviour
         }
 
         //phase 2
-        else if (forward && currentPos > initPos + maxReach/2) //&& forwardAux
+		else if (forward && forwardAux && currentPos > initPos + maxReach/2) //&& forwardAux
         {
             if (rightSide) target = Quaternion.Euler(-30f, currentRotY+(1.5f*deltaRot), currentRotZ-deltaRot);
             else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
 
             paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-            Debug.Log("p2");
+           	Debug.Log("p2");
         }
         
         //phase 3
-        else if (!forward && currentPos >= initPos + maxReach/2) //&& !forwardAux
+		else if (!forward && !forwardAux && currentPos >= initPos + maxReach/2) //&& !forwardAux
         {
             if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
             else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -163,7 +164,7 @@ public class HemiSupport : MonoBehaviour
         }
 
         //phase 4
-        else if (!forward && currentPos < initPos + maxReach/2) //&& !forwardAux
+		else if (!forward && !forwardAux && currentPos < initPos + maxReach/2) //&& !forwardAux
         {
             if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
             else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -180,11 +181,15 @@ public class HemiSupport : MonoBehaviour
     void OnTriggerEnter(Collider other) 
     {
                  
-		if (other.gameObject.name == "Contact Fingerbone" && gameObject.name == "HemiZone_L")  //HOW TO DISTINGUISH LEFT FROM RIGHT HAND??    -------------->          IMPLENT TRIGGER WITH ATTACHMENT HANDS Objects
+		if (other.gameObject.name == "Contact Fingerbone")  //HOW TO DISTINGUISH LEFT FROM RIGHT HAND??    -------------->          IMPLENT TRIGGER WITH ATTACHMENT HANDS Objects
         {
-			hemiModel.SetActive(false);            //works as long as patient doesnt leave LeapMotion tacking area
+			handModel.SetActive(false);            //works as long as patient doesnt leave LeapMotion tacking area
             animatedModel.SetActive(true);
             animator.SetBool("startGrab", true);
+
+			initPos = wrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
+			oldPos = initPos;
+			Debug.Log(initPos + maxReach);
 
             auxTrack = true;
 
