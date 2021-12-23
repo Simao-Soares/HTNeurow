@@ -104,17 +104,18 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-			//SEPARATE CONTROL METHODS
 
-			if(GameManager.ControlMethod == 1){ //BCI
+            //SEPARATE CONTROL METHODS
+            //BCI
+            if (GameManager.ControlMethod == 1){ 
 
 				InteractionManager.SetActive(false);
 				leftPaddleAnim.enabled = true;
 				rightPaddleAnim.enabled = true;
 				//falta os InteractionBehaviour das paddles e mais coisas de certeza
 			}
-
-			else if(GameManager.ControlMethod == -1){ //HT
+            //HT
+            else if (GameManager.ControlMethod == -1){ 
 				
 				//deactivate BCI Hand models
 				myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(false);

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using Random = System.Random;
 
+
 public class CoinGame : MonoBehaviour
 {
 
@@ -133,6 +134,7 @@ public class CoinGame : MonoBehaviour
 
     private void GenerateObjectives() {
         //List<CoinClass> listCoins = new List<CoinClass>();
+        float minDistanceToBoat = Mathf.Sqrt(minDistance * minDistance + 50f * 50f);
 
         for (int i = 0; i < numberOfCoins; i++)
         {
@@ -141,15 +143,16 @@ public class CoinGame : MonoBehaviour
 
             if (listCoins.Count > 0)
             {
-                for (int j = 0; j < i; j++)
+                for (int j = 0; j < i; j++)        
                 {
-                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance ||
-                           Vector3.Distance(boat.transform.position, newCoords) < minDistance) {
+                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance || Vector3.Distance(boat.transform.position, newCoords) < minDistanceToBoat)
+                    {                      
                         newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100.5f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
                     }
                 }
             }
             GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
+            Debug.Log(Vector3.Distance(boat.transform.position, newCoords));
             listCoins[i].CoinObject = aux;
         }
     }
