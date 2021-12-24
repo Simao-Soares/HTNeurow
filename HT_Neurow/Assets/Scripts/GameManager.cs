@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
 	//-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 // NOT DEFAULT, ONLY FOR TESTING
 
-    public static int ControlMethod = -1; //static -> instances of GameObject will share this value 
+    public static int ControlMethod = 1; //static -> instances of GameObject will share this value 
                                          //  1 -> BCI (arrowKeys)
                                          // -1 -> HT (leapMotion)
 
@@ -112,8 +112,11 @@ public class GameManager : MonoBehaviour
 				InteractionManager.SetActive(false);
 				leftPaddleAnim.enabled = true;
 				rightPaddleAnim.enabled = true;
-				//falta os InteractionBehaviour das paddles e mais coisas de certeza
-			}
+
+                rightPaddleZone.SetActive(true);
+                leftPaddleZone.SetActive(true);
+                //falta os InteractionBehaviour das paddles e mais coisas de certeza
+            }
             //HT
             else if (GameManager.ControlMethod == -1){ 
 				

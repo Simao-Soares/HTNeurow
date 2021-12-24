@@ -77,18 +77,11 @@ public class HemiSupport : MonoBehaviour
 
         
 
-		if (auxTrack && oldPos >= initPos && oldPos <= initPos + maxReach) {
+		if (auxTrack && oldPos >= initPos && oldPos <= initPos + maxReach) {   //-----------------------------------------> this is why it doesnt do the second part of the rowing movement 
             RotPaddle(oldPos, delta, forward, forwardAux);
             oldPos = wrist.transform.position.z;
 			//Debug.Log(oldPos);
         }
-
-
-
-        //Debug.Log(initPos + maxReach);
-        //Debug.Log(oldPos);
-        //if (oldPos == initPos + maxReach) Debug.Log("fim");       ----->        //Doesnt reach initPos+maxReach, but shouldnt be a problem with HT
-        //if (oldPos == initPos) Debug.Log("inicio");
 
     }
 
