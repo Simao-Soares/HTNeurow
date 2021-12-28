@@ -38,7 +38,6 @@ public class BoatMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
 
-        Debug.Log(GameManager.ControlMethod);
         rb = GetComponent<Rigidbody>(); 
         rb.AddForce(0, 0, forwardForce, ForceMode.Impulse); //sketchy
 
