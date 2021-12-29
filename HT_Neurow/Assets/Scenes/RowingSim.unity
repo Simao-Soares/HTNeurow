@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.65
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 319123717}
-  m_IndirectSpecularColor: {r: 0.2190129, g: 0.5314297, b: 0.6048797, a: 0.65}
+  m_IndirectSpecularColor: {r: 0.21879214, g: 0.5305719, b: 0.6047558, a: 0.65}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2023,7 +2023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &271282873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2038,13 +2038,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arcHeight: 0.1
   sidesPerAngle: 1
-  arcAngle: 55
+  arcAngle: 180
   arcSides: 0
   arcWidth: 3
   arcRadius: 30
   xPos: 45.458
   zPos: 38.5
-  yRot: 160
+  xRot: 1
+  yRot: 0
 --- !u!23 &271282874
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4069,7 +4070,7 @@ GameObject:
   - component: {fileID: 518036401}
   - component: {fileID: 518036400}
   m_Layer: 0
-  m_Name: ArcMesh
+  m_Name: ArcRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4089,12 +4090,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arcHeight: 0.1
   sidesPerAngle: 1
-  arcAngle: 125
+  arcAngle: 1
   arcSides: 0
   arcWidth: 3
   arcRadius: 20
   xPos: 18.5
   zPos: 0
+  xRot: 1
   yRot: -90
 --- !u!23 &518036401
 MeshRenderer:
@@ -20168,6 +20170,7 @@ GameObject:
   - component: {fileID: 1993805487}
   - component: {fileID: 1993805484}
   - component: {fileID: 1993805485}
+  - component: {fileID: 1993805488}
   m_Layer: 0
   m_Name: Player
   m_TagString: PlayerPos
@@ -20300,6 +20303,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1993805488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993805481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef0db43981db4518856e70d87db08c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boatSpeed: 0
+  challengeLevel: 0
+  totalTaskTime: 0
+  pathWidth: 3
+  renderer: {fileID: 518036399}
+  instructionsTime: 0
+  instructions: {fileID: 0}
+  normalUI: {fileID: 0}
+  gameOverUI: {fileID: 0}
+  timeText: {fileID: 0}
+  playerScoreText: {fileID: 0}
+  finalScoreText: {fileID: 0}
+  freezeDuration: 10
+  boat: {fileID: 0}
 --- !u!1 &1997441729
 GameObject:
   m_ObjectHideFlags: 0
@@ -20348,7 +20377,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2003301855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20367,8 +20396,9 @@ MonoBehaviour:
   arcSides: 0
   arcWidth: 3
   arcRadius: 40
-  xPos: 72.41
-  zPos: -11.54
+  xPos: 68.373
+  zPos: -24.459
+  xRot: 1
   yRot: 0
 --- !u!23 &2003301856
 MeshRenderer:
@@ -20426,13 +20456,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003301854}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2020776465
 GameObject:
   m_ObjectHideFlags: 0

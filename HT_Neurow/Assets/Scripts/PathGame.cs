@@ -13,6 +13,9 @@ public class PathGame : MonoBehaviour
 
     //PRIMARY TASK SETTINGS
     public float totalTaskTime;
+	public float pathWidth;
+
+	public GameObject renderer; 
 
     //SECUNDARY TASK SETTINGS
     public float instructionsTime;
@@ -59,43 +62,46 @@ public class PathGame : MonoBehaviour
     void Start()
     {
 
+		DefinePath();
+		PathRenderer();
+
         
 
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (timerIsRunning)
-        {
-            if (totalTaskTime > 0)
-            {
-                totalTaskTime -= Time.deltaTime;
-                DisplayTime(totalTaskTime);
-
-                //always show instructions for instructionsTime seconds at the start
-                if (auxI == true) StartCoroutine(ShowInstructions(instructionsTime));
-                //show instructions for instructionsTime seconds when i key is pressed
-                if (Input.GetKeyDown("i")) StartCoroutine(ShowInstructions(instructionsTime)); //not perfect but enough
-            }
-            else //TIME IS UP
-            {
-                Debug.Log("Time has run out!");
-                totalTaskTime = 0;
-                timerIsRunning = false;
-                normalUI.SetActive(false);
-                this.finalScoreText.text = playerScore.ToString();
-
-                gameOverUI.SetActive(true);
-
-                pendingFreezeDuration = freezeDuration; //freeze screen on GameOver
-                if (pendingFreezeDuration > 0 && !isFrozen) StartCoroutine(DoFreeze());
-
-
-            }
-        }
-
-    }
+//    void FixedUpdate()
+//    {
+//        if (timerIsRunning)
+//        {
+//            if (totalTaskTime > 0)
+//            {
+//                totalTaskTime -= Time.deltaTime;
+//                DisplayTime(totalTaskTime);
+//
+//                //always show instructions for instructionsTime seconds at the start
+//                if (auxI == true) StartCoroutine(ShowInstructions(instructionsTime));
+//                //show instructions for instructionsTime seconds when i key is pressed
+//                if (Input.GetKeyDown("i")) StartCoroutine(ShowInstructions(instructionsTime)); //not perfect but enough
+//            }
+//            else //TIME IS UP
+//            {
+//                Debug.Log("Time has run out!");
+//                totalTaskTime = 0;
+//                timerIsRunning = false;
+//                normalUI.SetActive(false);
+//                this.finalScoreText.text = playerScore.ToString();
+//
+//                gameOverUI.SetActive(true);
+//
+//                pendingFreezeDuration = freezeDuration; //freeze screen on GameOver
+//                if (pendingFreezeDuration > 0 && !isFrozen) StartCoroutine(DoFreeze());
+//
+//
+//            }
+//        }
+//
+//    }
 
     void DisplayTime(float timeToDisplay)
     {
@@ -135,118 +141,139 @@ public class PathGame : MonoBehaviour
         int nArcs = 0;
         float arcLength = 0;
 
+		ArcClass newArc = new ArcClass();
+		ArcClass newArc1 = new ArcClass();
+		ArcClass newArc2 = new ArcClass();
+
+
+		newArc.arcID = 0;
+		newArc.angle = 125;
+		newArc.radius = 20f;
+
+		newArc1.arcID = 1;
+		newArc1.angle = 55;
+		newArc1.radius = 30f;
+
+		newArc2.arcID = 2;
+		newArc2.angle = 40;
+		newArc2.radius = 50f;
+		listArcs.Add(newArc);
+		listArcs.Add(newArc1);
+		listArcs.Add(newArc2);
+
+
+
+
+
         //while (pathLength < totalPathLength)
-        for(int i=0; i<2; i++)                      //<-------------------------------------------------- testing 3 arcs
-        { 
-            //Later define range of radius and angle values based on dificulty level
-            float newRadius = Random.Range(20f, 50f);
-            float newAngle = Random.Range(45f, 225f);
-
-            //Adding new arc to the list
-            ArcClass newArc = new ArcClass();
-            newArc.radius = newRadius;
-
-            //ArcRenderer takes int arcAngle, +1 so that the path doesn't end sonner than the time
-            newArc.angle = (int)Mathf.Round(newAngle)+1; 
-            newArc.arcID = nArcs;
-            listArcs.Add(newArc);
-
-            //Calculating arc length and adding it to the total path length
-            arcLength = (newAngle / 360f) * 2 * Mathf.PI * newRadius;
-            pathLength += arcLength;
-            nArcs++;
-        }
+//        for(int i=0; i<3; i++)                      //<-------------------------------------------------- testing 3 arcs
+//        { 
+//            //Later define range of radius and angle values based on dificulty level
+//            float newRadius = Random.Range(20f, 50f);
+//            float newAngle = Random.Range(45f, 225f);
+//
+//            //Adding new arc to the list
+//            ArcClass newArc = new ArcClass();
+//            newArc.radius = newRadius;
+//
+//            //ArcRenderer takes int arcAngle, +1 so that the path doesn't end sonner than the time
+//            newArc.angle = (int)Mathf.Round(newAngle)+1; 
+//            newArc.arcID = nArcs;
+//            listArcs.Add(newArc);
+//
+//            //Calculating arc length and adding it to the total path length
+//            arcLength = (newAngle / 360f) * 2 * Mathf.PI * newRadius;
+//            pathLength += arcLength;
+//            nArcs++;
+//        }
     }
 
-    private void PathRenderer()  // <--------------------------------------------------------------------------------------------------------- simplifica e testa por partes, E ANTES DISSO ACERTA COM 3 ArcMesh a mexer no inspector
+	private void PathRenderer() 
     {
 
-        ArcRenderer ar;
+        
         int auxInit;
         float prevAngle, prevRadius, prevCenterX, prevCenterY, prevYrot;
 
         foreach (ArcClass arc in listArcs)
         {
-            ar = gameObject.GetComponent<ArcRenderer>();
+            //ar = gameObject.GetComponent<ArcRenderer>();
+			GameObject rendererObj = Instantiate(renderer);
+			ArcRenderer ar = rendererObj.GetComponent<ArcRenderer>();
+
+			ar.arcWidth = pathWidth;
             ar.arcAngle = listArcs[arc.arcID].angle;
             ar.arcRadius = listArcs[arc.arcID].radius;
+
 
             float auxX = 0;
             float auxY = 0;
 
             auxInit = Random.Range(0, 1);   //defines direction of the first arc 
-            ar.DrawArcMesh();
-
+			if(auxInit == 0) ar.xRot=true;
+			else ar.xRot=false;													
             if (arc.arcID == 0) //first arc
             {
                 
                 if (auxInit == 0) //turns right 
                 {
-                    listArcs[arc.arcID].centerX = ar.xPos = ar.arcRadius - ar.arcWidth / 2;
+					listArcs[arc.arcID].centerX = ar.xPos = ar.arcRadius - pathWidth / 2;
                     listArcs[arc.arcID].centerY = 0;
-                    listArcs[arc.arcID].yRotation = ar.yRot = 0;
+                    listArcs[arc.arcID].yRotation = ar.yRot = -90f;
                 } 
                 else              //turns left
                 {
-                    listArcs[arc.arcID].centerX = ar.xPos = -ar.arcRadius + ar.arcWidth / 2;
+					listArcs[arc.arcID].centerX = ar.xPos = -ar.arcRadius + pathWidth / 2;
                     listArcs[arc.arcID].centerY = 0;
-                    listArcs[arc.arcID].yRotation = ar.yRot = 180f - ar.arcAngle;
+                    listArcs[arc.arcID].yRotation = ar.yRot = -90f;
                 } 
             }
 
             else {
+				
                 prevAngle = listArcs[arc.arcID -1].angle;
                 prevRadius = listArcs[arc.arcID -1].radius;
                 prevCenterX = listArcs[arc.arcID - 1].centerX;
                 prevCenterY = listArcs[arc.arcID - 1].centerY;
                 prevYrot = listArcs[arc.arcID - 1].yRotation;
 
-                auxX = (prevRadius + ar.arcRadius) * Mathf.Sin(ar.arcAngle);
-                auxY = (prevRadius + ar.arcRadius) * Mathf.Cos(ar.arcAngle);
+				if (arc.arcID == 1) {
+					auxX = (prevRadius + ar.arcRadius - pathWidth) * Mathf.Cos((180f-prevAngle) * Mathf.Deg2Rad);
+					auxY = (prevRadius + ar.arcRadius - pathWidth) * Mathf.Sin((180f-prevAngle) * Mathf.Deg2Rad);
+				}
+				else if (arc.arcID == 2){ // bem martelado simao apaga isto
+					auxX = (prevRadius + ar.arcRadius - pathWidth) * Mathf.Cos( (prevAngle - (listArcs[0].angle-90)) * Mathf.Deg2Rad);
+					auxY = (prevRadius + ar.arcRadius - pathWidth) * Mathf.Sin( ( prevAngle - (listArcs[0].angle-90)) * Mathf.Deg2Rad);
+				}
+
 
                 if (arc.arcID % 2 == 1) //odd number arcs
                 {
-                    if (auxInit == 0) //first arc went to the right
-                    {
-                        if (listArcs[arc.arcID].angle < 90f)
-                        {
-                            listArcs[arc.arcID].centerX = ar.xPos = prevCenterX - auxX;
-                            listArcs[arc.arcID].centerY = ar.zPos = prevCenterX + auxY;
-                            listArcs[arc.arcID].yRotation = ar.yRot = prevYrot;
-
-
-
-
-
-
-                        }
-
-
-                    }
+	                listArcs[arc.arcID].centerX = ar.xPos = prevCenterX + auxX;
+	                listArcs[arc.arcID].centerY = ar.zPos = prevCenterY + auxY;
+					listArcs[arc.arcID].yRotation = ar.yRot = 90f + prevAngle - ar.arcAngle;
 
                 }
+
                 else if (arc.arcID % 2 == 0) //even number arcs
                 {
-                    if (auxInit == 0) ar.xPos = ar.arcRadius - ar.arcWidth / 2;
-                    else ar.xPos = ar.arcRadius + ar.arcWidth / 2;
+					
+					listArcs[arc.arcID].centerX = ar.xPos = prevCenterX + auxY;
+					listArcs[arc.arcID].centerY = ar.zPos = prevCenterY - auxX; 
+					listArcs[arc.arcID].yRotation = ar.yRot = -(prevAngle - (listArcs[0].angle-90));
 
                 }
+
+
             }
 
-            //define position (xPos and zPos) based on previous arc             <---------------------------------------------------------------------------
-            //xRot swaps between 0 and 180 and with 180 i think you need to substract the diameter in the localXPos idk
+			ar.DrawArcMesh(); 
         }
-            
-
     }
 
 
 
 
 
-
-
-
-
-
+		
 }

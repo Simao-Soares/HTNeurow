@@ -37,7 +37,7 @@ public class ArcRenderer : MonoBehaviour
     public float xPos;
     public float zPos;
 
-    //public bool xRot;   //flips with every iteration on the list of arcs (no two consecutive arcs have the same direction)
+    public bool xRot;   //flips with every iteration on the list of arcs (no two consecutive arcs have the same direction)
     public float yRot;  //important to define for every arc except the first, where it is 0
 
 
@@ -52,7 +52,8 @@ public class ArcRenderer : MonoBehaviour
 	public void DrawArcMesh()
 	{
         gameObject.transform.position = new Vector3(xPos, 0.64f, zPos);
-        gameObject.transform.eulerAngles = new Vector3(0, yRot, 0);          // <-----------------------------------------------------------
+		if(xRot) gameObject.transform.eulerAngles = new Vector3(0, yRot, 0);          // <-----------------------------------------------------------
+		else gameObject.transform.eulerAngles = new Vector3(180f, yRot, 0);
 
 
 
