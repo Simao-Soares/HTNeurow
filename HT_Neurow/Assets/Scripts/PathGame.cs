@@ -38,9 +38,16 @@ public class PathGame : MonoBehaviour
 
     public class ArcClass
     {
+        //Arc Properties
         public int arcID;
         public float radius;
         public int angle;
+
+        //Arc Position
+        public float centerX;
+        public float centerY;
+        public float yRotation;
+
     }
     private List<ArcClass> listArcs = new List<ArcClass>();
 
@@ -128,7 +135,8 @@ public class PathGame : MonoBehaviour
         int nArcs = 0;
         float arcLength = 0;
 
-        while (pathLength < totalPathLength)
+        //while (pathLength < totalPathLength)
+        for(int i=0; i<2; i++)                      //<-------------------------------------------------- testing 3 arcs
         { 
             //Later define range of radius and angle values based on dificulty level
             float newRadius = Random.Range(20f, 50f);
@@ -137,7 +145,9 @@ public class PathGame : MonoBehaviour
             //Adding new arc to the list
             ArcClass newArc = new ArcClass();
             newArc.radius = newRadius;
-            newArc.angle = (int)Mathf.Round(newAngle)+1; //ArcRenderer takes int arcAngle, +1 so that the path doesn't end sonner than the time
+
+            //ArcRenderer takes int arcAngle, +1 so that the path doesn't end sonner than the time
+            newArc.angle = (int)Mathf.Round(newAngle)+1; 
             newArc.arcID = nArcs;
             listArcs.Add(newArc);
 
@@ -148,24 +158,79 @@ public class PathGame : MonoBehaviour
         }
     }
 
-    private void PathRenderer()
+    private void PathRenderer()  // <--------------------------------------------------------------------------------------------------------- simplifica e testa por partes, E ANTES DISSO ACERTA COM 3 ArcMesh a mexer no inspector
     {
 
         ArcRenderer ar;
         int auxInit;
+        float prevAngle, prevRadius, prevCenterX, prevCenterY, prevYrot;
 
         foreach (ArcClass arc in listArcs)
         {
             ar = gameObject.GetComponent<ArcRenderer>();
             ar.arcAngle = listArcs[arc.arcID].angle;
             ar.arcRadius = listArcs[arc.arcID].radius;
+
+            float auxX = 0;
+            float auxY = 0;
+
+            auxInit = Random.Range(0, 1);   //defines direction of the first arc 
             ar.DrawArcMesh();
-                    
-            if(arc.arcID == 0)
+
+            if (arc.arcID == 0) //first arc
             {
-                auxInit = Random.Range(0, 1);
-                if(auxInit == 0) ar.xPos = boat.transform.position.x + ar.arcRadius - ar.arcWidth/2;
-                else ar.xPos = boat.transform.position.x + ar.arcRadius + ar.arcWidth / 2;
+                
+                if (auxInit == 0) //turns right 
+                {
+                    listArcs[arc.arcID].centerX = ar.xPos = ar.arcRadius - ar.arcWidth / 2;
+                    listArcs[arc.arcID].centerY = 0;
+                    listArcs[arc.arcID].yRotation = ar.yRot = 0;
+                } 
+                else              //turns left
+                {
+                    listArcs[arc.arcID].centerX = ar.xPos = -ar.arcRadius + ar.arcWidth / 2;
+                    listArcs[arc.arcID].centerY = 0;
+                    listArcs[arc.arcID].yRotation = ar.yRot = 180f - ar.arcAngle;
+                } 
+            }
+
+            else {
+                prevAngle = listArcs[arc.arcID -1].angle;
+                prevRadius = listArcs[arc.arcID -1].radius;
+                prevCenterX = listArcs[arc.arcID - 1].centerX;
+                prevCenterY = listArcs[arc.arcID - 1].centerY;
+                prevYrot = listArcs[arc.arcID - 1].yRotation;
+
+                auxX = (prevRadius + ar.arcRadius) * Mathf.Sin(ar.arcAngle);
+                auxY = (prevRadius + ar.arcRadius) * Mathf.Cos(ar.arcAngle);
+
+                if (arc.arcID % 2 == 1) //odd number arcs
+                {
+                    if (auxInit == 0) //first arc went to the right
+                    {
+                        if (listArcs[arc.arcID].angle < 90f)
+                        {
+                            listArcs[arc.arcID].centerX = ar.xPos = prevCenterX - auxX;
+                            listArcs[arc.arcID].centerY = ar.zPos = prevCenterX + auxY;
+                            listArcs[arc.arcID].yRotation = ar.yRot = prevYrot;
+
+
+
+
+
+
+                        }
+
+
+                    }
+
+                }
+                else if (arc.arcID % 2 == 0) //even number arcs
+                {
+                    if (auxInit == 0) ar.xPos = ar.arcRadius - ar.arcWidth / 2;
+                    else ar.xPos = ar.arcRadius + ar.arcWidth / 2;
+
+                }
             }
 
             //define position (xPos and zPos) based on previous arc             <---------------------------------------------------------------------------

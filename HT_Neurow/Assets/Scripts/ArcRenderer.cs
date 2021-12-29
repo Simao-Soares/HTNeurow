@@ -33,8 +33,12 @@ public class ArcRenderer : MonoBehaviour
 
 	Material arcMaterial;
 
+    //Rendering position
     public float xPos;
     public float zPos;
+
+    //public bool xRot;   //flips with every iteration on the list of arcs (no two consecutive arcs have the same direction)
+    public float yRot;  //important to define for every arc except the first, where it is 0
 
 
 	// Start is called before the first frame update
@@ -48,7 +52,11 @@ public class ArcRenderer : MonoBehaviour
 	public void DrawArcMesh()
 	{
         gameObject.transform.position = new Vector3(xPos, 0.64f, zPos);
-		int resSides = arcSides;
+        gameObject.transform.eulerAngles = new Vector3(0, yRot, 0);          // <-----------------------------------------------------------
+
+
+
+        int resSides = arcSides;
 		if (arcSides < 3)
 		{
 			resSides = (int)Mathf.RoundToInt(arcAngle * sidesPerAngle);
