@@ -50,37 +50,39 @@ public class HemiSupport : MonoBehaviour
 
     private void Update()
     {
-        //---------------------  Test animations without the hand collisions: ---------------------
-
-        if (Input.GetKey("g"))
-        {
-            auxTrack = true;
-            TestingGraspAnim();
-        }
-
-
-
-        // ----------------------- Override wrist movement with arrowKeys --------------------------
-
-        testDistance = wrist.transform.localPosition.z - initPos;
-
-        if (Input.GetKey(KeyCode.UpArrow) && testDistance < maxReach) 
-        {
-            wrist.transform.Translate(Vector3.forward * 0.5f * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow) && wrist.transform.localPosition.z > initPos) 
-        {
-            wrist.transform.Translate(Vector3.back * 0.5f * Time.deltaTime);
-        }
-        //------------------------------------------------------------------------------------------
+//        //---------------------  Test animations without the hand collisions: ---------------------
+//
+//        if (Input.GetKey("g"))
+//        {
+//            auxTrack = true;
+//            TestingGraspAnim();
+//        }
+//
+//
+//
+//        // ----------------------- Override wrist movement with arrowKeys --------------------------
+//
+//        testDistance = wrist.transform.localPosition.z - initPos;
+//
+//        if (Input.GetKey(KeyCode.UpArrow) && testDistance < maxReach) 
+//        {
+//            wrist.transform.Translate(Vector3.forward * 0.5f * Time.deltaTime);
+//        }
+//
+//        if (Input.GetKey(KeyCode.DownArrow) && wrist.transform.localPosition.z > initPos) 
+//        {
+//            wrist.transform.Translate(Vector3.back * 0.5f * Time.deltaTime);
+//        }
+//        //------------------------------------------------------------------------------------------
 
         
 
-		if (auxTrack && oldPos >= initPos && oldPos <= initPos + maxReach) {   //-----------------------------------------> this is why it doesnt do the second part of the rowing movement 
-            RotPaddle(oldPos, delta, forward, forwardAux);
-            oldPos = wrist.transform.position.z;
-			//Debug.Log(oldPos);
+		if (auxTrack){	// && oldPos >= initPos && oldPos <= initPos + maxReach) {   //-----------------------------------------> this is why it doesnt do the second part of the rowing movement 
+
+			if( oldPos >= initPos && oldPos <= initPos + maxReach){
+	            RotPaddle(oldPos, delta, forward, forwardAux);
+			}
+			oldPos = wrist.transform.position.z;
         }
 
     }
@@ -147,7 +149,7 @@ public class HemiSupport : MonoBehaviour
         }
         
         //phase 3
-		else if (!forward && !forwardAux && currentPos >= initPos + maxReach/2) //&& !forwardAux
+		else if (!forward && forwardAux && currentPos >= initPos + maxReach/2) //&& !forwardAux
         {
             if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
             else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -157,7 +159,7 @@ public class HemiSupport : MonoBehaviour
         }
 
         //phase 4
-		else if (!forward && !forwardAux && currentPos < initPos + maxReach/2) //&& !forwardAux
+		else if (!forward && forwardAux && currentPos < initPos + maxReach/2) //&& !forwardAux
         {
             if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
             else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -182,9 +184,13 @@ public class HemiSupport : MonoBehaviour
 
 			initPos = wrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
 			oldPos = initPos;
-			Debug.Log(initPos + maxReach);
+			//Debug.Log(initPos + maxReach);
 
             auxTrack = true;
+
+			gameObject.GetComponent<SphereCollider>().enabled = false;  //prevent subsequent collisions
+			gameObject.GetComponent<MeshRenderer>().enabled = false;
+
 
 
         }

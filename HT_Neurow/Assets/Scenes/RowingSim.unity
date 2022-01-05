@@ -146,7 +146,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2349746}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -6.938894e-18, w: 1}
   m_LocalPosition: {x: -0.028182715, y: 0, z: 0}
   m_LocalScale: {x: 0.99999994, y: 1.0000002, z: 1}
   m_Children:
@@ -2005,110 +2005,6 @@ Transform:
   m_Father: {fileID: 1483998811}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &271282872
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 271282876}
-  - component: {fileID: 271282875}
-  - component: {fileID: 271282874}
-  - component: {fileID: 271282873}
-  m_Layer: 0
-  m_Name: ArcMesh (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &271282873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271282872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42e0af0ddd9f04049bf21c5343bae99d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arcHeight: 0.1
-  sidesPerAngle: 1
-  arcAngle: 180
-  arcSides: 0
-  arcWidth: 3
-  arcRadius: 30
-  xPos: 45.458
-  zPos: 38.5
-  xRot: 1
-  yRot: 0
---- !u!23 &271282874
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271282872}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 5f51be2ba9fae4ebbbdbf644a0db934a, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &271282875
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271282872}
-  m_Mesh: {fileID: 0}
---- !u!4 &271282876
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271282872}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.64, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &274054215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2276,7 +2172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &297200874
 Transform:
   m_ObjectHideFlags: 0
@@ -2895,7 +2791,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392357539}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
@@ -5504,7 +5400,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579999593}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c186b0a7f2a4e4646bbee38e1f773635, type: 3}
   m_Name: 
@@ -5522,7 +5418,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579999593}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
@@ -5568,7 +5464,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579999593}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5948241e73f244e49bbe8044011b16e9, type: 3}
   m_Name: 
@@ -5633,7 +5529,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596900970}
-  m_LocalRotation: {x: -0, y: -0, z: 0.0000000027357598, w: 1}
+  m_LocalRotation: {x: -0.000000007450581, y: -9.313226e-10, z: 0.000000010186341, w: 1}
   m_LocalPosition: {x: -0.04615961, y: 0.000000052452087, z: -0.000000009536743}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
   m_Children:
@@ -5855,7 +5751,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643954153}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
@@ -6473,7 +6369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &767945117
 Transform:
   m_ObjectHideFlags: 0
@@ -11344,7 +11240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1117628665
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11800,17 +11696,17 @@ MonoBehaviour:
     Fingers:
     - bones:
       - PrevJoint:
-          x: -0.10066175
+          x: -0.10026204
           y: 0.556
-          z: -0.13516848
+          z: -0.13157396
         NextJoint:
-          x: -0.10066175
+          x: -0.10026204
           y: 0.556
-          z: -0.13516848
+          z: -0.13157396
         Center:
-          x: -0.10066175
+          x: -0.10026204
           y: 0.556
-          z: -0.13516848
+          z: -0.13157396
         Direction:
           x: 0
           y: 0
@@ -11824,17 +11720,17 @@ MonoBehaviour:
           z: -0.5351684
           w: 0.7650837
       - PrevJoint:
-          x: -0.10066175
+          x: -0.10026204
           y: 0.556
-          z: -0.13516848
+          z: -0.13157396
         NextJoint:
-          x: -0.07635861
+          x: -0.0759589
           y: 0.5369036
-          z: -0.10080317
+          z: -0.09720865
         Center:
-          x: -0.08851018
+          x: -0.08811047
           y: 0.5464518
-          z: -0.11798582
+          z: -0.114391305
         Direction:
           x: 0.5258143
           y: -0.41316253
@@ -11848,17 +11744,17 @@ MonoBehaviour:
           z: -0.5351684
           w: 0.7650837
       - PrevJoint:
-          x: -0.07635861
+          x: -0.0759589
           y: 0.5369036
-          z: -0.10080317
+          z: -0.09720865
         NextJoint:
-          x: -0.059758652
+          x: -0.059358943
           y: 0.5238601
-          z: -0.07733036
+          z: -0.07373584
         Center:
-          x: -0.06805863
+          x: -0.06765892
           y: 0.53038186
-          z: -0.08906676
+          z: -0.08547224
         Direction:
           x: 0.52581424
           y: -0.41316193
@@ -11872,17 +11768,17 @@ MonoBehaviour:
           z: -0.5351684
           w: 0.7650837
       - PrevJoint:
-          x: -0.059758652
+          x: -0.059358943
           y: 0.5238601
-          z: -0.07733036
+          z: -0.07373584
         NextJoint:
-          x: -0.04836425
+          x: -0.047964543
           y: 0.5149069
-          z: -0.061218366
+          z: -0.05762385
         Center:
-          x: -0.05406145
+          x: -0.05366174
           y: 0.5193835
-          z: -0.069274366
+          z: -0.06567985
         Direction:
           x: 0.5258145
           y: -0.41316167
@@ -11899,9 +11795,9 @@ MonoBehaviour:
       Id: 0
       HandId: 0
       TipPosition:
-        x: -0.04836425
+        x: -0.047964543
         y: 0.5149069
-        z: -0.061218366
+        z: -0.05762385
       Direction:
         x: 0.52581424
         y: -0.41316193
@@ -11912,17 +11808,17 @@ MonoBehaviour:
       TimeVisible: 0
     - bones:
       - PrevJoint:
-          x: -0.10812965
+          x: -0.10772994
           y: 0.57410496
-          z: -0.12526065
+          z: -0.12166613
         NextJoint:
-          x: -0.09681872
+          x: -0.096419014
           y: 0.564
-          z: -0.058850646
+          z: -0.05525613
         Center:
-          x: -0.10247418
+          x: -0.102074474
           y: 0.56905246
-          z: -0.09205565
+          z: -0.08846113
         Direction:
           x: 0.16604415
           y: -0.14834048
@@ -11936,17 +11832,17 @@ MonoBehaviour:
           z: -0.006266236
           w: 0.99368477
       - PrevJoint:
-          x: -0.09681872
+          x: -0.096419014
           y: 0.564
-          z: -0.058850646
+          z: -0.05525613
         NextJoint:
-          x: -0.09021348
+          x: -0.08981377
           y: 0.55809903
-          z: -0.020069238
+          z: -0.01647472
         Center:
-          x: -0.0935161
+          x: -0.09311639
           y: 0.5610495
-          z: -0.039459944
+          z: -0.035865426
         Direction:
           x: 0.16604437
           y: -0.14834034
@@ -11960,17 +11856,17 @@ MonoBehaviour:
           z: -0.006266236
           w: 0.99368477
       - PrevJoint:
-          x: -0.09021348
+          x: -0.08981377
           y: 0.55809903
-          z: -0.020069238
+          z: -0.01647472
         NextJoint:
-          x: -0.0864974
+          x: -0.086097695
           y: 0.5547792
-          z: 0.0017489567
+          z: 0.0053434744
         Center:
-          x: -0.08835544
+          x: -0.08795573
           y: 0.5564391
-          z: -0.0091601405
+          z: -0.005565623
         Direction:
           x: 0.16604441
           y: -0.14834046
@@ -11984,17 +11880,17 @@ MonoBehaviour:
           z: -0.006266236
           w: 0.99368477
       - PrevJoint:
-          x: -0.0864974
+          x: -0.086097695
           y: 0.5547792
-          z: 0.0017489567
+          z: 0.0053434744
         NextJoint:
-          x: -0.08387059
+          x: -0.08347088
           y: 0.5524324
-          z: 0.01717183
+          z: 0.020766348
         Center:
-          x: -0.08518399
+          x: -0.084784284
           y: 0.5536058
-          z: 0.009460393
+          z: 0.013054911
         Direction:
           x: 0.16604386
           y: -0.14834096
@@ -12011,9 +11907,9 @@ MonoBehaviour:
       Id: 1
       HandId: 0
       TipPosition:
-        x: -0.08387059
+        x: -0.08347088
         y: 0.5524324
-        z: 0.01717183
+        z: 0.020766348
       Direction:
         x: 0.16604441
         y: -0.14834046
@@ -12024,17 +11920,17 @@ MonoBehaviour:
       TimeVisible: 0
     - bones:
       - PrevJoint:
-          x: -0.119118266
+          x: -0.11871856
           y: 0.5755828
-          z: -0.122604705
+          z: -0.11901019
         NextJoint:
-          x: -0.11721123
+          x: -0.11681152
           y: 0.566
-          z: -0.058747888
+          z: -0.05515337
         Center:
-          x: -0.11816475
+          x: -0.11776504
           y: 0.57079136
-          z: -0.09067629
+          z: -0.087081775
         Direction:
           x: 0.029520677
           y: -0.14834084
@@ -12048,17 +11944,17 @@ MonoBehaviour:
           z: 0.073994935
           w: 0.9943705
       - PrevJoint:
-          x: -0.11721123
+          x: -0.11681152
           y: 0.566
-          z: -0.058747888
+          z: -0.05515337
         NextJoint:
-          x: -0.115893714
+          x: -0.115494005
           y: 0.5593796
-          z: -0.0146313235
+          z: -0.011036806
         Center:
-          x: -0.11655247
+          x: -0.11615276
           y: 0.5626898
-          z: -0.036689606
+          z: -0.033095088
         Direction:
           x: 0.029520858
           y: -0.14833984
@@ -12072,17 +11968,17 @@ MonoBehaviour:
           z: 0.073994935
           w: 0.9943705
       - PrevJoint:
-          x: -0.115893714
+          x: -0.115494005
           y: 0.5593796
-          z: -0.0146313235
+          z: -0.011036806
         NextJoint:
-          x: -0.11511643
+          x: -0.11471672
           y: 0.55547374
-          z: 0.011395767
+          z: 0.014990285
         Center:
-          x: -0.11550507
+          x: -0.11510536
           y: 0.5574267
-          z: -0.0016177781
+          z: 0.0019767396
         Direction:
           x: 0.029520767
           y: -0.14834154
@@ -12096,17 +11992,17 @@ MonoBehaviour:
           z: 0.073994935
           w: 0.9943705
       - PrevJoint:
-          x: -0.11511643
+          x: -0.11471672
           y: 0.55547374
-          z: 0.011395767
+          z: 0.014990285
         NextJoint:
-          x: -0.114602774
+          x: -0.114203066
           y: 0.5528926
-          z: 0.02859559
+          z: 0.032190107
         Center:
-          x: -0.1148596
+          x: -0.114459895
           y: 0.5541832
-          z: 0.019995678
+          z: 0.023590196
         Direction:
           x: 0.02952057
           y: -0.1483402
@@ -12123,9 +12019,9 @@ MonoBehaviour:
       Id: 2
       HandId: 0
       TipPosition:
-        x: -0.114602774
+        x: -0.114203066
         y: 0.5528926
-        z: 0.02859559
+        z: 0.032190107
       Direction:
         x: 0.029520767
         y: -0.14834154
@@ -12136,17 +12032,17 @@ MonoBehaviour:
       TimeVisible: 0
     - bones:
       - PrevJoint:
-          x: -0.13041073
+          x: -0.13001102
           y: 0.57460374
-          z: -0.12164593
+          z: -0.11805141
         NextJoint:
-          x: -0.13744718
+          x: -0.13704747
           y: 0.566
-          z: -0.06472085
+          z: -0.06112633
         Center:
-          x: -0.13392895
+          x: -0.13352925
           y: 0.5703019
-          z: -0.09318338
+          z: -0.089588866
         Direction:
           x: -0.12131806
           y: -0.14834054
@@ -12160,17 +12056,17 @@ MonoBehaviour:
           z: 0.10489069
           w: 0.9898138
       - PrevJoint:
-          x: -0.13744718
+          x: -0.13704747
           y: 0.566
-          z: -0.06472085
+          z: -0.06112633
         NextJoint:
-          x: -0.1424661
+          x: -0.14206639
           y: 0.55986315
-          z: -0.024117563
+          z: -0.020523045
         Center:
-          x: -0.13995664
+          x: -0.13955693
           y: 0.56293154
-          z: -0.044419207
+          z: -0.04082469
         Direction:
           x: -0.121317856
           y: -0.14834021
@@ -12184,17 +12080,17 @@ MonoBehaviour:
           z: 0.10489069
           w: 0.9898138
       - PrevJoint:
-          x: -0.1424661
+          x: -0.14206639
           y: 0.55986315
-          z: -0.024117563
+          z: -0.020523045
         NextJoint:
-          x: -0.14557792
+          x: -0.14517821
           y: 0.5560582
-          z: 0.001057066
+          z: 0.0046515837
         Center:
-          x: -0.14402202
+          x: -0.14362231
           y: 0.5579607
-          z: -0.011530248
+          z: -0.007935731
         Direction:
           x: -0.12131869
           y: -0.14834005
@@ -12208,17 +12104,17 @@ MonoBehaviour:
           z: 0.10489069
           w: 0.9898138
       - PrevJoint:
-          x: -0.14557792
+          x: -0.14517821
           y: 0.5560582
-          z: 0.001057066
+          z: 0.0046515837
         NextJoint:
-          x: -0.1476767
+          x: -0.147277
           y: 0.55349195
-          z: 0.01803644
+          z: 0.021630958
         Center:
-          x: -0.1466273
+          x: -0.1462276
           y: 0.5547751
-          z: 0.009546753
+          z: 0.013141271
         Direction:
           x: -0.121316984
           y: -0.14833976
@@ -12235,9 +12131,9 @@ MonoBehaviour:
       Id: 3
       HandId: 0
       TipPosition:
-        x: -0.1476767
+        x: -0.147277
         y: 0.55349195
-        z: 0.01803644
+        z: 0.021630958
       Direction:
         x: -0.12131869
         y: -0.14834005
@@ -12248,17 +12144,17 @@ MonoBehaviour:
       TimeVisible: 0
     - bones:
       - PrevJoint:
-          x: -0.14141408
+          x: -0.14101437
           y: 0.56768316
-          z: -0.12381211
+          z: -0.12021759
         NextJoint:
-          x: -0.15533744
+          x: -0.15493773
           y: 0.562
-          z: -0.07227128
+          z: -0.06867676
         Center:
-          x: -0.14837575
+          x: -0.14797604
           y: 0.56484157
-          z: -0.0980417
+          z: -0.09444718
         Direction:
           x: -0.25932878
           y: -0.10585181
@@ -12272,17 +12168,17 @@ MonoBehaviour:
           z: 0.17725913
           w: 0.97394294
       - PrevJoint:
-          x: -0.15533744
+          x: -0.15493773
           y: 0.562
-          z: -0.07227128
+          z: -0.06867676
         NextJoint:
-          x: -0.16382788
+          x: -0.16342817
           y: 0.55853444
-          z: -0.04084183
+          z: -0.03724731
         Center:
-          x: -0.15958266
+          x: -0.15918295
           y: 0.5602672
-          z: -0.056556553
+          z: -0.052962035
         Direction:
           x: -0.25932932
           y: -0.105850115
@@ -12296,17 +12192,17 @@ MonoBehaviour:
           z: 0.17725913
           w: 0.97394294
       - PrevJoint:
-          x: -0.16382788
+          x: -0.16342817
           y: 0.55853444
-          z: -0.04084183
+          z: -0.03724731
         NextJoint:
-          x: -0.16852432
+          x: -0.16812462
           y: 0.55661744
-          z: -0.023456752
+          z: -0.019862235
         Center:
-          x: -0.16617611
+          x: -0.1657764
           y: 0.55757594
-          z: -0.032149293
+          z: -0.028554773
         Direction:
           x: -0.25932872
           y: -0.105853364
@@ -12320,17 +12216,17 @@ MonoBehaviour:
           z: 0.17725913
           w: 0.97394294
       - PrevJoint:
-          x: -0.16852432
+          x: -0.16812462
           y: 0.55661744
-          z: -0.023456752
+          z: -0.019862235
         NextJoint:
-          x: -0.17266321
+          x: -0.1722635
           y: 0.55492806
-          z: -0.008135624
+          z: -0.0045411065
         Center:
-          x: -0.17059377
+          x: -0.17019406
           y: 0.5557728
-          z: -0.015796188
+          z: -0.012201671
         Direction:
           x: -0.25932875
           y: -0.105850525
@@ -12347,9 +12243,9 @@ MonoBehaviour:
       Id: 4
       HandId: 0
       TipPosition:
-        x: -0.17266321
+        x: -0.1722635
         y: 0.55492806
-        z: -0.008135624
+        z: -0.0045411065
       Direction:
         x: -0.25932872
         y: -0.105853364
@@ -12359,9 +12255,9 @@ MonoBehaviour:
       IsExtended: 1
       TimeVisible: 0
     PalmPosition:
-      x: -0.120000005
+      x: -0.119600296
       y: 0.562
-      z: -0.081999995
+      z: -0.07840548
     PalmVelocity:
       x: 0
       y: 0
@@ -12385,29 +12281,29 @@ MonoBehaviour:
     PinchDistance: 0
     PalmWidth: 0.085
     StabilizedPalmPosition:
-      x: -0.120000005
+      x: -0.119600296
       y: 0.562
-      z: -0.081999995
+      z: -0.07840548
     WristPosition:
-      x: -0.12887
+      x: -0.12847029
       y: 0.5615
-      z: -0.16712001
+      z: -0.16352549
     TimeVisible: 0
     Confidence: 1
     IsLeft: 1
     Arm:
       PrevJoint:
-        x: -0.1270581
+        x: -0.1266584
         y: 0.566
-        z: -0.38200003
+        z: -0.3784055
       NextJoint:
-        x: -0.12705812
+        x: -0.12665841
         y: 0.566
-        z: -0.132
+        z: -0.12840548
       Center:
-        x: -0.12705812
+        x: -0.12665841
         y: 0.566
-        z: -0.25700003
+        z: -0.2534055
       Direction:
         x: -0.000000059604645
         y: 0
@@ -12934,7 +12830,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220089293}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c186b0a7f2a4e4646bbee38e1f773635, type: 3}
   m_Name: 
@@ -12952,7 +12848,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220089293}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
@@ -12998,7 +12894,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220089293}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5948241e73f244e49bbe8044011b16e9, type: 3}
   m_Name: 
@@ -14710,7 +14606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1410986143
 AudioListener:
   m_ObjectHideFlags: 0
@@ -15061,7 +14957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1447458171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15451,7 +15347,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487315664}
-  m_LocalRotation: {x: -0.06944278, y: -0.011343509, z: 0.07922408, w: -0.9943705}
+  m_LocalRotation: {x: -0.06944278, y: -0.011343508, z: 0.07922408, w: -0.9943704}
   m_LocalPosition: {x: -0.08142906, y: -0.002755506, z: 0.0044407654}
   m_LocalScale: {x: 1, y: 0.99999917, z: 1.0000002}
   m_Children:
@@ -16200,7 +16096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11435192, guid: b9c7aaf0d314cb847a3b2a20e893f1b6, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11435192, guid: b9c7aaf0d314cb847a3b2a20e893f1b6, type: 3}
       propertyPath: editTimePose
@@ -16592,17 +16488,17 @@ MonoBehaviour:
     Fingers:
     - bones:
       - PrevJoint:
-          x: 0.10066173
+          x: 0.10106144
           y: 0.556
-          z: -0.1351685
+          z: -0.13157398
         NextJoint:
-          x: 0.10066173
+          x: 0.10106144
           y: 0.556
-          z: -0.1351685
+          z: -0.13157398
         Center:
-          x: 0.10066173
+          x: 0.10106144
           y: 0.556
-          z: -0.1351685
+          z: -0.13157398
         Direction:
           x: 0
           y: 0
@@ -16616,17 +16512,17 @@ MonoBehaviour:
           z: 0.5351684
           w: 0.7650837
       - PrevJoint:
-          x: 0.10066173
+          x: 0.10106144
           y: 0.556
-          z: -0.1351685
+          z: -0.13157398
         NextJoint:
-          x: 0.07635861
+          x: 0.07675832
           y: 0.5369036
-          z: -0.100803174
+          z: -0.09720866
         Center:
-          x: 0.08851017
+          x: 0.08890988
           y: 0.5464518
-          z: -0.11798583
+          z: -0.11439131
         Direction:
           x: -0.52581394
           y: -0.41316253
@@ -16640,17 +16536,17 @@ MonoBehaviour:
           z: 0.5351684
           w: 0.7650837
       - PrevJoint:
-          x: 0.07635861
+          x: 0.07675832
           y: 0.5369036
-          z: -0.100803174
+          z: -0.09720866
         NextJoint:
-          x: 0.059758652
+          x: 0.06015836
           y: 0.5238601
-          z: -0.077330366
+          z: -0.07373585
         Center:
-          x: 0.06805863
+          x: 0.06845834
           y: 0.53038186
-          z: -0.08906677
+          z: -0.085472256
         Direction:
           x: -0.52581424
           y: -0.41316193
@@ -16664,17 +16560,17 @@ MonoBehaviour:
           z: 0.5351684
           w: 0.7650837
       - PrevJoint:
-          x: 0.059758652
+          x: 0.06015836
           y: 0.5238601
-          z: -0.077330366
+          z: -0.07373585
         NextJoint:
-          x: 0.04836425
+          x: 0.04876396
           y: 0.5149069
-          z: -0.061218373
+          z: -0.057623856
         Center:
-          x: 0.05406145
+          x: 0.05446116
           y: 0.5193835
-          z: -0.069274366
+          z: -0.06567985
         Direction:
           x: -0.5258145
           y: -0.41316167
@@ -16691,9 +16587,9 @@ MonoBehaviour:
       Id: 0
       HandId: 0
       TipPosition:
-        x: 0.04836425
+        x: 0.04876396
         y: 0.5149069
-        z: -0.061218373
+        z: -0.057623856
       Direction:
         x: -0.52581424
         y: -0.41316193
@@ -16704,17 +16600,17 @@ MonoBehaviour:
       TimeVisible: 0
     - bones:
       - PrevJoint:
-          x: 0.10812965
+          x: 0.10852936
           y: 0.57410496
-          z: -0.12526067
+          z: -0.12166615
         NextJoint:
-          x: 0.09681872
+          x: 0.09721843
           y: 0.564
-          z: -0.05885066
+          z: -0.055256143
         Center:
-          x: 0.10247418
+          x: 0.10287389
           y: 0.56905246
-          z: -0.09205566
+          z: -0.088461146
         Direction:
           x: -0.16604415
           y: -0.14834048
@@ -16728,17 +16624,17 @@ MonoBehaviour:
           z: 0.0062662293
           w: 0.99368477
       - PrevJoint:
-          x: 0.09681872
+          x: 0.09721843
           y: 0.564
-          z: -0.05885066
+          z: -0.055256143
         NextJoint:
-          x: 0.09021349
+          x: 0.0906132
           y: 0.55809903
-          z: -0.020069253
+          z: -0.016474735
         Center:
-          x: 0.09351611
+          x: 0.09391582
           y: 0.5610495
-          z: -0.03945996
+          z: -0.03586544
         Direction:
           x: -0.166044
           y: -0.14834034
@@ -16752,17 +16648,17 @@ MonoBehaviour:
           z: 0.0062662293
           w: 0.99368477
       - PrevJoint:
-          x: 0.09021349
+          x: 0.0906132
           y: 0.55809903
-          z: -0.020069253
+          z: -0.016474735
         NextJoint:
-          x: 0.08649742
+          x: 0.08689713
           y: 0.5547792
-          z: 0.0017489418
+          z: 0.0053434595
         Center:
-          x: 0.08835545
+          x: 0.08875516
           y: 0.5564391
-          z: -0.009160155
+          z: -0.0055656377
         Direction:
           x: -0.16604441
           y: -0.14834046
@@ -16776,17 +16672,17 @@ MonoBehaviour:
           z: 0.0062662293
           w: 0.99368477
       - PrevJoint:
-          x: 0.08649742
+          x: 0.08689713
           y: 0.5547792
-          z: 0.0017489418
+          z: 0.0053434595
         NextJoint:
-          x: 0.083870605
+          x: 0.08427031
           y: 0.5524324
-          z: 0.017171815
+          z: 0.020766333
         Center:
-          x: 0.08518401
+          x: 0.08558372
           y: 0.5536058
-          z: 0.009460378
+          z: 0.013054896
         Direction:
           x: -0.16604386
           y: -0.14834096
@@ -16803,9 +16699,9 @@ MonoBehaviour:
       Id: 1
       HandId: 0
       TipPosition:
-        x: 0.083870605
+        x: 0.08427031
         y: 0.5524324
-        z: 0.017171815
+        z: 0.020766333
       Direction:
         x: -0.16604441
         y: -0.14834046
@@ -16816,17 +16712,17 @@ MonoBehaviour:
       TimeVisible: 0
     - bones:
       - PrevJoint:
-          x: 0.119118266
+          x: 0.119517975
           y: 0.5755828
-          z: -0.12260473
+          z: -0.11901021
         NextJoint:
-          x: 0.11721123
+          x: 0.11761094
           y: 0.566
-          z: -0.058747903
+          z: -0.055153385
         Center:
-          x: 0.11816475
+          x: 0.11856446
           y: 0.57079136
-          z: -0.090676315
+          z: -0.0870818
         Direction:
           x: -0.029520677
           y: -0.14834084
@@ -16840,17 +16736,17 @@ MonoBehaviour:
           z: -0.07399494
           w: 0.9943705
       - PrevJoint:
-          x: 0.11721123
+          x: 0.11761094
           y: 0.566
-          z: -0.058747903
+          z: -0.055153385
         NextJoint:
-          x: 0.11589373
+          x: 0.11629344
           y: 0.5593796
-          z: -0.014631338
+          z: -0.011036821
         Center:
-          x: 0.11655248
+          x: 0.11695219
           y: 0.5626898
-          z: -0.03668962
+          z: -0.033095103
         Direction:
           x: -0.029520525
           y: -0.14833984
@@ -16864,17 +16760,17 @@ MonoBehaviour:
           z: -0.07399494
           w: 0.9943705
       - PrevJoint:
-          x: 0.11589373
+          x: 0.11629344
           y: 0.5593796
-          z: -0.014631338
+          z: -0.011036821
         NextJoint:
-          x: 0.11511645
+          x: 0.115516156
           y: 0.55547374
-          z: 0.011395752
+          z: 0.01499027
         Center:
-          x: 0.115505084
+          x: 0.11590479
           y: 0.5574267
-          z: -0.001617793
+          z: 0.0019767247
         Direction:
           x: -0.029520767
           y: -0.14834154
@@ -16888,17 +16784,17 @@ MonoBehaviour:
           z: -0.07399494
           w: 0.9943705
       - PrevJoint:
-          x: 0.11511645
+          x: 0.115516156
           y: 0.55547374
-          z: 0.011395752
+          z: 0.01499027
         NextJoint:
-          x: 0.11460279
+          x: 0.1150025
           y: 0.5528926
-          z: 0.028595574
+          z: 0.032190092
         Center:
-          x: 0.11485962
+          x: 0.11525933
           y: 0.5541832
-          z: 0.019995663
+          z: 0.023590181
         Direction:
           x: -0.02952057
           y: -0.1483402
@@ -16915,9 +16811,9 @@ MonoBehaviour:
       Id: 2
       HandId: 0
       TipPosition:
-        x: 0.11460279
+        x: 0.1150025
         y: 0.5528926
-        z: 0.028595574
+        z: 0.032190092
       Direction:
         x: -0.029520767
         y: -0.14834154
@@ -16928,17 +16824,17 @@ MonoBehaviour:
       TimeVisible: 0
     - bones:
       - PrevJoint:
-          x: 0.13041073
+          x: 0.13081044
           y: 0.57460374
-          z: -0.12164594
+          z: -0.118051425
         NextJoint:
-          x: 0.13744718
+          x: 0.13784689
           y: 0.566
-          z: -0.06472087
+          z: -0.06112635
         Center:
-          x: 0.13392895
+          x: 0.13432866
           y: 0.5703019
-          z: -0.093183406
+          z: -0.08958889
         Direction:
           x: 0.12131806
           y: -0.14834054
@@ -16952,17 +16848,17 @@ MonoBehaviour:
           z: -0.1048907
           w: 0.9898138
       - PrevJoint:
-          x: 0.13744718
+          x: 0.13784689
           y: 0.566
-          z: -0.06472087
+          z: -0.06112635
         NextJoint:
-          x: 0.1424661
+          x: 0.1428658
           y: 0.55986315
-          z: -0.024117589
+          z: -0.020523071
         Center:
-          x: 0.13995664
+          x: 0.14035635
           y: 0.56293154
-          z: -0.04441923
+          z: -0.04082471
         Direction:
           x: 0.121317856
           y: -0.14834021
@@ -16976,17 +16872,17 @@ MonoBehaviour:
           z: -0.1048907
           w: 0.9898138
       - PrevJoint:
-          x: 0.1424661
+          x: 0.1428658
           y: 0.55986315
-          z: -0.024117589
+          z: -0.020523071
         NextJoint:
-          x: 0.14557792
+          x: 0.14597763
           y: 0.5560582
-          z: 0.0010570362
+          z: 0.004651554
         Center:
-          x: 0.14402202
+          x: 0.14442173
           y: 0.5579607
-          z: -0.011530276
+          z: -0.007935759
         Direction:
           x: 0.12131869
           y: -0.14834005
@@ -17000,17 +16896,17 @@ MonoBehaviour:
           z: -0.1048907
           w: 0.9898138
       - PrevJoint:
-          x: 0.14557792
+          x: 0.14597763
           y: 0.5560582
-          z: 0.0010570362
+          z: 0.004651554
         NextJoint:
-          x: 0.14767674
+          x: 0.14807644
           y: 0.55349195
-          z: 0.01803641
+          z: 0.021630928
         Center:
-          x: 0.14662734
+          x: 0.14702705
           y: 0.5547751
-          z: 0.009546723
+          z: 0.013141241
         Direction:
           x: 0.121318705
           y: -0.14833976
@@ -17027,9 +16923,9 @@ MonoBehaviour:
       Id: 3
       HandId: 0
       TipPosition:
-        x: 0.14767674
+        x: 0.14807644
         y: 0.55349195
-        z: 0.01803641
+        z: 0.021630928
       Direction:
         x: 0.12131869
         y: -0.14834005
@@ -17040,17 +16936,17 @@ MonoBehaviour:
       TimeVisible: 0
     - bones:
       - PrevJoint:
-          x: 0.14141408
+          x: 0.14181378
           y: 0.56768316
-          z: -0.12381214
+          z: -0.12021762
         NextJoint:
-          x: 0.15533744
+          x: 0.15573715
           y: 0.562
-          z: -0.0722713
+          z: -0.068676785
         Center:
-          x: 0.14837575
+          x: 0.14877546
           y: 0.56484157
-          z: -0.09804172
+          z: -0.0944472
         Direction:
           x: 0.25932878
           y: -0.10585181
@@ -17064,17 +16960,17 @@ MonoBehaviour:
           z: -0.17725913
           w: 0.97394294
       - PrevJoint:
-          x: 0.15533744
+          x: 0.15573715
           y: 0.562
-          z: -0.0722713
+          z: -0.068676785
         NextJoint:
-          x: 0.16382788
+          x: 0.16422759
           y: 0.55853444
-          z: -0.04084186
+          z: -0.03724734
         Center:
-          x: 0.15958266
+          x: 0.15998237
           y: 0.5602672
-          z: -0.056556582
+          z: -0.052962065
         Direction:
           x: 0.25932932
           y: -0.105850115
@@ -17088,17 +16984,17 @@ MonoBehaviour:
           z: -0.17725913
           w: 0.97394294
       - PrevJoint:
-          x: 0.16382788
+          x: 0.16422759
           y: 0.55853444
-          z: -0.04084186
+          z: -0.03724734
         NextJoint:
-          x: 0.16852432
+          x: 0.16892403
           y: 0.55661744
-          z: -0.023456782
+          z: -0.019862264
         Center:
-          x: 0.16617611
+          x: 0.16657582
           y: 0.55757594
-          z: -0.032149322
+          z: -0.028554803
         Direction:
           x: 0.25932872
           y: -0.105853364
@@ -17112,17 +17008,17 @@ MonoBehaviour:
           z: -0.17725913
           w: 0.97394294
       - PrevJoint:
-          x: 0.16852432
+          x: 0.16892403
           y: 0.55661744
-          z: -0.023456782
+          z: -0.019862264
         NextJoint:
-          x: 0.17266321
+          x: 0.17306292
           y: 0.55492806
-          z: -0.008135654
+          z: -0.0045411363
         Center:
-          x: 0.17059377
+          x: 0.17099348
           y: 0.5557728
-          z: -0.015796218
+          z: -0.0122017
         Direction:
           x: 0.25932875
           y: -0.105850525
@@ -17139,9 +17035,9 @@ MonoBehaviour:
       Id: 4
       HandId: 0
       TipPosition:
-        x: 0.17266321
+        x: 0.17306292
         y: 0.55492806
-        z: -0.008135654
+        z: -0.0045411363
       Direction:
         x: 0.25932872
         y: -0.105853364
@@ -17151,9 +17047,9 @@ MonoBehaviour:
       IsExtended: 1
       TimeVisible: 0
     PalmPosition:
-      x: 0.120000005
+      x: 0.12039971
       y: 0.562
-      z: -0.08200001
+      z: -0.07840549
     PalmVelocity:
       x: 0
       y: 0
@@ -17177,29 +17073,29 @@ MonoBehaviour:
     PinchDistance: 0
     PalmWidth: 0.085
     StabilizedPalmPosition:
-      x: 0.120000005
+      x: 0.12039971
       y: 0.562
-      z: -0.08200001
+      z: -0.07840549
     WristPosition:
-      x: 0.12887
+      x: 0.1292697
       y: 0.5615
-      z: -0.16712001
+      z: -0.16352549
     TimeVisible: 0
     Confidence: 1
     IsLeft: 0
     Arm:
       PrevJoint:
-        x: 0.12705806
+        x: 0.12745777
         y: 0.566
-        z: -0.38200003
+        z: -0.3784055
       NextJoint:
-        x: 0.1270581
+        x: 0.12745781
         y: 0.566
-        z: -0.13200001
+        z: -0.1284055
       Center:
-        x: 0.12705809
+        x: 0.1274578
         y: 0.566
-        z: -0.25700003
+        z: -0.2534055
       Direction:
         x: 0.00000017881393
         y: 0
@@ -18069,7 +17965,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 6
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!135 &1700037858
 SphereCollider:
@@ -18829,7 +18725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1796535331
 Transform:
   m_ObjectHideFlags: 0
@@ -20235,7 +20131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotAngle: 20
   spinningTime: 1
-  forwardForce: 1
+  forwardForce: 0
   turnLeft: 0
   turnRight: 0
   leftPaddle: {fileID: 643954153}
@@ -20249,7 +20145,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993805481}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 163b0940d4cdf412f9e9063b42725450, type: 3}
   m_Name: 
@@ -20310,7 +20206,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993805481}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eef0db43981db4518856e70d87db08c3, type: 3}
   m_Name: 
@@ -20358,110 +20254,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 472819219}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2003301854
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2003301858}
-  - component: {fileID: 2003301857}
-  - component: {fileID: 2003301856}
-  - component: {fileID: 2003301855}
-  m_Layer: 0
-  m_Name: ArcMesh (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &2003301855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003301854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42e0af0ddd9f04049bf21c5343bae99d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arcHeight: 0.1
-  sidesPerAngle: 1
-  arcAngle: 200
-  arcSides: 0
-  arcWidth: 3
-  arcRadius: 40
-  xPos: 68.373
-  zPos: -24.459
-  xRot: 1
-  yRot: 0
---- !u!23 &2003301856
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003301854}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 5f51be2ba9fae4ebbbdbf644a0db934a, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2003301857
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003301854}
-  m_Mesh: {fileID: 0}
---- !u!4 &2003301858
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003301854}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.64, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2020776465
 GameObject:
