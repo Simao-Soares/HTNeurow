@@ -29,6 +29,7 @@ public class ArcRenderer : MonoBehaviour
 	MeshFilter viewMeshFilter;
 	MeshRenderer meshRenderer;
 	Mesh viewMesh;
+    MeshCollider meshCollider;
 	
 
 	Material arcMaterial;
@@ -41,17 +42,10 @@ public class ArcRenderer : MonoBehaviour
     public float yRot;  //important to define for every arc except the first, where it is 0
 
 
-	// Start is called before the first frame update
-	void Start()
-    {
-        DrawArcMesh();
-    }
-
-
 
 	public void DrawArcMesh()
 	{
-        gameObject.transform.position = new Vector3(xPos, 0.64f, zPos);
+        gameObject.transform.position = new Vector3(xPos, -0.1f, zPos);
 		if(xRot) gameObject.transform.eulerAngles = new Vector3(0, yRot, 0);          // <-----------------------------------------------------------
 		else gameObject.transform.eulerAngles = new Vector3(180f, yRot, 0);
 
@@ -77,9 +71,12 @@ public class ArcRenderer : MonoBehaviour
 		viewMeshFilter.mesh = viewMesh;
 
 		arcMaterial = meshRenderer.sharedMaterial;
-		
 
-	}
+        meshCollider = GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = viewMesh;
+
+
+    }
 
 
 	public Mesh CreateArcMesh(string name, int sides, float width, float radius, int arcAngle)

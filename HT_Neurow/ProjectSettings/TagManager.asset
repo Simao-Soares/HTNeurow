@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerPos
+  - LeapHands
+  - rigidHand
+  - PathArcs
   layers:
   - Default
   - TransparentFX
