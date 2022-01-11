@@ -127,14 +127,14 @@ public class PathGame : MonoBehaviour
 
                 //------------------------------------------------------------
 
-                closestPointBoat = FindClosestPoint(transform.position);
-                distanceBoatToPath = Vector3.Distance(transform.position, closestPointBoat);
-                UpdateScore(distanceBoatToPath);
-                this.playerScoreText.text = ((int)playerScore).ToString();
-                this.distanceText.text = ((int)distanceBoatToPath).ToString();
+                //closestPointBoat = FindClosestPoint(transform.position);
+                //distanceBoatToPath = Vector3.Distance(transform.position, closestPointBoat);
+                //UpdateScore(distanceBoatToPath);
+                //this.playerScoreText.text = ((int)playerScore).ToString();
+                //this.distanceText.text = ((int)distanceBoatToPath).ToString();
 
-                BackOnTrack(); 
-                if (auxCorrection) StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
+                //BackOnTrack(); 
+                //if (auxCorrection) StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
                
 
 
