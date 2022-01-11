@@ -8,8 +8,11 @@ public class PathGame : MonoBehaviour
 {
 
     //STILL NEED TO FIGURE OUT:
-    private float boatSpeed;         //update boat movement method so this can be its actual speed
-    public float challengeLevel;    //determine how to measure challenge level based on radius and angle of arcs (lower radius => tighter curves, lower angles => more curves)
+    public float boatSpeed;         //update boat movement method so this can be its actual speed
+
+    [Range(1, 5)]
+    public int challengeLevel;    //determine how to measure challenge level based on radius and angle of arcs (lower radius => tighter curves, lower angles => more curves)
+
 
     //PRIMARY TASK SETTINGS
     public float totalTaskTime = 60f;
