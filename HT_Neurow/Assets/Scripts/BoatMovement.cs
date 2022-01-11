@@ -14,7 +14,7 @@ public class BoatMovement : MonoBehaviour
     public float forwardForce; 
 
 
-    bool cooldownActivated;
+    public bool cooldownActivated;
   
     float timeStarted;
     float timeSinceStarted;
@@ -29,17 +29,22 @@ public class BoatMovement : MonoBehaviour
     public Animator R_rowAnimator;
 
     Quaternion rotateB;
-    Quaternion rotateA;
+    public Quaternion rotateA;
 
-    int countl = 0;
-    int countr = 0;
+    public int countl = 0;
+    public int countr = 0;
+
+
+    //-------------------------
+    public bool debugAux = false;
+    //-------------------------
 
 
     // Start is called before the first frame update
     void Start(){
 
         rb = GetComponent<Rigidbody>(); 
-        rb.AddForce(0, 0, forwardForce, ForceMode.Impulse); //sketchy
+        //rb.AddForce(0, 0, forwardForce, ForceMode.Impulse); //sketchy
 
         L_rowAnimator.SetFloat("Time", 0.7f/spinningTime ); //0.7 was trial and error
         R_rowAnimator.SetFloat("Time", 0.7f/spinningTime );
@@ -48,28 +53,34 @@ public class BoatMovement : MonoBehaviour
 
     private void Update(){
 
-		int cm = GameManager.ControlMethod; 
+		int cm = GameManager.ControlMethod;
+
+
 
         //checks input + if cooldown is over + selected control method corresponds to the input 
-        if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1) ||(turnLeft == true && cooldownActivated == false && cm == -1)){
+        if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1)||
+            (turnLeft == true && cooldownActivated == false && cm == -1))                                 
+        {
             Turn(true); //turn to the left side=true
             cooldownActivated = true;
             turnLeft = false;
 			if(cm == 1) R_rowAnimator.SetBool("Turning", true);
         }
 
-        else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1) ||(turnRight == true && cooldownActivated == false && cm == -1)){
+        else if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1) ||
+                 (turnRight == true && cooldownActivated == false && cm == -1))  
+        {
             Turn(false); //turn to the right side=false
             cooldownActivated = true;
             turnRight = false;
 			if(cm == 1) L_rowAnimator.SetBool("Turning", true);
         }
 
-        if(cooldownActivated) RunCooldownTimer(GameManager.ControlMethod);
+        if(cooldownActivated) RunCooldownTimer();
 
         //Change movement direction
-        rb.velocity=Vector3.zero;
-        rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse); 
+        rb.velocity = Vector3.zero;
+        rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
     }
 
 
@@ -77,24 +88,27 @@ public class BoatMovement : MonoBehaviour
     public void Turn(bool side){
         cooldownActivated = true;
         timeStarted = Time.time;
-        rotateA.eulerAngles = this.transform.rotation.eulerAngles;
-
-        //Debug.Log(rotateA.eulerAngles);
+        rotateA.eulerAngles = transform.rotation.eulerAngles;         
 
         if(side){
-            countl++;
-            rotateB.eulerAngles = rotateA * new Vector3(0, rotAngle * (countr-countl), 0);
-            //Debug.Log(rotateB.eulerAngles);
+            //countl++;
+            //rotateB.eulerAngles = rotateA * new Vector3(0, rotAngle * (countr-countl), 0);
+           
+            rotateB = Quaternion.Euler(0, rotateA.eulerAngles.y - rotAngle, 0); //(rotAngle * (countr - countl))
+
         }
         else if(side==false){
-            countr++;
-            rotateB.eulerAngles = rotateA * new Vector3(0, rotAngle * (countr-countl), 0);
-            //Debug.Log(rotateB.eulerAngles);
+            //countr++;
+            //rotateB.eulerAngles = rotateA * new Vector3(0, rotAngle * (countr-countl), 0);
+
+            rotateB = Quaternion.Euler(0, rotateA.eulerAngles.y + rotAngle, 0);
+
+
         }
     }
 
 
-    void RunCooldownTimer(int auxControl){  //runs until rotation is complete and 
+    void RunCooldownTimer(){  //runs until rotation is complete 
         float timeSinceStarted = Time.time - timeStarted;
         float percentageComplete = timeSinceStarted / spinningTime;
 
@@ -107,4 +121,5 @@ public class BoatMovement : MonoBehaviour
             R_rowAnimator.SetBool("Turning", false);
         }
     }
+
 }

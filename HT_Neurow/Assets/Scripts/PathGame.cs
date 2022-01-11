@@ -12,10 +12,22 @@ public class PathGame : MonoBehaviour
     public float challengeLevel;    //determine how to measure challenge level based on radius and angle of arcs (lower radius => tighter curves, lower angles => more curves)
 
     //PRIMARY TASK SETTINGS
-    public float totalTaskTime;
-    public float pathWidth;
+    public float totalTaskTime = 60f;
+    public float pathWidth = 2f;
+
+    public float maxDeviationAngle = 150f;
+    public float maxDistance = 5f; 
+    public float maxDistanceNoAngle = 10f;
+
 
     public GameObject renderer;
+
+    public float correctionSpeed = 0.5f;
+    public bool auxCorrection = false;
+
+    public Vector3 vectorToPathFront = Vector3.zero;
+    public Vector3 boatOrientation = Vector3.zero;
+
 
     //SECUNDARY TASK SETTINGS
     public float instructionsTime;
@@ -39,7 +51,21 @@ public class PathGame : MonoBehaviour
     private float playerScore = 0;
     private bool timerIsRunning = false;
     private bool auxI;
-    private float distanceToPath;
+
+    //relative to the boat position
+    private float distanceBoatToPath; 
+    private Vector3 closestPointBoat;
+    //relative to the auxiliar point in front 
+    private float distanceToPathFront;
+    private Vector3 closestPointFront;
+
+
+    private Rigidbody rb;
+
+    
+    private Quaternion correctionRotation;
+
+    BoatMovement movementScript;
 
 
     public class ArcClass
@@ -54,11 +80,18 @@ public class PathGame : MonoBehaviour
         public float centerY;
         public float yRotation;
 
+        //GameObject
+        public GameObject arcObj;
+
     }
     private List<ArcClass> listArcs = new List<ArcClass>();
 
-    //public GameObject boat;
 
+    //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
+    public GameObject ball;
+    public GameObject ball2;
+    public GameObject ball3;
+    //-----------------//-----------------//-----------------------------------------//-----------------//-----------------
 
 
     // Start is called before the first frame update
@@ -72,6 +105,11 @@ public class PathGame : MonoBehaviour
         //tempScoreUI.SetActive(false);
         auxI = true;
         timerIsRunning = true;
+
+        rb = GetComponent<Rigidbody>();
+        movementScript = GetComponent<BoatMovement>();
+
+
     }
 
     // Update is called once per frame
@@ -86,10 +124,16 @@ public class PathGame : MonoBehaviour
 
                 //------------------------------------------------------------
 
-                FindDistanceToPath();
-                UpdateScore(distanceToPath);
+                closestPointBoat = FindClosestPoint(transform.position);
+                distanceBoatToPath = Vector3.Distance(transform.position, closestPointBoat);
+                UpdateScore(distanceBoatToPath);
                 this.playerScoreText.text = ((int)playerScore).ToString();
-                this.distanceText.text = ((int)distanceToPath).ToString();
+                this.distanceText.text = ((int)distanceBoatToPath).ToString();
+
+                BackOnTrack(); 
+                if (auxCorrection) StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
+               
+
 
                 //------------------------------------------------------------
 
@@ -104,7 +148,7 @@ public class PathGame : MonoBehaviour
                 totalTaskTime = 0;
                 timerIsRunning = false;
                 normalUI.SetActive(false);
-                this.finalScoreText.text = playerScore.ToString();
+                this.finalScoreText.text = ((int)playerScore).ToString();
 
                 gameOverUI.SetActive(true);
 
@@ -155,56 +199,55 @@ public class PathGame : MonoBehaviour
         int nArcs = 0;
         float arcLength = 0;
 
-        //ArcClass newArc = new ArcClass();
-        //ArcClass newArc1 = new ArcClass();
-        //ArcClass newArc2 = new ArcClass();
+        ArcClass newArc = new ArcClass();
+        ArcClass newArc1 = new ArcClass();
+        ArcClass newArc2 = new ArcClass();
 
-        //newArc.arcID = 0;
-        //newArc.angle = 125;
-        //newArc.radius = 20f;
+        newArc.arcID = 0;
+        newArc.angle = 60;
+        newArc.radius = 20f;
 
-        //newArc1.arcID = 1;
-        //newArc1.angle = 55;
-        //newArc1.radius = 30f;
+        newArc1.arcID = 1;
+        newArc1.angle = 40;
+        newArc1.radius = 30f;
 
-        //newArc2.arcID = 2;
-        //newArc2.angle = 40;
-        //newArc2.radius = 50f;
-        //listArcs.Add(newArc);
-        //listArcs.Add(newArc1);
-        //listArcs.Add(newArc2);
+        newArc2.arcID = 2;
+        newArc2.angle = 40;
+        newArc2.radius = 20;
+
+        listArcs.Add(newArc);
+        listArcs.Add(newArc1);
+        listArcs.Add(newArc2);
 
 
 
 
 
         //while (pathLength < totalPathLength)
-        for (int i = 0; i < 3; i++)                      //<-------------------------------------------------- testing 3 arcs
-        {
-            //Later define range of radius and angle values based on dificulty level
-            float newRadius = Random.Range(20f, 50f);
-            float newAngle = Random.Range(45f, 225f);
+        //for (int i = 0; i < 3; i++)                      //<-------------------------------------------------- testing 3 arcs
+        //{
+        //    //Later define range of radius and angle values based on dificulty level
+        //    float newRadius = Random.Range(20f, 50f);
+        //    float newAngle = Random.Range(45f, 225f);
 
-            //Adding new arc to the list
-            ArcClass newArc = new ArcClass();
-            newArc.radius = newRadius;
+        //    //Adding new arc to the list
+        //    ArcClass newArc = new ArcClass();
+        //    newArc.radius = newRadius;
 
-            //ArcRenderer takes int arcAngle, +1 so that the path doesn't end sonner than the time
-            newArc.angle = (int)Mathf.Round(newAngle) + 1;
-            newArc.arcID = nArcs;
-            listArcs.Add(newArc);
+        //    //ArcRenderer takes int arcAngle, +1 so that the path doesn't end sonner than the time
+        //    newArc.angle = (int)Mathf.Round(newAngle) + 1;
+        //    newArc.arcID = nArcs;
+        //    listArcs.Add(newArc);
 
-            //Calculating arc length and adding it to the total path length
-            arcLength = (newAngle / 360f) * 2 * Mathf.PI * newRadius;
-            pathLength += arcLength;
-            nArcs++;
-        }
+        //    //Calculating arc length and adding it to the total path length
+        //    arcLength = (newAngle / 360f) * 2 * Mathf.PI * newRadius;
+        //    pathLength += arcLength;
+        //    nArcs++;
+        //}
     }
 
     private void PathRenderer()
     {
-
-
         int auxInit;
         float prevAngle, prevRadius, prevCenterX, prevCenterY, prevYrot;
 
@@ -212,6 +255,7 @@ public class PathGame : MonoBehaviour
         {
             //ar = gameObject.GetComponent<ArcRenderer>();
             GameObject rendererObj = Instantiate(renderer);
+            arc.arcObj = rendererObj;                                 //<-------------------------------------------------- clean, no need for rendererObj
             ArcRenderer ar = rendererObj.GetComponent<ArcRenderer>();
 
             ar.arcWidth = pathWidth;
@@ -279,45 +323,40 @@ public class PathGame : MonoBehaviour
                     listArcs[arc.arcID].yRotation = ar.yRot = -(prevAngle - (listArcs[0].angle - 90));
 
                 }
-
-
             }
-
             ar.DrawArcMesh();
         }
     }
 
 
-    public GameObject FindClosestArc()
+    public GameObject FindClosestArc(Vector3 point)     
     {
-        GameObject[] arcs;
-        arcs = GameObject.FindGameObjectsWithTag("PathArcs");
         GameObject closest = null;
         float distance = Mathf.Infinity;
-        Vector3 boatPosition = gameObject.transform.position;
-        foreach (GameObject arc in arcs)
+        //Vector3 boatPosition = gameObject.transform.position;
+        foreach (ArcClass arc in listArcs)
         {
-            Vector3 diff = arc.transform.position - boatPosition;
-            float curDistance = diff.sqrMagnitude;
+            var centerArc = new Vector3(arc.centerX, 0f, arc.centerY);              //---------------------------------------------------------> CHANGE centerY to centerZ and arcID to id
+            float curDistance = Vector3.Distance(centerArc, point) - arc.radius;
+            
             if (curDistance < distance)
             {
-                closest = arc;
+                closest = arc.arcObj;
                 distance = curDistance;
             }
         }
         return closest;
     }
 
-    public void FindDistanceToPath()
+    public Vector3 FindClosestPoint(Vector3 point)
     {
-        var closestArc = FindClosestArc();
+        GameObject closestArc = FindClosestArc(point);
         var collider = closestArc.GetComponent<MeshCollider>();
-        var boatPosition = gameObject.transform.position;
-
-        Vector3 closestPoint = collider.ClosestPoint(boatPosition);
-        Debug.Log(closestPoint);
-        distanceToPath = Vector3.Distance(boatPosition, closestPoint);
+        Vector3 closestPoint = collider.ClosestPoint(point);
+        return closestPoint;                                                                                                                       
     }
+
+
 
     public void UpdateScore(float distance)  //Maybe change multipliers
     {
@@ -325,4 +364,61 @@ public class PathGame : MonoBehaviour
         else playerScore+=0.2f;
     }
 
+
+    public void BackOnTrack()                 //-----> MESS
+    {
+        float angleFront, angleTan;
+        Vector3 boatPos, frontOfBoat, vectorToPath;
+        var rowing = movementScript.cooldownActivated; //turning
+
+        if (!auxCorrection) {
+
+            boatPos = gameObject.transform.position;
+            frontOfBoat = boatPos + 5*transform.forward;
+            boatOrientation = frontOfBoat - boatPos;
+            closestPointBoat = FindClosestPoint(transform.position);
+            closestPointFront = FindClosestPoint(frontOfBoat);
+
+            vectorToPath = closestPointBoat + new Vector3(0, +0.362237f, 0) - boatPos; 
+            vectorToPathFront = closestPointFront + new Vector3(0, +0.362237f, 0) - boatPos;
+
+            angleTan = Vector3.Angle(boatOrientation, vectorToPath);
+
+            //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
+            ball.transform.position = closestPointBoat; //Debug
+            ball2.transform.position = frontOfBoat; //Debug
+            ball3.transform.position = closestPointFront;
+            //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
+            //if (vectorToPath != Vector3.zero) correctionRotation = Quaternion.LookRotation(vectorToPath, new Vector3(0, 1, 0));
+            
+            if (vectorToPathFront != Vector3.zero) correctionRotation = Quaternion.LookRotation(vectorToPathFront, new Vector3(0, 1, 0)); //correction angle (rotation) is based on the point in front
+           
+            if (!rowing) {  
+                if (angleTan > maxDeviationAngle && distanceBoatToPath > maxDistance || distanceBoatToPath > maxDistanceNoAngle)    //maxDeviation verified with angle deviation in relation to tan to path
+                {
+                    movementScript.enabled = false;
+                    rb.velocity = Vector3.zero;
+                    auxCorrection = true;
+                    Debug.Log("what");
+                }
+            }
+        }
+
+        else
+        {
+            angleFront = Vector3.Angle(boatOrientation, vectorToPathFront);
+            if (angleFront < 10f)
+            {
+                auxCorrection = false;
+                movementScript.enabled = true;
+            }
+        }
+    }
+
+    IEnumerator CorrectionCoroutine(float speed, Quaternion rotation)
+    {
+        Quaternion current = transform.rotation;
+        transform.localRotation = Quaternion.Lerp(current, rotation, speed * Time.deltaTime);
+        yield return null;
+    }
 }
