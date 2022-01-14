@@ -7,29 +7,37 @@ using UnityEngine.SceneManagement;
 public class PathGame : MonoBehaviour
 {
 
-    //STILL NEED TO FIGURE OUT:
-    public float boatSpeed;         //update boat movement method so this can be its actual speed
+        
 
-    [Range(1, 5)]
-    public int challengeLevel;    //determine how to measure challenge level based on radius and angle of arcs (lower radius => tighter curves, lower angles => more curves)
 
+    //PRIMARY ELEMENTS
+    public GameObject meshHolder;
+    public GameObject pathRenderer;
+
+    public GameObject pathCreator; 
+    [HideInInspector] public List<Vector2> anchorPoints;    //(-x, z)
+    [HideInInspector] public List<Vector2> vectorPoints;    //(z, -x)
+
+    [HideInInspector] public float boatSpeed;
 
     //PRIMARY TASK SETTINGS
+    [Range(1, 5)]
+    public int challengeLevel;
     public float totalTaskTime = 60f;
-    public float pathWidth = 2f;
+    public float scoreMultiplier = 0.1f;
 
+    //Test these ranges:
+    [Range(120, 170)]           
     public float maxDeviationAngle = 150f;
-    public float maxDistance = 5f; 
+    [Range(5, 10)]
+    public float maxDistance = 5f;
+    [Range(10, 20)]
     public float maxDistanceNoAngle = 10f;
-
-
-    public GameObject renderer;
-
+    //[Range(10, 20)]
     public float correctionSpeed = 0.5f;
-    public bool auxCorrection = false;
 
-    public Vector3 vectorToPathFront = Vector3.zero;
-    public Vector3 boatOrientation = Vector3.zero;
+    [HideInInspector] public bool auxCorrection = false;
+
 
 
     //SECUNDARY TASK SETTINGS
@@ -55,12 +63,8 @@ public class PathGame : MonoBehaviour
     private bool timerIsRunning = false;
     private bool auxI;
 
-    //relative to the boat position
-    private float distanceBoatToPath; 
     private Vector3 closestPointBoat;
-    //relative to the auxiliar point in front 
-    private float distanceToPathFront;
-    private Vector3 closestPointFront;
+
 
 
     private Rigidbody rb;
@@ -69,25 +73,6 @@ public class PathGame : MonoBehaviour
     private Quaternion correctionRotation;
 
     BoatMovement movementScript;
-
-
-    public class ArcClass
-    {
-        //Arc Properties
-        public int arcID;
-        public float radius;
-        public int angle;
-
-        //Arc Position
-        public float centerX;
-        public float centerY;
-        public float yRotation;
-
-        //GameObject
-        public GameObject arcObj;
-
-    }
-    private List<ArcClass> listArcs = new List<ArcClass>();
 
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
@@ -100,17 +85,20 @@ public class PathGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DefinePath();
-        PathRenderer();
+        //DefinePath();
+        //PathRenderer();
 
         timerIsRunning = true;
         instructions.SetActive(false);
-        //tempScoreUI.SetActive(false);
         auxI = true;
         timerIsRunning = true;
 
         rb = GetComponent<Rigidbody>();
+        boatSpeed = rb.velocity.magnitude;
         movementScript = GetComponent<BoatMovement>();
+
+        anchorPoints = pathCreator.GetComponent<MyPathGenerator>().anchorPoints;
+        vectorPoints = pathCreator.GetComponent<MyPathGenerator>().colliderPoints;
 
 
     }
@@ -127,14 +115,26 @@ public class PathGame : MonoBehaviour
 
                 //------------------------------------------------------------
 
-                //closestPointBoat = FindClosestPoint(transform.position);
-                //distanceBoatToPath = Vector3.Distance(transform.position, closestPointBoat);
-                //UpdateScore(distanceBoatToPath);
-                //this.playerScoreText.text = ((int)playerScore).ToString();
-                //this.distanceText.text = ((int)distanceBoatToPath).ToString();
+                closestPointBoat = FindClosestVectorPoint();
+                
+                ball.transform.position = closestPointBoat;
 
-                //BackOnTrack(); 
-                //if (auxCorrection) StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
+
+                //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
+
+                var AUXfrontAnchor = FindClosestFrontAnchor();
+                var AUXfrontAnchorNorm = new Vector3(-AUXfrontAnchor.y, 0, AUXfrontAnchor.x);
+                ball2.transform.position = AUXfrontAnchorNorm;
+
+                //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
+
+
+                UpdateScore(closestPointBoat);
+
+                playerScoreText.text = ((int)playerScore).ToString();
+
+                BackOnTrack(); 
+                if (auxCorrection) StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
                
 
 
@@ -151,7 +151,7 @@ public class PathGame : MonoBehaviour
                 totalTaskTime = 0;
                 timerIsRunning = false;
                 normalUI.SetActive(false);
-                this.finalScoreText.text = ((int)playerScore).ToString();
+                finalScoreText.text = ((int)playerScore).ToString();
 
                 gameOverUI.SetActive(true);
 
@@ -163,6 +163,9 @@ public class PathGame : MonoBehaviour
         }
 
     }
+
+
+    //------------------------  TIMER FUNCTIONS  -----------------      ---------------------------------------> should probably be moved to a different file, since they're common to both tasks
 
     void DisplayTime(float timeToDisplay)
     {
@@ -195,227 +198,117 @@ public class PathGame : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    void DefinePath()
+    //------------------------------------------------------------
+
+
+    //To the collider
+    //public Vector3 FindClosestPoint(Vector3 point)
+    //{
+    //    var collider = edgeCollider.GetComponent<EdgeCollider2D>();
+    //    Vector3 closestPoint = collider.ClosestPoint(point);
+    //    return closestPoint;                                                                                                                       
+    //}
+
+    public void UpdateScore(Vector3 closestPoint)  //Maybe change multipliers
     {
-        float totalPathLength = boatSpeed * totalTaskTime;
-        float pathLength = 0;
-        int nArcs = 0;
-        float arcLength = 0;
+        var distance = Vector3.Distance(transform.position, closestPoint);
+        this.distanceText.text = ((int)distance).ToString();
 
-        ArcClass newArc = new ArcClass();
-        ArcClass newArc1 = new ArcClass();
-        ArcClass newArc2 = new ArcClass();
-
-        newArc.arcID = 0;
-        newArc.angle = 60;
-        newArc.radius = 20f;
-
-        newArc1.arcID = 1;
-        newArc1.angle = 40;
-        newArc1.radius = 30f;
-
-        newArc2.arcID = 2;
-        newArc2.angle = 40;
-        newArc2.radius = 20;
-
-        listArcs.Add(newArc);
-        listArcs.Add(newArc1);
-        listArcs.Add(newArc2);
-
-
-
-
-
-        //while (pathLength < totalPathLength)
-        //for (int i = 0; i < 3; i++)                      //<-------------------------------------------------- testing 3 arcs
-        //{
-        //    //Later define range of radius and angle values based on dificulty level
-        //    float newRadius = Random.Range(20f, 50f);
-        //    float newAngle = Random.Range(45f, 225f);
-
-        //    //Adding new arc to the list
-        //    ArcClass newArc = new ArcClass();
-        //    newArc.radius = newRadius;
-
-        //    //ArcRenderer takes int arcAngle, +1 so that the path doesn't end sonner than the time
-        //    newArc.angle = (int)Mathf.Round(newAngle) + 1;
-        //    newArc.arcID = nArcs;
-        //    listArcs.Add(newArc);
-
-        //    //Calculating arc length and adding it to the total path length
-        //    arcLength = (newAngle / 360f) * 2 * Mathf.PI * newRadius;
-        //    pathLength += arcLength;
-        //    nArcs++;
-        //}
-    }
-
-    private void PathRenderer()
-    {
-        int auxInit;
-        float prevAngle, prevRadius, prevCenterX, prevCenterY, prevYrot;
-
-        foreach (ArcClass arc in listArcs)
-        {
-            //ar = gameObject.GetComponent<ArcRenderer>();
-            GameObject rendererObj = Instantiate(renderer);
-            arc.arcObj = rendererObj;                                 //<-------------------------------------------------- clean, no need for rendererObj
-            ArcRenderer ar = rendererObj.GetComponent<ArcRenderer>();
-
-            ar.arcWidth = pathWidth;
-            ar.arcAngle = listArcs[arc.arcID].angle;
-            ar.arcRadius = listArcs[arc.arcID].radius;
-
-
-            float auxX = 0;
-            float auxY = 0;
-
-            auxInit = Random.Range(0, 1);   //defines direction of the first arc 
-            if (auxInit == 0) ar.xRot = true;
-            else ar.xRot = false;
-            if (arc.arcID == 0) //first arc
-            {
-
-                if (auxInit == 0) //turns right 
-                {
-                    listArcs[arc.arcID].centerX = ar.xPos = ar.arcRadius - pathWidth / 2;
-                    listArcs[arc.arcID].centerY = 0;
-                    listArcs[arc.arcID].yRotation = ar.yRot = -90f;
-                }
-                else              //turns left
-                {
-                    listArcs[arc.arcID].centerX = ar.xPos = -ar.arcRadius + pathWidth / 2;
-                    listArcs[arc.arcID].centerY = 0;
-                    listArcs[arc.arcID].yRotation = ar.yRot = -90f;
-                }
-            }
-
-            else
-            {
-
-                prevAngle = listArcs[arc.arcID - 1].angle;
-                prevRadius = listArcs[arc.arcID - 1].radius;
-                prevCenterX = listArcs[arc.arcID - 1].centerX;
-                prevCenterY = listArcs[arc.arcID - 1].centerY;
-                prevYrot = listArcs[arc.arcID - 1].yRotation;
-
-                if (arc.arcID == 1)
-                {
-                    auxX = (prevRadius + ar.arcRadius - pathWidth) * Mathf.Cos((180f - prevAngle) * Mathf.Deg2Rad);
-                    auxY = (prevRadius + ar.arcRadius - pathWidth) * Mathf.Sin((180f - prevAngle) * Mathf.Deg2Rad);
-                }
-                else if (arc.arcID == 2)
-                { // bem martelado simao apaga isto
-                    auxX = (prevRadius + ar.arcRadius - pathWidth) * Mathf.Cos((prevAngle - (listArcs[0].angle - 90)) * Mathf.Deg2Rad);
-                    auxY = (prevRadius + ar.arcRadius - pathWidth) * Mathf.Sin((prevAngle - (listArcs[0].angle - 90)) * Mathf.Deg2Rad);
-                }
-
-
-                if (arc.arcID % 2 == 1) //odd number arcs
-                {
-                    listArcs[arc.arcID].centerX = ar.xPos = prevCenterX + auxX;
-                    listArcs[arc.arcID].centerY = ar.zPos = prevCenterY + auxY;
-                    listArcs[arc.arcID].yRotation = ar.yRot = 90f + prevAngle - ar.arcAngle;
-
-                }
-
-                else if (arc.arcID % 2 == 0) //even number arcs
-                {
-
-                    listArcs[arc.arcID].centerX = ar.xPos = prevCenterX + auxY;
-                    listArcs[arc.arcID].centerY = ar.zPos = prevCenterY - auxX;
-                    listArcs[arc.arcID].yRotation = ar.yRot = -(prevAngle - (listArcs[0].angle - 90));
-
-                }
-            }
-            ar.DrawArcMesh();
-        }
+        if (distance > 1f) playerScore +=  scoreMultiplier/(2*distance);
+        else playerScore += scoreMultiplier;
     }
 
 
-    public GameObject FindClosestArc(Vector3 point)     
+    public Vector3 FindClosestFrontAnchor() 
     {
-        GameObject closest = null;
+        Vector2 closest = Vector2.zero;
         float distance = Mathf.Infinity;
-        //Vector3 boatPosition = gameObject.transform.position;
-        foreach (ArcClass arc in listArcs)
+        Vector2 position = new Vector2(transform.position.x, transform.position.z); 
+        foreach (Vector2 anchor in anchorPoints)
         {
-            var centerArc = new Vector3(arc.centerX, 0f, arc.centerY);              //---------------------------------------------------------> CHANGE centerY to centerZ and arcID to id
-            float curDistance = Vector3.Distance(centerArc, point) - arc.radius;
-            
-            if (curDistance < distance)
-            {
-                closest = arc.arcObj;
-                distance = curDistance;
+            //Debug.Log(anchor);
+            if (position.y < anchor.x)
+            {                                                                          
+                float curDistance = Vector2.Distance(new Vector2(-anchor.y, anchor.x), position);
+                if (curDistance < distance)
+                {
+                    closest = anchor;
+                    distance = curDistance;
+                }
+
             }
         }
         return closest;
     }
 
-    public Vector3 FindClosestPoint(Vector3 point)
+
+    public Vector3 FindClosestVectorPoint()
     {
-        GameObject closestArc = FindClosestArc(point);
-        var collider = closestArc.GetComponent<MeshCollider>();
-        Vector3 closestPoint = collider.ClosestPoint(point);
-        return closestPoint;                                                                                                                       
+        Vector2 closest = Vector2.zero;
+        float distance = Mathf.Infinity;
+        Vector2 position = new Vector2(transform.position.x, transform.position.z);
+        foreach (Vector2 point in vectorPoints)
+        {
+            //Debug.Log(point);
+            float curDistance = Vector2.Distance(new Vector2(-point.x, point.y), position); //making elements of collideList (x,z)
+            if (curDistance < distance)
+            {
+                closest = point;
+                distance = curDistance;
+            }
+        }
+        return new Vector3(-closest.x, 0, closest.y); // turning (-x,z) into (x,0,z)
     }
 
 
 
-    public void UpdateScore(float distance)  //Maybe change multipliers
-    {
-        if (distance > 1f) playerScore += 1 / (10*distance);
-        else playerScore+=0.2f;
-    }
 
-
-    public void BackOnTrack()                 //-----> MESS
+    public void BackOnTrack()              
     {
-        float angleFront, angleTan;
-        Vector3 boatPos, frontOfBoat, vectorToPath;
+        Vector3 boatPos, frontOfBoat, toClosestVectorPoint, vectorToAnchor;
         var rowing = movementScript.cooldownActivated; //turning
 
-        if (!auxCorrection) {
+        boatPos = transform.position;
+        frontOfBoat = boatPos + 5*transform.forward;
+        var boatOrientation = frontOfBoat - boatPos;
 
-            boatPos = gameObject.transform.position;
-            frontOfBoat = boatPos + 5*transform.forward;
-            boatOrientation = frontOfBoat - boatPos;
-            closestPointBoat = FindClosestPoint(transform.position);
-            closestPointFront = FindClosestPoint(frontOfBoat);
+        //closestPointBoat = FindClosestVectorPoint();
 
-            vectorToPath = closestPointBoat + new Vector3(0, +0.362237f, 0) - boatPos; 
-            vectorToPathFront = closestPointFront + new Vector3(0, +0.362237f, 0) - boatPos;
 
-            angleTan = Vector3.Angle(boatOrientation, vectorToPath);
 
-            //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
-            ball.transform.position = closestPointBoat; //Debug
-            ball2.transform.position = frontOfBoat; //Debug
-            ball3.transform.position = closestPointFront;
-            //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
-            //if (vectorToPath != Vector3.zero) correctionRotation = Quaternion.LookRotation(vectorToPath, new Vector3(0, 1, 0));
-            
-            if (vectorToPathFront != Vector3.zero) correctionRotation = Quaternion.LookRotation(vectorToPathFront, new Vector3(0, 1, 0)); //correction angle (rotation) is based on the point in front
-           
-            if (!rowing) {  
-                if (angleTan > maxDeviationAngle && distanceBoatToPath > maxDistance || distanceBoatToPath > maxDistanceNoAngle)    //maxDeviation verified with angle deviation in relation to tan to path
-                {
-                    movementScript.enabled = false;
-                    rb.velocity = Vector3.zero;
-                    auxCorrection = true;
-                    Debug.Log("what");
-                }
-            }
-        }
+        toClosestVectorPoint = closestPointBoat + new Vector3(0, +0.362237f, 0) - boatPos; //when the path is straight the vector points can be the same as the anchor points
 
-        else
-        {
-            angleFront = Vector3.Angle(boatOrientation, vectorToPathFront);
-            if (angleFront < 10f)
+        var frontAnchor = FindClosestFrontAnchor();
+        var frontAnchorNorm = new Vector3(-frontAnchor.y, 0, frontAnchor.x);
+        vectorToAnchor = frontAnchorNorm + new Vector3(0, +0.362237f, 0) - boatPos;
+
+        //Debug.Log(FindClosestFrontAnchor());
+
+        float angleTan = Vector3.Angle(boatOrientation, toClosestVectorPoint);
+        float angleAnchor = Vector3.Angle(boatOrientation, vectorToAnchor);
+
+        float distanceBoatToPath = Vector3.Distance(boatPos, closestPointBoat);
+
+
+
+
+        if (vectorToAnchor != Vector3.zero) correctionRotation = Quaternion.LookRotation(vectorToAnchor, new Vector3(0, 1, 0));
+                       
+        if (!rowing) {  
+            if (angleTan > maxDeviationAngle && distanceBoatToPath > maxDistance || distanceBoatToPath > maxDistanceNoAngle)    //maxDeviation verified with angle deviation in relation to tan to path
             {
-                auxCorrection = false;
-                movementScript.enabled = true;
+                movementScript.enabled = false;
+                rb.velocity = Vector3.zero;
+                auxCorrection = true;
             }
         }
+        
+        if (angleAnchor < 10f)
+        {
+            auxCorrection = false;
+            movementScript.enabled = true;
+        }
+        
     }
 
     IEnumerator CorrectionCoroutine(float speed, Quaternion rotation)

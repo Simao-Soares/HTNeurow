@@ -22,6 +22,14 @@ namespace PathCreation.Examples {
         MeshRenderer meshRenderer;
         Mesh mesh;
 
+
+        private void Update()
+        {
+            PathUpdated();      //probably really taxing on the cpu and should be optimised
+        }
+
+
+
         protected override void PathUpdated () {
             if (pathCreator != null) {
                 AssignMeshComponents ();

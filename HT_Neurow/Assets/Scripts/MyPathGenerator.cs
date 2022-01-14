@@ -7,11 +7,16 @@ public class MyPathGenerator : MonoBehaviour
 {
     public GameObject player;
     public PathCreator pathCreator;
+    public GameObject RoadRenderer;
+
+    private VertexPath newVertexPath;
     private BezierPath newBezierPath;
     private int challengeLevel;
     private float boatSpeed, totalTaskTime, pathLength;
     
     [HideInInspector] public List<Vector2> anchorPoints = new List<Vector2>();
+    [HideInInspector] public List<Vector2> colliderPoints = new List<Vector2>();
+
 
 
 
@@ -19,28 +24,48 @@ public class MyPathGenerator : MonoBehaviour
     void Start()
     {
         PathGame gameScript = player.GetComponent<PathGame>();
+        //var roadRenderer = this.GetComponent<RoadMeshCreator>();
+         
         challengeLevel = gameScript.challengeLevel;
         boatSpeed = gameScript.boatSpeed;
         totalTaskTime = gameScript.totalTaskTime;
+
+        Debug.Log(pathLength);
+
         pathLength = boatSpeed * totalTaskTime;
 
         GenerateAnchorPoints(challengeLevel);
-        GeneratePath(anchorPoints.ToArray(), false);  
+        newVertexPath = GeneratePath(anchorPoints.ToArray(), false);
+
+        //RoadRenderer.GetComponent<RoadMeshCreator>()
+
+
+
+        foreach (Vector3 point in newVertexPath.localPoints)
+        {
+            Vector2 pointNorm = new Vector2(point.z, point.x);
+            colliderPoints.Add(pointNorm);
+            //Debug.Log(pointNorm);
+        }
+
 
         pathCreator.bezierPath = newBezierPath;
+
+        
+
        
 
-        Debug.Log(anchorPoints[0]);
-        Debug.Log(anchorPoints[1]);
-        Debug.Log(anchorPoints[2]);
-        Debug.Log(anchorPoints[3]);
+
+        //-----------------//-----------------//-----------------------------------------//-----------------//-----------------
+        //Debug.Log(colliderPoints[1]);
+        //Debug.Log(anchorPoints[2]);
+
+
+
+        //-----------------//-----------------//-----------------------------------------//-----------------//-----------------
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 
     VertexPath GeneratePath(Vector2[] points, bool closedPath)
     {
@@ -52,23 +77,27 @@ public class MyPathGenerator : MonoBehaviour
 
         // Then create a vertex path from the bezier path, to be used for movement etc
 
-        return new VertexPath(newBezierPath, transform);  //----------------------> transform probably wrong because it should incorporate vertex path options
+        return new VertexPath(newBezierPath, transform);  
     }
 
     void GenerateAnchorPoints(float challengeLevel)
     {
         float currentPathLength = 0;
 
-
+        Debug.Log(pathLength);
         while (currentPathLength < pathLength)
         {
             var count = anchorPoints.Count; 
-            var yVar = Random.Range (-2 * challengeLevel, 2 * challengeLevel);
-            var xVar = Random.Range(10 * 1 / challengeLevel, 20 * 1 / challengeLevel);
+            var yVar = Random.Range (-3 * challengeLevel, 3 * challengeLevel);
+            var xVar = Random.Range(20 * 1 / challengeLevel, 40 * 1 / challengeLevel);
             if (count == 0)
             {
-                anchorPoints.Add(new Vector2(xVar, yVar));
-                currentPathLength = Vector2.Distance(Vector2.zero, anchorPoints[0]);
+                anchorPoints.Add(Vector2.zero);
+            }
+            //so that path always starts straightish
+            else if (count == 1)                        
+            {
+                anchorPoints.Add(new Vector2(20f, 0f));
             }
 
             else
