@@ -11,7 +11,9 @@ public class BoatMovement : MonoBehaviour
     public float rotAngle;  //angle of rotation with 1 press
     public float spinningTime; //time it takes takes to rotate
 
-    public float forwardForce; 
+    public float forwardForce;
+
+    public bool selfCorrection;
 
 
     public bool cooldownActivated;
@@ -49,6 +51,8 @@ public class BoatMovement : MonoBehaviour
         L_rowAnimator.SetFloat("Time", 0.7f/spinningTime ); //0.7 was trial and error
         R_rowAnimator.SetFloat("Time", 0.7f/spinningTime );
 
+        selfCorrection = false;
+
     }
 
     private void Update(){
@@ -80,7 +84,7 @@ public class BoatMovement : MonoBehaviour
 
         //Change movement direction
         rb.velocity = Vector3.zero;
-        rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
+        if(!selfCorrection) rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
     }
 
 

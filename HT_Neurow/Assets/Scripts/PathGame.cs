@@ -13,8 +13,12 @@ public class PathGame : MonoBehaviour
     //PRIMARY ELEMENTS
     public GameObject meshHolder;
     public GameObject pathRenderer;
+    public GameObject pathCreator;
 
-    public GameObject pathCreator; 
+    public Material pathMaterial;
+    public GameObject uiCue;
+
+    
     [HideInInspector] public List<Vector2> anchorPoints;    //(-x, z)
     [HideInInspector] public List<Vector2> vectorPoints;    //(z, -x)
 
@@ -25,6 +29,10 @@ public class PathGame : MonoBehaviour
     public int challengeLevel;
     public float totalTaskTime = 60f;
     public float scoreMultiplier = 0.1f;
+
+
+    public float selfCorrectTime = 10f; 
+
 
     //Test these ranges:
     [Range(120, 170)]           
@@ -37,8 +45,9 @@ public class PathGame : MonoBehaviour
     public float correctionSpeed = 0.5f;
 
     [HideInInspector] public bool auxCorrection = false;
+    [HideInInspector] public bool auxSelfCorrect = false;
 
-
+    public bool stopTimer;
 
     //SECUNDARY TASK SETTINGS
     public float instructionsTime;
@@ -52,6 +61,9 @@ public class PathGame : MonoBehaviour
     public TMP_Text finalScoreText;
 
     public TMP_Text distanceText;
+
+    public TMP_Text correctTimerText;
+    public GameObject selfCorrectTimer;
 
     //Screen Freeze Couroutine
     public float freezeDuration = 10f;
@@ -89,9 +101,11 @@ public class PathGame : MonoBehaviour
         //PathRenderer();
 
         timerIsRunning = true;
+        stopTimer = false;
+
         instructions.SetActive(false);
+        selfCorrectTimer.SetActive(false);
         auxI = true;
-        timerIsRunning = true;
 
         rb = GetComponent<Rigidbody>();
         boatSpeed = rb.velocity.magnitude;
@@ -110,7 +124,7 @@ public class PathGame : MonoBehaviour
         {
             if (totalTaskTime > 0)
             {
-                totalTaskTime -= Time.deltaTime;
+                if (!stopTimer) totalTaskTime -= Time.deltaTime;
                 DisplayTime(totalTaskTime);
 
                 //------------------------------------------------------------
@@ -133,9 +147,12 @@ public class PathGame : MonoBehaviour
 
                 playerScoreText.text = ((int)playerScore).ToString();
 
-                BackOnTrack(); 
-                if (auxCorrection) StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
-               
+                BackOnTrack();
+                if (auxSelfCorrect) StartCoroutine("SelfCorrection");
+                if (auxCorrection) {
+                    StopCoroutine("SelfCorrection");
+                    StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
+                } 
 
 
                 //------------------------------------------------------------
@@ -213,9 +230,11 @@ public class PathGame : MonoBehaviour
     {
         var distance = Vector3.Distance(transform.position, closestPoint);
         this.distanceText.text = ((int)distance).ToString();
-
-        if (distance > 1f) playerScore +=  scoreMultiplier/(2*distance);
-        else playerScore += scoreMultiplier;
+        if(distance <= maxDistance)
+        {
+            if (distance > 1f) playerScore += scoreMultiplier / (2 * distance);
+            else playerScore += scoreMultiplier;
+        }
     }
 
 
@@ -272,41 +291,42 @@ public class PathGame : MonoBehaviour
         frontOfBoat = boatPos + 5*transform.forward;
         var boatOrientation = frontOfBoat - boatPos;
 
-        //closestPointBoat = FindClosestVectorPoint();
-
-
-
-        toClosestVectorPoint = closestPointBoat + new Vector3(0, +0.362237f, 0) - boatPos; //when the path is straight the vector points can be the same as the anchor points
+        toClosestVectorPoint = closestPointBoat + new Vector3(0, 0.5f, 0) - boatPos; //when the path is straight the vector points can be the same as the anchor points
 
         var frontAnchor = FindClosestFrontAnchor();
         var frontAnchorNorm = new Vector3(-frontAnchor.y, 0, frontAnchor.x);
-        vectorToAnchor = frontAnchorNorm + new Vector3(0, +0.362237f, 0) - boatPos;
-
-        //Debug.Log(FindClosestFrontAnchor());
+        vectorToAnchor = frontAnchorNorm + new Vector3(0, 0.5f, 0) - boatPos;
 
         float angleTan = Vector3.Angle(boatOrientation, toClosestVectorPoint);
         float angleAnchor = Vector3.Angle(boatOrientation, vectorToAnchor);
-
         float distanceBoatToPath = Vector3.Distance(boatPos, closestPointBoat);
 
-
-
-
         if (vectorToAnchor != Vector3.zero) correctionRotation = Quaternion.LookRotation(vectorToAnchor, new Vector3(0, 1, 0));
+
+        PathColor(angleTan, distanceBoatToPath);
                        
-        if (!rowing) {  
+        if (!rowing && !auxSelfCorrect) {  
             if (angleTan > maxDeviationAngle && distanceBoatToPath > maxDistance || distanceBoatToPath > maxDistanceNoAngle)    //maxDeviation verified with angle deviation in relation to tan to path
             {
-                movementScript.enabled = false;
-                rb.velocity = Vector3.zero;
-                auxCorrection = true;
+                //movementScript.enabled = false;
+                movementScript.selfCorrection = true; 
+
+                selfCorrectTimer.SetActive(true);
+                auxSelfCorrect = true;
+                stopTimer = true;
             }
         }
         
-        if (angleAnchor < 10f)
+        if (angleAnchor < 5f)
         {
             auxCorrection = false;
+            auxSelfCorrect = false;
             movementScript.enabled = true;
+
+            stopTimer = false;
+            selfCorrectTimer.SetActive(false);
+            StopCoroutine("SelfCorrection");
+            movementScript.selfCorrection = false;
         }
         
     }
@@ -314,7 +334,58 @@ public class PathGame : MonoBehaviour
     IEnumerator CorrectionCoroutine(float speed, Quaternion rotation)
     {
         Quaternion current = transform.rotation;
+        movementScript.enabled = false;
         transform.localRotation = Quaternion.Lerp(current, rotation, speed * Time.deltaTime);
         yield return null;
+    }
+
+    IEnumerator SelfCorrection()
+    {
+        float currTime = selfCorrectTime;
+        
+        while (currTime > 0)
+        {
+            currTime -= Time.deltaTime;
+            correctTimerText.text = ((int)currTime).ToString();
+
+            rb.velocity = Vector3.zero;
+            
+            yield return null;
+        }
+        selfCorrectTimer.SetActive(false);
+        //auxSelfCorrect = false;
+        auxCorrection = true;
+        //yield return null;
+    }
+
+    void PathColor(float angle, float distance)
+    {
+        //How to consider maxDistanceNoAngle??
+        Color color;
+        float red = 0f;
+        float green = 0f;
+        float blue = 0f;
+
+        var angleComponent = (angle-90f) / maxDeviationAngle;
+        var distanceComponent = 0f;
+        if (distance >= 1f) distanceComponent = (distance-1) / maxDistance;
+
+        //var deviation = angleComponent/2 + distanceComponent/2;
+        var deviation =  distanceComponent;
+        Debug.Log(deviation);
+        if (deviation <= 0.5)
+        {
+            green = 1f;
+            red = 2 * deviation;
+        }
+        else if(deviation > 0.5)
+        {
+            green = -2 * deviation + 2;
+            red = 1f;
+        }
+        color = new Color(red, green, blue);
+        pathMaterial.color = color;
+        playerScoreText.color = color;
+        //uiCue.GetComponent<Material>().color = color;
     }
 }
