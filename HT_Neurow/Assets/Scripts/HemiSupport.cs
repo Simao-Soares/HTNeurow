@@ -15,6 +15,7 @@ public class HemiSupport : MonoBehaviour
     private bool auxTrack = false; //signals beggining of wrist tracking
 
 	public GameObject wrist;
+    public GameObject wristAUX;
 	public GameObject paddle;
 
 	
@@ -75,14 +76,18 @@ public class HemiSupport : MonoBehaviour
 //        }
 //        //------------------------------------------------------------------------------------------
 
-        
+        wristAUX.transform.position = wrist.transform.position; //----------------------------------------->  aux object only has Player as parent object => can use its localPosition
 
-		if (auxTrack){	// && oldPos >= initPos && oldPos <= initPos + maxReach) {   //-----------------------------------------> this is why it doesnt do the second part of the rowing movement 
+        if (auxTrack){  // && oldPos >= initPos && oldPos <= initPos + maxReach) {   
 
-			if( oldPos >= initPos && oldPos <= initPos + maxReach){
-	            RotPaddle(oldPos, delta, forward, forwardAux);
-			}
-			oldPos = wrist.transform.position.z;
+            if (oldPos >= initPos && oldPos <= initPos + maxReach) //----------------------------------------->  forwwardAux not being properly updated since RotPaddle only runs if wrist is within movement bounds
+            {
+                RotPaddle(oldPos, delta, forward, forwardAux);
+            }
+            else if (oldPos >= initPos + maxReach) forwardAux = false;
+            else if (oldPos <= initPos) forwardAux = true;
+            //oldPos = wrist.transform.position.z;
+            oldPos = wristAUX.transform.localPosition.z;
         }
 
     }
@@ -102,7 +107,8 @@ public class HemiSupport : MonoBehaviour
         //phases 1 and 2 with forward wrist motion  => forward = true
         //phases 3 and 4 with backward wrist motion => forward = false
 
-        float currentPos = wrist.transform.position.z;
+        //float currentPos = wrist.transform.position.z;
+        float currentPos = wristAUX.transform.localPosition.z;
         float currentRotY = paddle.transform.localEulerAngles.y;
         float currentRotZ = paddle.transform.localEulerAngles.z;
         
@@ -111,10 +117,11 @@ public class HemiSupport : MonoBehaviour
         delta = (currentPos - oldPos);
         deltaRot = (2*delta / maxReach) * 15f;  //dont know why i need the 2* but i'll take it
 
+        Debug.Log(currentPos - initPos);
 
-        if (currentPos >= initPos + maxReach) forwardAux = false;               //trying to implement the need to complete the whole movement!!!!!!!!!!!!
-        else if (currentPos <= initPos) forwardAux = true;
-
+        //if (currentPos >= initPos + maxReach) forwardAux = false;              
+        //else if (currentPos <= initPos) forwardAux = true;
+        
 
         if (currentPos > oldPos)
         {
@@ -149,7 +156,7 @@ public class HemiSupport : MonoBehaviour
         }
         
         //phase 3
-		else if (!forward && forwardAux && currentPos >= initPos + maxReach/2) //&& !forwardAux
+		else if (!forward && !forwardAux && currentPos >= initPos + maxReach/2) //&& !forwardAux
         {
             if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
             else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -159,7 +166,7 @@ public class HemiSupport : MonoBehaviour
         }
 
         //phase 4
-		else if (!forward && forwardAux && currentPos < initPos + maxReach/2) //&& !forwardAux
+		else if (!forward && !forwardAux && currentPos < initPos + maxReach/2) //&& !forwardAux
         {
             if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
             else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -182,14 +189,18 @@ public class HemiSupport : MonoBehaviour
             animatedModel.SetActive(true);
             animator.SetBool("startGrab", true);
 
-			initPos = wrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
+            //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
+            initPos = wristAUX.transform.localPosition.z;
+            //initPos = wrist.transform.position.z; 
 			oldPos = initPos;
-			//Debug.Log(initPos + maxReach);
+            //Debug.Log(initPos + maxReach);
+
+            gameObject.GetComponent<SphereCollider>().enabled = false;  //prevent subsequent collisions
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
 
             auxTrack = true;
 
-			gameObject.GetComponent<SphereCollider>().enabled = false;  //prevent subsequent collisions
-			gameObject.GetComponent<MeshRenderer>().enabled = false;
+
 
 
 

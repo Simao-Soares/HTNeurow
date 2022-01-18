@@ -13,10 +13,10 @@ public class BoatMovement : MonoBehaviour
 
     public float forwardForce;
 
-    public bool selfCorrection;
+    [HideInInspector] public bool selfCorrection;
 
 
-    public bool cooldownActivated;
+    [HideInInspector] public bool cooldownActivated;
   
     float timeStarted;
     float timeSinceStarted;
@@ -31,14 +31,14 @@ public class BoatMovement : MonoBehaviour
     public Animator R_rowAnimator;
 
     Quaternion rotateB;
-    public Quaternion rotateA;
+    [HideInInspector] public Quaternion rotateA;
 
-    public int countl = 0;
-    public int countr = 0;
+    //public int countl = 0;
+    //public int countr = 0;
 
 
     //-------------------------
-    public bool debugAux = false;
+    [HideInInspector] public bool debugAux = false;
     //-------------------------
 
 
