@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
 
-    public static int Gender = 1;        //  1 -> Male
+    public static int Gender = -1;        //  1 -> Male
                                          // -1 -> Female
 
     public static int Forward = 1;       //  1 -> Auto (always moving forward)
