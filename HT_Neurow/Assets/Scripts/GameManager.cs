@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class GameManager : MonoBehaviour
@@ -33,29 +35,64 @@ public class GameManager : MonoBehaviour
 
 	public GameObject InteractionManager;
 
+    //General
+    public Slider timeSlider;
+    public Slider turnAngleSlider;
+    public Slider boatSpeedSlider;
+    public Slider turnSpeedSlider;
+
+    //Task #1
+    public Slider challengeLevelSlider;
+    public Slider angleDevSlider;
+    public Slider maxDistanceSlider;
+    public Slider maxDistance2Slider;
+    public Slider selfCorrectSlider;
+    public Slider autoCorrectSlider;
+
+    //Task #2
+    public Slider playAreaSlider;
+    public Slider objectiveNumSlider;
+    public Slider objectiveRadSlider;
 
 
 
 
-
-
-
-	//-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 // NOT DEFAULT, ONLY FOR TESTING
+    //-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 // NOT DEFAULT, ONLY FOR TESTING
 
     public static int ControlMethod = -1; //static -> instances of GameObject will share this value 
-                                         //  1 -> BCI (arrowKeys)
-                                         // -1 -> HT (leapMotion)
+                                          //  1 -> BCI (arrowKeys)
+                                          // -1 -> HT (leapMotion)
 
-    public static int HemiLimb = 2;     //  0 -> No hemiparethic limb                                                                 
+    public static int HemiLimb = 2;      //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
 
-    public static int Gender = -1;        //  1 -> Male
+    public static int Gender = -1;       //  1 -> Male
                                          // -1 -> Female
 
-    public static int Forward = 1;       //  1 -> Auto (always moving forward)
+    //public static int Forward = 1;     //  1 -> Auto (always moving forward)
                                          // -1 -> Manual (forward movement based on rowing)
+
+    public static int taskDuration = 120;
+
+    //BOAT MOVEMENT
+    public static float turnAngle = 20f;
+    public static float boatSpeed = 1f;
+    public static float turnSpeed = 1f;
+
+    //TASK #1
+    public static int challengeLevel = 2;
+    public static int angleDev = 150;
+    public static float maxDistance = 5f;
+    public static float maxDistance2 = 10f;
+    public static int selfCorrect = 10;
+    public static float autoCorrect = 1f;
+
+    //TASK #2
+    public static int playArea = 300;
+    public static int objectiveNum = 3;
+    public static float objectiveRad = 1f;
 
     //-------------------------------------------------------------------------------------------------------------------
 
@@ -68,6 +105,21 @@ public class GameManager : MonoBehaviour
 
         // Retrieve the name of this scene.
         string sceneName = currentScene.name;
+        
+        //Set inicial parameters
+        timeSlider.value = taskDuration;
+        turnAngleSlider.value = turnAngle;
+        boatSpeedSlider.value = boatSpeed;
+        turnSpeedSlider.value = turnSpeed;
+        challengeLevelSlider.value = challengeLevel;
+        angleDevSlider.value = angleDev;
+        maxDistanceSlider.value = maxDistance;
+        maxDistance2Slider.value = maxDistance2;
+        selfCorrectSlider.value = selfCorrect;
+        autoCorrectSlider.value = autoCorrect;
+        playAreaSlider.value = playArea;
+        objectiveNumSlider.value = objectiveNum;
+        objectiveRadSlider.value = objectiveRad;
 
         if (sceneName == "RowingSim")
         {
@@ -129,18 +181,9 @@ public class GameManager : MonoBehaviour
 
 				leftPaddleAnim.enabled = false;
 				rightPaddleAnim.enabled = false;
-
-				
-				
-			
 			}
-
             //---------------------------------------------------------------------------------------------------------------
         }
-
-        
-
-        
     }
 
 
@@ -164,8 +207,17 @@ public class GameManager : MonoBehaviour
     //    player.SetActive(true);
     //}
 
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 
-	public void SetBCIControlMethod(){
+    //------------------------------------------  SET FUNCTIONS  ------------------------------------------
+
+
+    //General Settings:
+
+    public void SetBCIControlMethod(){
 		ControlMethod = 1;
 	}
 
@@ -197,14 +249,77 @@ public class GameManager : MonoBehaviour
         Gender = GenderAux;
     }
 
-    public void SetForward(int ForwardAux)
+    public void SetTime()
     {
-        Forward = ForwardAux;
+        taskDuration = ((int)timeSlider.value);
     }
 
-    public void BackToMenu()
+    public void SetTurnAngle()
     {
-        SceneManager.LoadScene("Menu");
-
+        turnAngle = ((int)turnAngleSlider.value);
     }
+
+    public void SetBoatSpeed()
+    {
+        boatSpeed = Mathf.Round(boatSpeedSlider.value * 100f) / 100f;
+    }
+
+    public void SetTurnSpeed()
+    {
+        turnSpeed = ((int)turnSpeedSlider.value);
+    }
+
+    //public void SetForward(int ForwardAux)
+    //{
+    //    Forward = ForwardAux;
+    //}
+
+
+    //Task #1 Settings:
+
+    public void SetChallengeLevel()
+    {
+        challengeLevel = ((int)challengeLevelSlider.value);
+    }
+    public void SetAngleDev()
+    {
+        angleDev = ((int)angleDevSlider.value);
+    }
+    public void SetMaxDistance()
+    {
+        maxDistance = ((int)maxDistanceSlider.value);
+    }
+    public void SetMaxDistance2()
+    {
+        maxDistance2 = ((int)maxDistance2Slider.value);
+    }
+    public void SetSelfCorrectTime()
+    {
+        selfCorrect = ((int)selfCorrectSlider.value);
+    }
+    public void SetAutoCorrectSpeed()
+    {
+        autoCorrect = ((int)autoCorrectSlider.value);
+    }
+
+
+    //Task #2 Settings:
+
+    public void SetPlayAreaSize()
+    {
+        playArea = ((int)playAreaSlider.value);
+    }
+    public void SetNumberOfObjectives()
+    {
+        objectiveNum = ((int)objectiveNumSlider.value);
+    }
+    public void SetObjectiveRad()
+    {
+        objectiveRad = ((int)objectiveRadSlider.value);
+    }
+
+
+
+
+    //------------------------------------------------------------------------------------------------------------------------
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MenuScript : MonoBehaviour
 {
@@ -26,15 +27,33 @@ public class MenuScript : MonoBehaviour
 	public Button hemiButtonLeft;
 	public Button genderButtonM;
 	public Button genderButtonF;
-	public Button forwardButtonA;
-	public Button forwardButtonM;
+	//public Button forwardButtonA;
+	//public Button forwardButtonM;
+
+	//Slider Values
+	public TMP_Text durationText;
+	public TMP_Text turnAngleText;
+	public TMP_Text boatSpeedText;
+	public TMP_Text turnSpeedText;
+
+	public TMP_Text challengeLevelText;
+	public TMP_Text angleDevText;
+	public TMP_Text maxDistanceText;
+	public TMP_Text maxDistance2Text;
+	public TMP_Text selfCorrectText;
+	public TMP_Text autoCorrectText;
+
+	public TMP_Text playAreaText;
+	public TMP_Text objectiveNumText;
+	public TMP_Text objectiveRadText;
 
 
 
 
 
 
-    private void Update()
+
+	private void Update()
     {
 
 		if (optPanel.activeSelf) UpdateSettings();
@@ -110,12 +129,30 @@ public class MenuScript : MonoBehaviour
 		else if (GameManager.HemiLimb == 2) {
 			hemiButtonLeft.Select();
 			hemiButtonRight.Select();
-
 		}
 
-		if (GameManager.Forward == 1) forwardButtonA.Select();
-		else forwardButtonM.Select();
+		//if (GameManager.Forward == 1) forwardButtonA.Select();
+		//else forwardButtonM.Select();
 
+		var taskTime = GameManager.taskDuration;
+		float minutes = Mathf.FloorToInt(taskTime / 60);
+		float seconds = Mathf.FloorToInt(taskTime % 60);
+		durationText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+		turnAngleText.text = GameManager.turnAngle.ToString();
+		boatSpeedText.text = GameManager.boatSpeed.ToString();
+		turnSpeedText.text = GameManager.turnSpeed.ToString();
+
+		challengeLevelText.text = GameManager.challengeLevel.ToString();
+		angleDevText.text = GameManager.angleDev.ToString();
+		maxDistanceText.text = GameManager.maxDistance.ToString();
+		maxDistance2Text.text = GameManager.maxDistance2.ToString();
+		selfCorrectText.text = GameManager.selfCorrect.ToString();
+		autoCorrectText.text = GameManager.autoCorrect.ToString();
+
+		playAreaText.text = GameManager.playArea.ToString();
+		objectiveNumText.text = GameManager.objectiveNum.ToString();
+		objectiveRadText.text = GameManager.objectiveRad.ToString();
 	}
 
 }

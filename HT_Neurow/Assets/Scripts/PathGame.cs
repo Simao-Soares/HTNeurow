@@ -16,9 +16,8 @@ public class PathGame : MonoBehaviour
     public GameObject pathCreator;
 
     public Material pathMaterial;
-    public GameObject uiCue;
+   
 
-    
     [HideInInspector] public List<Vector2> anchorPoints;    //(-x, z)
     [HideInInspector] public List<Vector2> vectorPoints;    //(z, -x)
 
@@ -97,9 +96,6 @@ public class PathGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //DefinePath();
-        //PathRenderer();
-
         timerIsRunning = true;
         stopTimer = false;
 
