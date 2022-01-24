@@ -33,6 +33,8 @@ public class BoatMovement : MonoBehaviour
     Quaternion rotateB;
     [HideInInspector] public Quaternion rotateA;
 
+    [HideInInspector] public bool auxTurn = false;
+
     //public int countl = 0;
     //public int countr = 0;
 
@@ -55,9 +57,18 @@ public class BoatMovement : MonoBehaviour
 
     }
 
-    private void Update(){
+    private void FixedUpdate(){
 
 		int cm = GameManager.ControlMethod;
+
+        var boatPos = transform.position;
+        var frontOfBoat = boatPos + 5 * transform.forward;
+        var boatOrientation = frontOfBoat - boatPos;
+
+
+        //if (auxTurn) StartCoroutine(Turning(1f, rotateB));
+        //if(boatOrientation!=rotateB)
+        
 
 
 
@@ -82,6 +93,7 @@ public class BoatMovement : MonoBehaviour
 
         if(cooldownActivated) RunCooldownTimer();
 
+
         //Change movement direction
         rb.velocity = Vector3.zero;
         if(!selfCorrection) rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
@@ -100,6 +112,10 @@ public class BoatMovement : MonoBehaviour
            
             rotateB = Quaternion.Euler(0, rotateA.eulerAngles.y - rotAngle, 0); //(rotAngle * (countr - countl))
 
+            //auxTurn = true;
+
+            
+
         }
         else if(side==false){
             //countr++;
@@ -107,8 +123,20 @@ public class BoatMovement : MonoBehaviour
 
             rotateB = Quaternion.Euler(0, rotateA.eulerAngles.y + rotAngle, 0);
 
+            //auxTurn = true;
+
+            
+
 
         }
+    }
+
+
+    IEnumerator Turning(float speed, Quaternion rotation)
+    {
+        Quaternion current = transform.rotation;
+        transform.localRotation = Quaternion.Lerp(current, rotation, speed * Time.deltaTime);
+        yield return null;
     }
 
 
@@ -125,5 +153,6 @@ public class BoatMovement : MonoBehaviour
             R_rowAnimator.SetBool("Turning", false);
         }
     }
+
 
 }

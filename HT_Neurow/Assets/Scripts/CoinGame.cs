@@ -80,7 +80,7 @@ public class CoinGame : MonoBehaviour
         //CoinLighting.SetActive(true);
 
         timeRemaining = GameManager.taskDuration;
-        coinGameArea = GameManager.playArea * 100;
+        coinGameArea = GameManager.playArea * 50;
         numberOfCoins = GameManager.objectiveNum;
         Coin.transform.localScale = new Vector3 (GameManager.objectiveRad, 100, GameManager.objectiveRad);            //<----------------------------------------------------------------------- TEST IT
 

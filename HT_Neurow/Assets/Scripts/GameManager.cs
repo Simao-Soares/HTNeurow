@@ -41,6 +41,16 @@ public class GameManager : MonoBehaviour
 
 	public GameObject InteractionManager;
 
+    //HT LeapMotion Elements
+    public GameObject auxTrackerR;
+    public GameObject auxTrackerL;
+    public GameObject attachtmentHands;
+
+    public GameObject hemiAnimHand_R;
+    public GameObject hemiAnimHand_L;
+
+
+
     //General
     public Slider timeSlider;
     public Slider turnAngleSlider;
@@ -78,11 +88,11 @@ public class GameManager : MonoBehaviour
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
-    public static int ControlMethod = 1;  //static -> instances of GameObject will share this value 
-                                          //  1 -> BCI (arrowKeys)
-                                          // -1 -> HT (leapMotion)
+    public static int ControlMethod = -1;  //static -> instances of GameObject will share this value 
+                                           //  1 -> BCI (arrowKeys)
+                                           // -1 -> HT (leapMotion)
 
-    public static int HemiLimb = 0;      //  0 -> No hemiparethic limb                                                                 
+    public static int HemiLimb = 1;      //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
@@ -100,12 +110,12 @@ public class GameManager : MonoBehaviour
                                            // -1 -> Z axis 
 
 
-    public static float motionRange = 0.1f;
+    public static float motionRange = 0.3f;
     public static float colliderSize = 0.2f;
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 1f;
+    public static float boatSpeed = 3f;
     public static float turnSpeed = 1f;
 
     //TASK #1
@@ -117,7 +127,7 @@ public class GameManager : MonoBehaviour
     public static float autoCorrect = 5f;
 
     //TASK #2
-    public static int playArea = 3;
+    public static int playArea = 1;
     public static int objectiveNum = 3;
     public static float objectiveRad = 1f;
 
@@ -129,9 +139,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
-
         // Create a temporary reference to the current scene.
         Scene currentScene = SceneManager.GetActiveScene();
 
@@ -159,7 +166,7 @@ public class GameManager : MonoBehaviour
             var movement = Player.GetComponent<BoatMovement>();
             movement.rotAngle = turnAngle;
             movement.spinningTime = 1 / turnSpeed;
-            movement.forwardForce = boatSpeed;
+            movement.forwardForce = boatSpeed/2;
 
             //------------------ General ------------------
             if (Gender == 1) //activate MALE hand models
@@ -172,10 +179,10 @@ public class GameManager : MonoBehaviour
                 myBCI_Hands_List.BCI_HandModels[1].RightHand.SetActive(true);
                 myBCI_Hands_List.BCI_HandModels[1].LeftHand.SetActive(true);
             }
+
             //BCI
             if (ControlMethod == 1)
             {
-
                 InteractionManager.SetActive(false);
                 leftPaddleAnim.enabled = true;
                 rightPaddleAnim.enabled = true;
@@ -183,8 +190,13 @@ public class GameManager : MonoBehaviour
                 rightPaddleZone.SetActive(false);
                 leftPaddleZone.SetActive(false);
 
-                //falta os InteractionBehaviour das paddles e mais coisas de certeza
+
+                auxTrackerR.SetActive(false);
+                auxTrackerL.SetActive(false);
+                attachtmentHands.SetActive(false);
+
             }
+
             //HT
             else if (ControlMethod == -1)
             {
@@ -196,38 +208,72 @@ public class GameManager : MonoBehaviour
 
                 leftPaddleAnim.enabled = false;
                 rightPaddleAnim.enabled = false;
+
+                InteractionManager.SetActive(true);
+
+                switch (HemiLimb)
+                {
+                    case 0:
+                        attachtmentHands.SetActive(false);
+
+                        rightPaddleZone.SetActive(false);
+                        leftPaddleZone.SetActive(false);
+                        auxTrackerR.SetActive(false);
+                        auxTrackerL.SetActive(false);
+
+                        hemiAnimHand_R.SetActive(false);
+                        hemiAnimHand_L.SetActive(false);
+                        break;
+
+                    case 1:
+                        rightPaddleZone.SetActive(true);
+                        auxTrackerR.SetActive(true);
+                        hemiAnimHand_R.SetActive(true);
+
+                        leftPaddleZone.SetActive(false);
+                        auxTrackerL.SetActive(false);
+                        hemiAnimHand_L.SetActive(false);
+
+                        break;
+
+                    case -1:
+                        leftPaddleZone.SetActive(true);
+                        auxTrackerL.SetActive(true);
+                        hemiAnimHand_L.SetActive(true);
+
+                        rightPaddleZone.SetActive(false);
+                        auxTrackerR.SetActive(false);
+                        hemiAnimHand_R.SetActive(false);
+                        break;
+
+                    case 2:
+                        rightPaddleZone.SetActive(true);
+                        leftPaddleZone.SetActive(true);
+                        auxTrackerR.SetActive(true);
+                        auxTrackerL.SetActive(true);
+
+                        hemiAnimHand_R.SetActive(true);
+                        hemiAnimHand_L.SetActive(true);
+                        break;
+                }
+
+                if (HemiLimb != 0)
+                {
+                    //HemiZone -> HemiSupport
+                    var R_Support = rightPaddleZone.GetComponent<HemiSupport>();
+                    var L_Support = leftPaddleZone.GetComponent<HemiSupport>();
+                    R_Support.maxReach = motionRange;
+                    L_Support.maxReach = motionRange;
+
+                    //Still to be implemented               //<----------------------------------------------------------------------- 
+                    //R_Support.colliderRad = colliderSize;
+                    //L_Support.colliderRad = colliderSize;
+                    //R_Support.orientation = trackAxis;
+                    //L_Support.orientation = trackAxis;
+                }
             }
 
-            switch (HemiLimb)
-            {
-                case 1:
-                    rightPaddleZone.SetActive(true);
-                    break;
 
-                case -1:
-                    leftPaddleZone.SetActive(true);
-                    break;
-
-                case 2:
-                    rightPaddleZone.SetActive(true);
-                    leftPaddleZone.SetActive(true);
-                    break;
-            }
-
-            if (HemiLimb != 0)
-            {
-                //HemiZone -> HemiSupport
-                var R_Support = rightPaddleZone.GetComponent<HemiSupport>();
-                var L_Support = leftPaddleZone.GetComponent<HemiSupport>();
-                R_Support.maxReach = motionRange;
-                L_Support.maxReach = motionRange;
-
-                //Still to be implemented               //<----------------------------------------------------------------------- 
-                //R_Support.colliderRad = colliderSize;
-                //L_Support.colliderRad = colliderSize;
-                //R_Support.orientation = trackAxis;
-                //L_Support.orientation = trackAxis;
-            }
 
             if (TaskChoice == 1)
             {

@@ -45,6 +45,8 @@ public class HemiSupport : MonoBehaviour
         if (gameObject.name == "HemiZone_L") rightSide = false;
         else if (gameObject.name == "HemiZone_R") rightSide = true;
 
+        forwardAux = true;
+
     }
 
 
@@ -80,7 +82,9 @@ public class HemiSupport : MonoBehaviour
 
         if (auxTrack){  // && oldPos >= initPos && oldPos <= initPos + maxReach) {   
 
-            if (oldPos >= initPos && oldPos <= initPos + maxReach) //----------------------------------------->  forwwardAux not being properly updated since RotPaddle only runs if wrist is within movement bounds
+            Debug.Log(forwardAux);
+
+            if (oldPos >= initPos && oldPos <= initPos + maxReach) 
             {
                 RotPaddle(oldPos, delta, forward, forwardAux);
             }
@@ -117,7 +121,7 @@ public class HemiSupport : MonoBehaviour
         delta = (currentPos - oldPos);
         deltaRot = (2*delta / maxReach) * 15f;  //dont know why i need the 2* but i'll take it
 
-        Debug.Log(currentPos - initPos);
+        //Debug.Log(currentPos - initPos);
 
         //if (currentPos >= initPos + maxReach) forwardAux = false;              
         //else if (currentPos <= initPos) forwardAux = true;
