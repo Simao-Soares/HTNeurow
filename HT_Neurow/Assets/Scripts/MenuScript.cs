@@ -15,9 +15,14 @@ public class MenuScript : MonoBehaviour
     public GameObject mainPanel;
 	public GameObject buttons;
 	public GameObject titleElements;
+
+	public GameObject chooseTaskPannel;
+
     private bool playAux = false;
 	private bool optAux = false;
 	private bool optBackAux = false;
+
+
 
 
 	//Variables for default game settings
@@ -29,9 +34,19 @@ public class MenuScript : MonoBehaviour
 	public Button genderButtonF;
 	//public Button forwardButtonA;
 	//public Button forwardButtonM;
+	public Button axisButtonX;
+	public Button axisButtonY;
+	public Button axisButtonZ;
+
+
+
+
 
 	//Slider Values
 	public TMP_Text durationText;
+	public TMP_Text motionRangeText;
+	public TMP_Text colliderSizeText;
+
 	public TMP_Text turnAngleText;
 	public TMP_Text boatSpeedText;
 	public TMP_Text turnSpeedText;
@@ -75,21 +90,39 @@ public class MenuScript : MonoBehaviour
 
 	public void OptPressed(){
 		optAux = true;
+		GameManager.optionsMenuAux = true; //-----------> to update parameter values
 	}
 
 	public void OptBackPressed(){
 		optBackAux = true;
+		GameManager.optionsMenuAux = false;
 	}
 
+	public void BackFromChosing()
+    {
+		SceneManager.LoadScene("Menu");
+    }
 
-    IEnumerator StartGame(){
+
+
+	//public void TaskChoice(int task)
+	//   {
+	//	taskChoiceAux = task;
+	//	SceneManager.LoadScene("RowingSim");
+	//}
+
+
+	IEnumerator StartGame(){
 		buttons.SetActive(false);
 		mainCam.GetComponent<CPC_CameraPath>().PlayPath(3);
 		playAux = false;
 		yield return new WaitForSeconds(3f);
 		titleElements.SetActive(false);
 		yield return new WaitForSeconds(.1f);
-        SceneManager.LoadScene("RowingSim");
+
+		chooseTaskPannel.SetActive(true);
+
+        
     }
 		
 
@@ -131,6 +164,11 @@ public class MenuScript : MonoBehaviour
 			hemiButtonRight.Select();
 		}
 
+		if (GameManager.trackAxis == 0) axisButtonX.Select();
+		else if (GameManager.trackAxis == 1) axisButtonY.Select();
+		else if (GameManager.trackAxis == -1) axisButtonZ.Select();
+
+
 		//if (GameManager.Forward == 1) forwardButtonA.Select();
 		//else forwardButtonM.Select();
 
@@ -138,6 +176,9 @@ public class MenuScript : MonoBehaviour
 		float minutes = Mathf.FloorToInt(taskTime / 60);
 		float seconds = Mathf.FloorToInt(taskTime % 60);
 		durationText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+		motionRangeText.text = GameManager.motionRange.ToString();
+		colliderSizeText.text = GameManager.colliderSize.ToString();
 
 		turnAngleText.text = GameManager.turnAngle.ToString();
 		boatSpeedText.text = GameManager.boatSpeed.ToString();

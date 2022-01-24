@@ -23,14 +23,14 @@ public class MyPathGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PathGame gameScript = player.GetComponent<PathGame>();
-        //var roadRenderer = this.GetComponent<RoadMeshCreator>();
-         
-        challengeLevel = gameScript.challengeLevel;
-        boatSpeed = gameScript.boatSpeed;
-        totalTaskTime = gameScript.totalTaskTime;
 
-        Debug.Log(pathLength);
+         
+        challengeLevel = GameManager.challengeLevel;
+
+        boatSpeed = GameManager.boatSpeed;
+        totalTaskTime = GameManager.taskDuration;
+
+        
 
         pathLength = boatSpeed * totalTaskTime;
 
@@ -84,7 +84,7 @@ public class MyPathGenerator : MonoBehaviour
     {
         float currentPathLength = 0;
 
-        Debug.Log(pathLength);
+        //Debug.Log(pathLength);
         while (currentPathLength < pathLength)
         {
             var count = anchorPoints.Count; 
@@ -97,7 +97,7 @@ public class MyPathGenerator : MonoBehaviour
             //so that path always starts straightish
             else if (count == 1)                        
             {
-                anchorPoints.Add(new Vector2(20f, 0f));
+                anchorPoints.Add(new Vector2(10f, 0f));
             }
 
             else

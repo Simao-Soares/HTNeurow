@@ -40,13 +40,13 @@ public class PathGame : MonoBehaviour
     public float maxDistance = 5f;
     [Range(10, 20)]
     public float maxDistanceNoAngle = 10f;
-    //[Range(10, 20)]
+    
     public float correctionSpeed = 0.5f;
 
     [HideInInspector] public bool auxCorrection = false;
     [HideInInspector] public bool auxSelfCorrect = false;
 
-    public bool stopTimer;
+    [HideInInspector] public bool stopTimer;
 
     //SECUNDARY TASK SETTINGS
     public float instructionsTime;
@@ -63,6 +63,9 @@ public class PathGame : MonoBehaviour
 
     public TMP_Text correctTimerText;
     public GameObject selfCorrectTimer;
+
+    public GameObject arrowRight;
+    public GameObject arrowLeft;
 
     //Screen Freeze Couroutine
     public float freezeDuration = 10f;
@@ -83,6 +86,8 @@ public class PathGame : MonoBehaviour
     
     private Quaternion correctionRotation;
 
+    [HideInInspector] public bool auxCorrectionDirection;
+
     BoatMovement movementScript;
 
 
@@ -96,9 +101,10 @@ public class PathGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetParameters();
+
         timerIsRunning = true;
         stopTimer = false;
-
         instructions.SetActive(false);
         selfCorrectTimer.SetActive(false);
         auxI = true;
@@ -148,6 +154,8 @@ public class PathGame : MonoBehaviour
                 if (auxCorrection) {
                     StopCoroutine("SelfCorrection");
                     StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
+                    arrowLeft.SetActive(false);
+                    arrowRight.SetActive(false);
                 } 
 
 
@@ -175,6 +183,19 @@ public class PathGame : MonoBehaviour
             }
         }
 
+    }
+
+    void SetParameters()
+    {
+        challengeLevel = GameManager.challengeLevel; //---------> in MyPathGenerator.cs
+
+        totalTaskTime = GameManager.taskDuration;
+
+        maxDeviationAngle = GameManager.angleDev;
+        maxDistance = GameManager.maxDistance;
+        maxDistanceNoAngle = GameManager.maxDistance2;
+        selfCorrectTime = GameManager.selfCorrect;
+        correctionSpeed = GameManager.autoCorrect/5;
     }
 
 
@@ -297,6 +318,11 @@ public class PathGame : MonoBehaviour
         float angleAnchor = Vector3.Angle(boatOrientation, vectorToAnchor);
         float distanceBoatToPath = Vector3.Distance(boatPos, closestPointBoat);
 
+
+        if (vectorToAnchor.x > 0) auxCorrectionDirection = true;    //----> to the right
+        else auxCorrectionDirection = false;                        //----> to the left
+
+
         if (vectorToAnchor != Vector3.zero) correctionRotation = Quaternion.LookRotation(vectorToAnchor, new Vector3(0, 1, 0));
 
         PathColor(angleTan, distanceBoatToPath);
@@ -344,6 +370,9 @@ public class PathGame : MonoBehaviour
             currTime -= Time.deltaTime;
             correctTimerText.text = ((int)currTime).ToString();
 
+            if (auxCorrectionDirection) arrowRight.SetActive(true);
+            else arrowLeft.SetActive(true);
+
             rb.velocity = Vector3.zero;
             
             yield return null;
@@ -368,7 +397,7 @@ public class PathGame : MonoBehaviour
 
         //var deviation = angleComponent/2 + distanceComponent/2;
         var deviation =  distanceComponent;
-        Debug.Log(deviation);
+        //Debug.Log(deviation);
         if (deviation <= 0.5)
         {
             green = 1f;

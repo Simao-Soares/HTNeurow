@@ -10,6 +10,12 @@ public class GameManager : MonoBehaviour
 {
     public GameObject zone; //interaction zone
 
+    public GameObject Player;
+
+    public GameObject mainPanel;
+    public GameObject optPanel;
+    public GameObject choicePanel;
+
     [System.Serializable]
     public class BCI_Hands
     {
@@ -40,8 +46,14 @@ public class GameManager : MonoBehaviour
     public Slider turnAngleSlider;
     public Slider boatSpeedSlider;
     public Slider turnSpeedSlider;
+    public Slider motionRangeSlider;
+    public Slider colliderSizeSlider;
+
 
     //Task #1
+    public GameObject PathUI;
+    public GameObject PathElements;
+
     public Slider challengeLevelSlider;
     public Slider angleDevSlider;
     public Slider maxDistanceSlider;
@@ -50,6 +62,9 @@ public class GameManager : MonoBehaviour
     public Slider autoCorrectSlider;
 
     //Task #2
+    public GameObject CoinUI;
+    public GameObject CoinLighting;
+
     public Slider playAreaSlider;
     public Slider objectiveNumSlider;
     public Slider objectiveRadSlider;
@@ -59,11 +74,15 @@ public class GameManager : MonoBehaviour
 
     //-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 // NOT DEFAULT, ONLY FOR TESTING
 
-    public static int ControlMethod = -1; //static -> instances of GameObject will share this value 
+    public static int TaskChoice = 1;   //  0 -> disabled                                                            
+                                        //  1 -> task1 (path)       
+                                        // -1 -> task2 (coins)
+
+    public static int ControlMethod = 1;  //static -> instances of GameObject will share this value 
                                           //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
-    public static int HemiLimb = 2;      //  0 -> No hemiparethic limb                                                                 
+    public static int HemiLimb = 0;      //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
@@ -76,6 +95,14 @@ public class GameManager : MonoBehaviour
 
     public static int taskDuration = 120;
 
+    public static int trackAxis = -1;      //  0 -> X axis                                                               
+                                           //  1 -> Y axis        
+                                           // -1 -> Z axis 
+
+
+    public static float motionRange = 0.1f;
+    public static float colliderSize = 0.2f;
+
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
     public static float boatSpeed = 1f;
@@ -87,60 +114,91 @@ public class GameManager : MonoBehaviour
     public static float maxDistance = 5f;
     public static float maxDistance2 = 10f;
     public static int selfCorrect = 10;
-    public static float autoCorrect = 1f;
+    public static float autoCorrect = 5f;
 
     //TASK #2
-    public static int playArea = 300;
+    public static int playArea = 3;
     public static int objectiveNum = 3;
     public static float objectiveRad = 1f;
 
     //-------------------------------------------------------------------------------------------------------------------
 
+    public static bool optionsMenuAux = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
+
+
+
         // Create a temporary reference to the current scene.
         Scene currentScene = SceneManager.GetActiveScene();
 
         // Retrieve the name of this scene.
         string sceneName = currentScene.name;
-        
-        //Set inicial parameters
-        timeSlider.value = taskDuration;
-        turnAngleSlider.value = turnAngle;
-        boatSpeedSlider.value = boatSpeed;
-        turnSpeedSlider.value = turnSpeed;
-        challengeLevelSlider.value = challengeLevel;
-        angleDevSlider.value = angleDev;
-        maxDistanceSlider.value = maxDistance;
-        maxDistance2Slider.value = maxDistance2;
-        selfCorrectSlider.value = selfCorrect;
-        autoCorrectSlider.value = autoCorrect;
-        playAreaSlider.value = playArea;
-        objectiveNumSlider.value = objectiveNum;
-        objectiveRadSlider.value = objectiveRad;
 
-        if (sceneName == "RowingSim")
+        if (sceneName == "Menu")
+        {
+            mainPanel.SetActive(true);
+            optPanel.SetActive(false);
+            choicePanel.SetActive(false);
+
+
+        }
+
+        else if (sceneName == "RowingSim")
         {
             //------------------------------------------- RowingSim SCENE SETUP ---------------------------------------------
 
-            rightPaddleZone.SetActive(false);
-            leftPaddleZone.SetActive(false);
+            //-----------------------------------------------------------------------
+            //Non-Task specific Settings:
+            //-----------------------------------------------------------------------
 
-            if (GameManager.Gender == 1) //activate MALE hand models
+            //--------------- Boat Movement ---------------
+            var movement = Player.GetComponent<BoatMovement>();
+            movement.rotAngle = turnAngle;
+            movement.spinningTime = 1 / turnSpeed;
+            movement.forwardForce = boatSpeed;
+
+            //------------------ General ------------------
+            if (Gender == 1) //activate MALE hand models
             {
                 myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(true);
                 myBCI_Hands_List.BCI_HandModels[0].LeftHand.SetActive(true);
             }
-
-            else if (GameManager.Gender == -1) //activate FEMALE hand models
+            else if (Gender == -1) //activate FEMALE hand models
             {
                 myBCI_Hands_List.BCI_HandModels[1].RightHand.SetActive(true);
                 myBCI_Hands_List.BCI_HandModels[1].LeftHand.SetActive(true);
             }
+            //BCI
+            if (ControlMethod == 1)
+            {
 
-            switch (GameManager.HemiLimb)
+                InteractionManager.SetActive(false);
+                leftPaddleAnim.enabled = true;
+                rightPaddleAnim.enabled = true;
+
+                rightPaddleZone.SetActive(false);
+                leftPaddleZone.SetActive(false);
+
+                //falta os InteractionBehaviour das paddles e mais coisas de certeza
+            }
+            //HT
+            else if (ControlMethod == -1)
+            {
+                //deactivate BCI Hand models
+                myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(false);
+                myBCI_Hands_List.BCI_HandModels[0].LeftHand.SetActive(false);
+                myBCI_Hands_List.BCI_HandModels[1].RightHand.SetActive(false);
+                myBCI_Hands_List.BCI_HandModels[1].LeftHand.SetActive(false);
+
+                leftPaddleAnim.enabled = false;
+                rightPaddleAnim.enabled = false;
+            }
+
+            switch (HemiLimb)
             {
                 case 1:
                     rightPaddleZone.SetActive(true);
@@ -156,32 +214,93 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
+            if (HemiLimb != 0)
+            {
+                //HemiZone -> HemiSupport
+                var R_Support = rightPaddleZone.GetComponent<HemiSupport>();
+                var L_Support = leftPaddleZone.GetComponent<HemiSupport>();
+                R_Support.maxReach = motionRange;
+                L_Support.maxReach = motionRange;
 
-            //SEPARATE CONTROL METHODS
-            //BCI
-            if (GameManager.ControlMethod == 1){ 
-
-				InteractionManager.SetActive(false);
-				leftPaddleAnim.enabled = true;
-				rightPaddleAnim.enabled = true;
-
-                rightPaddleZone.SetActive(false);
-                leftPaddleZone.SetActive(false);
-
-                //falta os InteractionBehaviour das paddles e mais coisas de certeza
+                //Still to be implemented               //<----------------------------------------------------------------------- 
+                //R_Support.colliderRad = colliderSize;
+                //L_Support.colliderRad = colliderSize;
+                //R_Support.orientation = trackAxis;
+                //L_Support.orientation = trackAxis;
             }
-            //HT
-            else if (GameManager.ControlMethod == -1){ 
-				
-				//deactivate BCI Hand models
-				myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(false);
-				myBCI_Hands_List.BCI_HandModels[0].LeftHand.SetActive(false);
-				myBCI_Hands_List.BCI_HandModels[1].RightHand.SetActive(false);
-				myBCI_Hands_List.BCI_HandModels[1].LeftHand.SetActive(false);
 
-				leftPaddleAnim.enabled = false;
-				rightPaddleAnim.enabled = false;
-			}
+            if (TaskChoice == 1)
+            {
+                Player.GetComponent<PathGame>().enabled = true;
+                PathUI.SetActive(true);
+                PathElements.SetActive(true);
+
+                Player.GetComponent<CoinGame>().enabled = false;
+                CoinUI.SetActive(false);
+            }
+            else if (TaskChoice == -1)
+            {
+                Player.GetComponent<PathGame>().enabled = false;
+                PathUI.SetActive(false);
+                PathElements.SetActive(false);
+
+                Player.GetComponent<CoinGame>().enabled = true;
+                CoinUI.SetActive(true);
+            }
+
+            
+
+
+
+            //if (TaskChoice == 1)
+            //{
+
+
+            //    var pathFollow = GetComponent<PathGame>();
+            //    //----------------------------------------
+            //    //Task1-specific Settings:
+            //    //----------------------------------------
+            //    pathFollow.totalTaskTime = taskDuration;
+
+            //    pathFollow.challengeLevel = challengeLevel;
+            //    pathFollow.maxDeviationAngle = angleDev;
+            //    pathFollow.maxDistance = maxDistance;
+            //    pathFollow.maxDistanceNoAngle = maxDistance2;
+            //    pathFollow.selfCorrectTime = selfCorrect;
+            //    pathFollow.correctionSpeed = autoCorrect;
+
+            //    //-----------------------------------------
+            //    //Task2-specific UI elements:
+            //    //-----------------------------------------
+            //    //PathUI.SetActive(true);
+
+
+            //}
+
+            //else if (TaskChoice == -1)
+            //{
+
+            ////CoinLighting.SetActive(true);
+            //var coinCatcher = GetComponent<CoinGame>();
+            ////-----------------------------------------
+            ////Task2-specific Settings:
+            ////-----------------------------------------
+            //coinCatcher.timeRemaining = taskDuration;
+            //coinCatcher.coinGameArea = playArea*200;
+            //coinCatcher.numberOfCoins = objectiveNum;
+            //coinCatcher.coinGameArea = objectiveRad;            //<----------------------------------------------------------------------- TEST IT
+
+            ////-----------------------------------------
+            ////Task2-specific UI elements:
+            ////-----------------------------------------
+            ////CoinUI.SetActive(true);
+
+
+
+            //}
+
+
+
             //---------------------------------------------------------------------------------------------------------------
         }
     }
@@ -191,40 +310,72 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Create a temporary reference to the current scene.
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        // Retrieve the name of this scene.
+        string sceneName = currentScene.name;
+
+
+
         if (Input.GetKey("l")){
             zone.SetActive(true);
         }
         else{
             zone.SetActive(false);
         }
-        if (Input.GetKey("escape")) Application.Quit();
+
+
+        if (Input.GetKey("escape")) SceneManager.LoadScene("Menu");      //<-----------------------------------------------------------------------
+        if (Input.GetKey("escape") && sceneName == "Menu") Application.Quit();
+
+
+        if (optionsMenuAux && sceneName == "Menu")
+        {
+            //Set inicial slider parameters
+            timeSlider.value = taskDuration;
+
+            motionRangeSlider.value = motionRange;
+            colliderSizeSlider.value = colliderSize;
+
+            turnAngleSlider.value = turnAngle;
+            boatSpeedSlider.value = boatSpeed;
+            turnSpeedSlider.value = turnSpeed;
+
+
+            challengeLevelSlider.value = challengeLevel;
+            angleDevSlider.value = angleDev;
+            maxDistanceSlider.value = maxDistance;
+            maxDistance2Slider.value = maxDistance2;
+            selfCorrectSlider.value = selfCorrect;
+            autoCorrectSlider.value = autoCorrect;
+
+            playAreaSlider.value = playArea;
+            objectiveNumSlider.value = objectiveNum;
+            objectiveRadSlider.value = objectiveRad;
+        }
+
     }
 
-    //void reloadAssets(){
-    //    water.SetActive(false);
-    //    water.SetActive(true);
-    //    player.SetActive(false);
-    //    player.SetActive(true);
-    //}
-
-    public void BackToMenu()
-    {
-        SceneManager.LoadScene("Menu");
-    }
 
     //------------------------------------------  SET FUNCTIONS  ------------------------------------------
 
-
+    //-----------------------------------------------------------------------
     //General Settings:
+    //-----------------------------------------------------------------------
+
+    public void SetTask(int taskAux)
+    {
+        TaskChoice = taskAux;
+        SceneManager.LoadScene("RowingSim");
+    }
 
     public void SetBCIControlMethod(){
 		ControlMethod = 1;
 	}
-
 	public void SetHTControlMethod(){
 		ControlMethod = -1;
 	}
-
     public void SetHemiLimb(int HemiAux)
     {
         switch (HemiLimb)
@@ -243,40 +394,47 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+    public void SetTrackedAxis(int AxisAux)
+    {
+        trackAxis = AxisAux;
 
+    }
     public void SetGender(int GenderAux)
     {
         Gender = GenderAux;
     }
-
     public void SetTime()
     {
-        taskDuration = ((int)timeSlider.value);
+        taskDuration = (int)(Mathf.Round(timeSlider.value/10f)*10f);
+    }
+    public void SetMotionRange()
+    {
+        motionRange = Mathf.Round(motionRangeSlider.value * 100f) / 100f;
+    }
+    public void SetColliderSize ()
+    {
+        colliderSize = Mathf.Round(colliderSizeSlider.value * 100f) / 100f;
     }
 
+    //-----------------------------------------------------------------------
+    //Boat Movement Settings:
+    //-----------------------------------------------------------------------
     public void SetTurnAngle()
     {
         turnAngle = ((int)turnAngleSlider.value);
     }
-
     public void SetBoatSpeed()
     {
-        boatSpeed = Mathf.Round(boatSpeedSlider.value * 100f) / 100f;
+        boatSpeed = Mathf.Round(boatSpeedSlider.value * 10f) / 10f;
     }
-
     public void SetTurnSpeed()
     {
         turnSpeed = ((int)turnSpeedSlider.value);
     }
 
-    //public void SetForward(int ForwardAux)
-    //{
-    //    Forward = ForwardAux;
-    //}
-
-
+    //-----------------------------------------------------------------------
     //Task #1 Settings:
-
+    //-----------------------------------------------------------------------
     public void SetChallengeLevel()
     {
         challengeLevel = ((int)challengeLevelSlider.value);
@@ -302,9 +460,9 @@ public class GameManager : MonoBehaviour
         autoCorrect = ((int)autoCorrectSlider.value);
     }
 
-
+    //-----------------------------------------------------------------------
     //Task #2 Settings:
-
+    //-----------------------------------------------------------------------
     public void SetPlayAreaSize()
     {
         playArea = ((int)playAreaSlider.value);
@@ -318,8 +476,16 @@ public class GameManager : MonoBehaviour
         objectiveRad = ((int)objectiveRadSlider.value);
     }
 
-
-
-
     //------------------------------------------------------------------------------------------------------------------------
+
+
+    //GameOver
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+
 }
+
+

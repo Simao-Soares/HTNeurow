@@ -15,6 +15,7 @@ public class CoinGame : MonoBehaviour
     public GameObject scoreUI;
     public float coinGameArea = 400f; // length of the side of playable area
     public float minDistance = 50f;
+    public int coinRad = 10;
 
     public GameObject Coin;
     public GameObject boat;
@@ -57,12 +58,45 @@ public class CoinGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+
         instructions.SetActive(false);
         tempScoreUI.SetActive(false);
         auxI = true;
+
+        SetParameters();
+
         GenerateObjectives();
+
         timerIsRunning = true;
+        
+
+        
     }
+
+
+    void SetParameters()
+    {
+        //CoinLighting.SetActive(true);
+
+        timeRemaining = GameManager.taskDuration;
+        coinGameArea = GameManager.playArea * 100;
+        numberOfCoins = GameManager.objectiveNum;
+        Coin.transform.localScale = new Vector3 (GameManager.objectiveRad, 100, GameManager.objectiveRad);            //<----------------------------------------------------------------------- TEST IT
+
+        Coin.GetComponent<PickedUp>().shrinkStep = GameManager.objectiveRad * 3;
+
+        //-----------------------------------------
+        //Task2-specific UI elements:
+        //-----------------------------------------
+        //CoinUI.SetActive(true);
+
+    }
+
+
+
+
+
 
     void FixedUpdate()
     {
