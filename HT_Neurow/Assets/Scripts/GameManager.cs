@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
-    public static int ControlMethod = 1;  //static -> instances of GameObject will share this value 
+    public static int ControlMethod = -1;  //static -> instances of GameObject will share this value 
                                            //  1 -> BCI (arrowKeys)
                                            // -1 -> HT (leapMotion)
 
@@ -110,12 +110,12 @@ public class GameManager : MonoBehaviour
                                            // -1 -> Z axis 
 
 
-    public static float motionRange = 0.3f;
+    public static float motionRange = 0.15f;
     public static float colliderSize = 0.2f;
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 3f;
+    public static float boatSpeed = 0f;
     public static float turnSpeed = 1f;
     public static bool invertTurn = false;
 

@@ -25,6 +25,10 @@ public class HemiSupport : MonoBehaviour
 	private float initPos;
     private float oldPos;
 
+    private float minPos;
+    private float maxPos;
+
+
 
 
     private float testDistance;
@@ -78,18 +82,26 @@ public class HemiSupport : MonoBehaviour
 //        }
 //        //------------------------------------------------------------------------------------------
 
-        wristAUX.transform.position = wrist.transform.position; //----------------------------------------->  aux object only has Player as parent object => can use its localPosition
+        wristAUX.transform.position = wrist.transform.position;
 
         if (auxTrack){  // && oldPos >= initPos && oldPos <= initPos + maxReach) {   
 
             Debug.Log(forwardAux);
 
-            if (oldPos >= initPos && oldPos <= initPos + maxReach) 
+            if (oldPos >= initPos && oldPos <= initPos + maxReach)
             {
                 RotPaddle(oldPos, delta, forward, forwardAux);
             }
-            else if (oldPos >= initPos + maxReach) forwardAux = false;
-            else if (oldPos <= initPos) forwardAux = true;
+            else if (oldPos >= initPos + maxReach)
+            {
+                forwardAux = false;
+                maxPos = initPos;
+            }
+            else if (oldPos <= initPos)
+            {
+                forwardAux = true;
+                minPos = initPos+maxReach;
+            }
             //oldPos = wrist.transform.position.z;
             oldPos = wristAUX.transform.localPosition.z;
         }
@@ -122,9 +134,6 @@ public class HemiSupport : MonoBehaviour
         deltaRot = (2*delta / maxReach) * 15f;  //dont know why i need the 2* but i'll take it
 
         //Debug.Log(currentPos - initPos);
-
-        //if (currentPos >= initPos + maxReach) forwardAux = false;              
-        //else if (currentPos <= initPos) forwardAux = true;
         
 
         if (currentPos > oldPos)
@@ -139,46 +148,56 @@ public class HemiSupport : MonoBehaviour
             //Debug.Log("backward");
         }
 
-        //phase 1
-		if (forward && forwardAux && currentPos <= initPos + maxReach/2) //&& forwardAux
-        {
-            if(rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
-            else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
+      //  if(forwardAux && currentPos > maxPos)
+        //{
+            //phase 1
+            if (forward && forwardAux && currentPos <= initPos + maxReach / 2) //&& forwardAux
+            {
+                if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
+                else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
 
-            paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-            Debug.Log("p1");
-        }
+                paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
+                Debug.Log("p1");
+            }
 
-        //phase 2
-		else if (forward && forwardAux && currentPos > initPos + maxReach/2) //&& forwardAux
-        {
-            if (rightSide) target = Quaternion.Euler(-30f, currentRotY+(1.5f*deltaRot), currentRotZ-deltaRot);
-            else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
+            //phase 2
+            else if (forward && forwardAux && currentPos > initPos + maxReach / 2) //&& forwardAux
+            {
+                if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
+                else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
 
-            paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-           	Debug.Log("p2");
-        }
-        
-        //phase 3
-		else if (!forward && !forwardAux && currentPos >= initPos + maxReach/2) //&& !forwardAux
-        {
-            if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
-            else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
+                paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
+                Debug.Log("p2");
+            }
 
-            paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-            Debug.Log("p3");
-        }
+          //  maxPos = currentPos;
 
-        //phase 4
-		else if (!forward && !forwardAux && currentPos < initPos + maxReach/2) //&& !forwardAux
-        {
-            if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
-            else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
+       // }
 
-            paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-            Debug.Log("p4");
+        //if (forwardAux && currentPos < minPos)
+        //{
+            //phase 3
+            if (!forward && !forwardAux && currentPos >= initPos + maxReach / 2) //&& !forwardAux
+            {
+                if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
+                else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
 
-        }
+                paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
+                Debug.Log("p3");
+            }
+
+            //phase 4
+            else if (!forward && !forwardAux && currentPos < initPos + maxReach / 2) //&& !forwardAux
+            {
+                if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
+                else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
+
+                paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
+                Debug.Log("p4");
+            }
+
+           // minPos = currentPos;
+        //}
     }
 
 
@@ -197,6 +216,10 @@ public class HemiSupport : MonoBehaviour
             initPos = wristAUX.transform.localPosition.z;
             //initPos = wrist.transform.position.z; 
 			oldPos = initPos;
+
+            minPos = initPos;
+            maxPos = initPos + maxReach;
+
             //Debug.Log(initPos + maxReach);
 
             gameObject.GetComponent<SphereCollider>().enabled = false;  //prevent subsequent collisions
