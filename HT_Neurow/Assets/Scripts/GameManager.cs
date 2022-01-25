@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 0f;
+    public static float boatSpeed = 1f;
     public static float turnSpeed = 1f;
     public static bool invertTurn = false;
 
