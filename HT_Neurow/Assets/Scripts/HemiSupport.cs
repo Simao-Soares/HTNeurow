@@ -148,7 +148,10 @@ public class HemiSupport : MonoBehaviour
             //Debug.Log("backward");
         }
 
-      //  if(forwardAux && currentPos > maxPos)
+        //These 2 if statements are ment to prevent tracking of "jittery" movement that would break the task
+        //it was almost working, it had some bug that prevented it of tracking during phases 3 and 4 of the movement
+
+        //if(forwardAux && currentPos > maxPos)
         //{
             //phase 1
             if (forward && forwardAux && currentPos <= initPos + maxReach / 2) //&& forwardAux
@@ -170,9 +173,9 @@ public class HemiSupport : MonoBehaviour
                 Debug.Log("p2");
             }
 
-          //  maxPos = currentPos;
+            //maxPos = currentPos;
 
-       // }
+        //}
 
         //if (forwardAux && currentPos < minPos)
         //{
@@ -196,7 +199,7 @@ public class HemiSupport : MonoBehaviour
                 Debug.Log("p4");
             }
 
-           // minPos = currentPos;
+            //minPos = currentPos;
         //}
     }
 
@@ -217,8 +220,8 @@ public class HemiSupport : MonoBehaviour
             //initPos = wrist.transform.position.z; 
 			oldPos = initPos;
 
-            minPos = initPos;
-            maxPos = initPos + maxReach;
+            minPos = initPos + maxReach;
+            maxPos = initPos;
 
             //Debug.Log(initPos + maxReach);
 

@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
                                            //  1 -> BCI (arrowKeys)
                                            // -1 -> HT (leapMotion)
 
-    public static int HemiLimb = 1;      //  0 -> No hemiparethic limb                                                                 
+    public static int HemiLimb = 0;      //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 1f;
+    public static float boatSpeed = 0f;
     public static float turnSpeed = 1f;
     public static bool invertTurn = false;
 

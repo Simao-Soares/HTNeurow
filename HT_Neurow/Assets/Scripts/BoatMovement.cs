@@ -27,6 +27,8 @@ public class BoatMovement : MonoBehaviour
     public GameObject leftPaddle;
     public GameObject rightPaddle;
 
+  
+
     public Animator L_rowAnimator; 
     public Animator R_rowAnimator;
 
@@ -42,6 +44,8 @@ public class BoatMovement : MonoBehaviour
     //-------------------------
     [HideInInspector] public bool debugAux = false;
     //-------------------------
+
+    public GameObject Paddles;         //<--------------------------------------------------
 
 
     // Start is called before the first frame update
@@ -65,10 +69,13 @@ public class BoatMovement : MonoBehaviour
         var frontOfBoat = boatPos + 5 * transform.forward;
         var boatOrientation = frontOfBoat - boatPos;
 
+        //Paddles.transform.position = transform.position;
+        //Paddles.transform.rotation = transform.rotation;
+
 
         //if (auxTurn) StartCoroutine(Turning(1f, rotateB));
         //if(boatOrientation!=rotateB)
-        
+
 
 
 
@@ -76,31 +83,39 @@ public class BoatMovement : MonoBehaviour
         if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1)||
             (turnLeft == true && cooldownActivated == false && cm == -1))                                 
         {
-            if(GameManager.invertTurn) Turn(true); //turn to the left side=true
+
+
+
+
+            if (GameManager.invertTurn) Turn(true); //turn to the left side=true
             else Turn(false);
 
             cooldownActivated = true;
             turnLeft = false;
-			if(cm == 1) R_rowAnimator.SetBool("Turning", true);
+            if (cm == 1) R_rowAnimator.SetBool("Turning", true);
         }
+
 
         else if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1) ||
                  (turnRight == true && cooldownActivated == false && cm == -1))  
         {
+
+
             if (GameManager.invertTurn) Turn(false); //turn to the right side=false
             else Turn(true);
 
             cooldownActivated = true;
             turnRight = false;
-			if(cm == 1) L_rowAnimator.SetBool("Turning", true);
+            if (cm == 1) L_rowAnimator.SetBool("Turning", true);
         }
+ 
 
         if(cooldownActivated) RunCooldownTimer();
 
 
-        //Change movement direction
+        ////Change movement direction
         rb.velocity = Vector3.zero;
-        if(!selfCorrection) rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
+        if (!selfCorrection) rb.AddForce(transform.forward * forwardForce, ForceMode.Impulse);
     }
 
 
