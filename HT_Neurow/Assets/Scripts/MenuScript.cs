@@ -37,6 +37,7 @@ public class MenuScript : MonoBehaviour
 	public Button axisButtonX;
 	public Button axisButtonY;
 	public Button axisButtonZ;
+	public Button invertButton;
 
 
 
@@ -167,6 +168,8 @@ public class MenuScript : MonoBehaviour
 		if (GameManager.trackAxis == 0) axisButtonX.Select();
 		else if (GameManager.trackAxis == 1) axisButtonY.Select();
 		else if (GameManager.trackAxis == -1) axisButtonZ.Select();
+
+		if (GameManager.invertTurn == true) invertButton.Select();
 
 
 		//if (GameManager.Forward == 1) forwardButtonA.Select();

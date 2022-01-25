@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
-    public static int ControlMethod = -1;  //static -> instances of GameObject will share this value 
+    public static int ControlMethod = 1;  //static -> instances of GameObject will share this value 
                                            //  1 -> BCI (arrowKeys)
                                            // -1 -> HT (leapMotion)
 
@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
     public static float turnAngle = 20f;
     public static float boatSpeed = 3f;
     public static float turnSpeed = 1f;
+    public static bool invertTurn = false;
 
     //TASK #1
     public static int challengeLevel = 2;
@@ -156,6 +157,8 @@ public class GameManager : MonoBehaviour
 
         else if (sceneName == "RowingSim")
         {
+
+
             //------------------------------------------- RowingSim SCENE SETUP ---------------------------------------------
 
             //-----------------------------------------------------------------------
@@ -477,7 +480,12 @@ public class GameManager : MonoBehaviour
     {
         turnSpeed = ((int)turnSpeedSlider.value);
     }
+    public void SetInvertTurn()
+    {
+        if(invertTurn) invertTurn=false;
+        else invertTurn = true;
 
+    }
     //-----------------------------------------------------------------------
     //Task #1 Settings:
     //-----------------------------------------------------------------------

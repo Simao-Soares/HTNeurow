@@ -87,14 +87,46 @@ public class MyPathGenerator : MonoBehaviour
         //Debug.Log(pathLength);
         while (currentPathLength < pathLength)
         {
-            var count = anchorPoints.Count; 
-            var yVar = Random.Range (-3 * challengeLevel, 3 * challengeLevel);
-            var xVar = Random.Range(20 * 1 / challengeLevel, 40 * 1 / challengeLevel);
+            var count = anchorPoints.Count;
+
+            var yAuxVar = Random.Range(0, 2);
+            float yVar;
+            float xVar;
+
+            Debug.Log(yAuxVar);
+
+            float y_minFunction = 1.944f * Mathf.Exp(0.3592f * challengeLevel) - 1.575f;
+            float y_maxFunction = 3 * challengeLevel;
+
+            float x_minFunction = 3 * y_minFunction;
+            float x_maxFunction = 3 * y_maxFunction;
+
+            if (yAuxVar == 0)
+            {
+                //if(challengeLevel==1) yVar = Random.Range(-3, -1);  
+                //else yVar = Random.Range(-3 * challengeLevel, -minFunctionAux);
+                yVar = Random.Range(-y_maxFunction, -y_minFunction);
+            }
+            else
+            {
+                //if (challengeLevel == 1) yVar = Random.Range(1, 3); 
+                //else yVar = Random.Range(minFunctionAux, 3 * challengeLevel);
+                yVar = Random.Range(y_minFunction, y_maxFunction);
+
+            }
+
+            //if (challengeLevel == 1) xVar = Random.Range(5 * 1 / challengeLevel, 10 * 1 / challengeLevel); //<--------------------------------- ugly exception to fix distance bug
+            //else xVar = Random.Range(20 * 1 / challengeLevel, 40 * 1 / challengeLevel);
+
+            xVar = Random.Range(x_minFunction, x_maxFunction);
+
+
             if (count == 0)
             {
                 anchorPoints.Add(Vector2.zero);
             }
-            //so that path always starts straightish
+
+            //so that path always starts straight(ish)
             else if (count == 1)                        
             {
                 anchorPoints.Add(new Vector2(10f, 0f));

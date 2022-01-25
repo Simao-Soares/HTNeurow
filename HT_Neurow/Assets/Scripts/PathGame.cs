@@ -259,7 +259,7 @@ public class PathGame : MonoBehaviour
     {
         Vector2 closest = Vector2.zero;
         float distance = Mathf.Infinity;
-        Vector2 position = new Vector2(transform.position.x, transform.position.z); 
+        Vector2 position = new Vector2(transform.position.x, transform.position.z + 2); //<--------------------------------------------------------- added an offset to prevent perpendicular corrections
         foreach (Vector2 anchor in anchorPoints)
         {
             //Debug.Log(anchor);
