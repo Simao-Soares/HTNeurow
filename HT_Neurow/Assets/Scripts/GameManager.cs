@@ -82,13 +82,13 @@ public class GameManager : MonoBehaviour
 
 
 
-    //-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 // NOT DEFAULT, ONLY FOR TESTING
+    //-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 
 
     public static int TaskChoice = 1;   //  0 -> disabled                                                            
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
-    public static int ControlMethod = -1;  //static -> instances of GameObject will share this value 
+    public static int ControlMethod = 1;  //static -> instances of GameObject will share this value 
                                            //  1 -> BCI (arrowKeys)
                                            // -1 -> HT (leapMotion)
 
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
     //public static int Forward = 1;     //  1 -> Auto (always moving forward)
                                          // -1 -> Manual (forward movement based on rowing)
 
-    public static int taskDuration = 120;
+    public static int taskDuration = 30; //------------------------------------------------------------------------------------------------------------------------------------------------- Testing
 
     public static int trackAxis = -1;      //  0 -> X axis                                                               
                                            //  1 -> Y axis        
@@ -115,12 +115,12 @@ public class GameManager : MonoBehaviour
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 0f;
+    public static float boatSpeed = 2f;
     public static float turnSpeed = 1f;
     public static bool invertTurn = false;
 
     //TASK #1
-    public static int challengeLevel = 2;
+    public static int challengeLevel = 5;
     public static int angleDev = 150;
     public static float maxDistance = 5f;
     public static float maxDistance2 = 10f;

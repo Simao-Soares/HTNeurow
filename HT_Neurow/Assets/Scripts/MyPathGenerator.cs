@@ -93,13 +93,12 @@ public class MyPathGenerator : MonoBehaviour
             float yVar;
             float xVar;
 
-            Debug.Log(yAuxVar);
 
-            float y_minFunction = 1.944f * Mathf.Exp(0.3592f * challengeLevel) - 1.575f;
-            float y_maxFunction = 3 * challengeLevel;
 
-            float x_minFunction = 3 * y_minFunction;
-            float x_maxFunction = 3 * y_maxFunction;
+            float y_minFunction = 4.78228f * Mathf.Exp(0.278084f * challengeLevel)-4.28458f;
+            float y_maxFunction = 5.22976f * Mathf.Exp(0.290293f * challengeLevel)-2.17223f;
+
+
 
             if (yAuxVar == 0)
             {
@@ -116,9 +115,10 @@ public class MyPathGenerator : MonoBehaviour
             }
 
             //if (challengeLevel == 1) xVar = Random.Range(5 * 1 / challengeLevel, 10 * 1 / challengeLevel); //<--------------------------------- ugly exception to fix distance bug
-            //else xVar = Random.Range(20 * 1 / challengeLevel, 40 * 1 / challengeLevel);
+            //else
+            xVar = Random.Range(15 * 1 / challengeLevel, 30 * 1 / challengeLevel);
 
-            xVar = Random.Range(x_minFunction, x_maxFunction);
+            //xVar = Random.Range(x_minFunction, x_maxFunction);
 
 
             if (count == 0)

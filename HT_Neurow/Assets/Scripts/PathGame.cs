@@ -103,6 +103,7 @@ public class PathGame : MonoBehaviour
     {
         SetParameters();
 
+
         timerIsRunning = true;
         stopTimer = false;
         instructions.SetActive(false);
@@ -116,6 +117,10 @@ public class PathGame : MonoBehaviour
         anchorPoints = pathCreator.GetComponent<MyPathGenerator>().anchorPoints;
         vectorPoints = pathCreator.GetComponent<MyPathGenerator>().colliderPoints;
 
+        Debug.Log(vectorPoints.Count);
+        //Add new point so that the max distance between vertexes is .5f
+        FixVertexList();
+        Debug.Log(vectorPoints.Count);
 
     }
 
@@ -412,5 +417,18 @@ public class PathGame : MonoBehaviour
         pathMaterial.color = color;
         playerScoreText.color = color;
         //uiCue.GetComponent<Material>().color = color;
+    }
+
+    void FixVertexList()
+    {
+        var n = 0;
+        while (n < vectorPoints.Count-1){ 
+            while (Vector2.Distance(vectorPoints[n], vectorPoints[n + 1]) > 0.5f)
+            {
+                var newVertex = new Vector2((vectorPoints[n].x + vectorPoints[n + 1].x) / 2, (vectorPoints[n].y + vectorPoints[n + 1].y) / 2);
+                vectorPoints.Insert(n + 1, newVertex);
+            }
+            n++;
+        }
     }
 }
