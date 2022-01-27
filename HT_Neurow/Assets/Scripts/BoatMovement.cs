@@ -27,7 +27,12 @@ public class BoatMovement : MonoBehaviour
     public GameObject leftPaddle;
     public GameObject rightPaddle;
 
-  
+    public GameObject leftRowCollider;
+    public GameObject rightRowCollider;
+    //[HideInInspector] public float leftRotationSpeed = 0;
+    //[HideInInspector] public float rightRotationSpeed = 0;
+
+
 
     public Animator L_rowAnimator; 
     public Animator R_rowAnimator;
@@ -45,7 +50,7 @@ public class BoatMovement : MonoBehaviour
     [HideInInspector] public bool debugAux = false;
     //-------------------------
 
-    public GameObject Paddles;         //<--------------------------------------------------
+
 
 
     // Start is called before the first frame update
@@ -57,6 +62,7 @@ public class BoatMovement : MonoBehaviour
         L_rowAnimator.SetFloat("Time", 0.7f/spinningTime ); //0.7 was trial and error
         R_rowAnimator.SetFloat("Time", 0.7f/spinningTime );
 
+
         selfCorrection = false;
 
     }
@@ -64,40 +70,33 @@ public class BoatMovement : MonoBehaviour
     private void FixedUpdate(){
 
 		int cm = GameManager.ControlMethod;
+        
 
-        var boatPos = transform.position;
-        var frontOfBoat = boatPos + 5 * transform.forward;
-        var boatOrientation = frontOfBoat - boatPos;
-
-        //Paddles.transform.position = transform.position;
-        //Paddles.transform.rotation = transform.rotation;
-
-
-        //if (auxTurn) StartCoroutine(Turning(1f, rotateB));
-        //if(boatOrientation!=rotateB)
 
 
 
 
         //checks input + if cooldown is over + selected control method corresponds to the input 
-        if ((Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1)||
-            (turnLeft == true && cooldownActivated == false && cm == -1))                                 
+        if (Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1)                                
         {
-
-
-
-
             if (GameManager.invertTurn) Turn(true); //turn to the left side=true
             else Turn(false);
 
             cooldownActivated = true;
             turnLeft = false;
-            if (cm == 1) R_rowAnimator.SetBool("Turning", true);
+            R_rowAnimator.SetBool("Turning", true);
         }
 
+        else if (cm == -1)
+        {
+            if (turnRight)
+            {
+                if (GameManager.invertTurn) transform.Rotate(Vector3.up, 50 * Time.deltaTime * rightRowCollider.GetComponent<DisplayRow>().rotationSpeed);
+                else transform.Rotate(Vector3.down, 50 * Time.deltaTime * rightRowCollider.GetComponent<DisplayRow>().rotationSpeed);
+            }
+        }
 
-        else if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1) ||
-                 (turnRight == true && cooldownActivated == false && cm == -1))  
+        else if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1))
         {
 
 
@@ -106,11 +105,20 @@ public class BoatMovement : MonoBehaviour
 
             cooldownActivated = true;
             turnRight = false;
-            if (cm == 1) L_rowAnimator.SetBool("Turning", true);
+            L_rowAnimator.SetBool("Turning", true);
         }
- 
 
-        if(cooldownActivated) RunCooldownTimer();
+        else if (cm == -1)
+        {
+            if (turnLeft)
+            {
+                if (GameManager.invertTurn) transform.Rotate(Vector3.up, 50 * Time.deltaTime * leftRowCollider.GetComponent<DisplayRow>().rotationSpeed);
+                else transform.Rotate(Vector3.down, 50 * Time.deltaTime * leftRowCollider.GetComponent<DisplayRow>().rotationSpeed);
+            }
+        }
+
+
+        if (cooldownActivated) RunCooldownTimer();
 
 
         ////Change movement direction

@@ -9,45 +9,53 @@ public class DisplayRow : MonoBehaviour
 {
     [SerializeField] Text customText;
 
-	public float rotA;
+	//public float rotA;
 	private bool rAux = false;
 	private bool lAux = false;
 	public GameObject myPlayer;
+	
+
+	[HideInInspector] public BoatMovement _playerScript;
+
+	public GameObject rowCollider;
+	public GameObject paddle;
+
+	public float waterLevel;
+	public float paddleDepth = 0;
+	public float paddleSpeed = 0;
 
 
-	public BoatMovement _playerScript;
+	Rigidbody rowRB;
 
-	//Array of Water GameObjects
-	//[System.Serializable]
-	//public class TerrainList
-	//{
-	//	public GameObject[] water;
-	//}
+	public float rotationSpeed;
 
-	//public TerrainList myTerrainList = new TerrainList();  //List of terrain elements
+
 
 	void Start(){
 		customText.enabled = false;
 		_playerScript = myPlayer.GetComponent<BoatMovement>();
 
+		//waterLevel = transform.position.y + (transform.localScale.y) / 2; //as it stands should be equal to -0.35f
+		rowRB = paddle.GetComponent<Rigidbody>();
+
 	}
 
-	void FixedUpdate()
-	{
-		//if(lAux) StartCoroutine(TurnRight());
-		//if(rAux) StartCoroutine(TurnLeft());
-		if(lAux)
-		{
-			_playerScript.turnLeft = true;
-			lAux=false;
-		}
+	//void FixedUpdate()
+	//{
+	//	//if(lAux) StartCoroutine(TurnRight());
+	//	//if(rAux) StartCoroutine(TurnLeft());
+	//	if(lAux)
+	//	{
+	//		_playerScript.turnLeft = true;
+	//		lAux=false;
+	//	}
 
-		if(rAux)
-		{
-			_playerScript.turnRight = true;
-			rAux=false;
-		} 
-	}
+	//	if(rAux)
+	//	{
+	//		_playerScript.turnRight = true;
+	//		rAux=false;
+	//	} 
+	//}
 
 
 
@@ -55,29 +63,41 @@ public class DisplayRow : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             customText.enabled = true;
-            //Debug.Log("RowStart");
-        }
+			waterLevel = rowCollider.transform.position.y;
+			if (gameObject.name == "R_RowCollider") _playerScript.turnRight = true;
+			else if (gameObject.name == "L_RowCollider") _playerScript.turnLeft = true;
+		}
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+		if (other.CompareTag("Player"))
+		{
+			paddleDepth = waterLevel - rowCollider.transform.position.y;
+			paddleSpeed = rowRB.angularVelocity.z; //------------------------------------doesnt work since the boat is always moving forward (in z)
+
+			if (gameObject.name == "R_RowCollider")
+			{
+				rotationSpeed = Mathf.Abs(paddleDepth * paddleSpeed);
+				Debug.Log(paddleSpeed);
+			}
+
+			if (gameObject.name == "L_RowCollider")
+			{
+				rotationSpeed = -Mathf.Abs(paddleDepth * paddleSpeed);
+				//Debug.Log(paddleSpeed);
+			}
+			}
+	}	
+
+
 
     void OnTriggerExit(Collider other){
         if (other.CompareTag("Player"))
         {
             customText.enabled = false;
-            //Debug.Log("RowEnd");
-
-			if(gameObject.name == "R_RowCollider"){
-//				for(int i = 0; i < myTerrainList.water.Length ; i++){
-//					myTerrainList.water[i].transform.Rotate(Vector3.up * 100f * Time.deltaTime);
-//				}
-				lAux = true;  //right row turns left
-			}
-
-			if(gameObject.name == "L_RowCollider"){
-//				for(int i = 0; i < myTerrainList.water.Length ; i++){
-//					myTerrainList.water[i].transform.Rotate(Vector3.down * 100f * Time.deltaTime);
-//				}
-				rAux = true;  //left row turns right
-			}
-        }
+			_playerScript.turnLeft = false;
+			_playerScript.turnRight = false;
+		}
     }
 }
