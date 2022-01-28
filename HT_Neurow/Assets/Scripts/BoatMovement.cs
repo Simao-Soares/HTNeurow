@@ -70,11 +70,8 @@ public class BoatMovement : MonoBehaviour
     private void FixedUpdate(){
 
 		int cm = GameManager.ControlMethod;
-        
 
-
-
-
+        //------------------------------------------   BCI Turning  -----------------------------------------
 
         //checks input + if cooldown is over + selected control method corresponds to the input 
         if (Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1)                                
@@ -87,19 +84,8 @@ public class BoatMovement : MonoBehaviour
             R_rowAnimator.SetBool("Turning", true);
         }
 
-        else if (cm == -1)
-        {
-            if (turnRight)
-            {
-                if (GameManager.invertTurn) transform.Rotate(Vector3.up, 50 * Time.deltaTime * rightRowCollider.GetComponent<DisplayRow>().rotationSpeed);
-                else transform.Rotate(Vector3.down, 50 * Time.deltaTime * rightRowCollider.GetComponent<DisplayRow>().rotationSpeed);
-            }
-        }
-
         else if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1))
         {
-
-
             if (GameManager.invertTurn) Turn(false); //turn to the right side=false
             else Turn(true);
 
@@ -108,15 +94,32 @@ public class BoatMovement : MonoBehaviour
             L_rowAnimator.SetBool("Turning", true);
         }
 
+        //------------------------------------------   HT Turning  -------------------------------------------
+
         else if (cm == -1)
         {
-            if (turnLeft)
+            var leftRotSpeed = leftRowCollider.GetComponent<DisplayRow>().rotationSpeed;
+            var rightRotSpeed = rightRowCollider.GetComponent<DisplayRow>().rotationSpeed;
+
+            var totalRotSpeed = rightRotSpeed - leftRotSpeed;
+
+            if (turnRight)//acho que isto nao e preciso e em baixo e so substituir por totalRotSpeed
             {
-                if (GameManager.invertTurn) transform.Rotate(Vector3.up, 50 * Time.deltaTime * leftRowCollider.GetComponent<DisplayRow>().rotationSpeed);
-                else transform.Rotate(Vector3.down, 50 * Time.deltaTime * leftRowCollider.GetComponent<DisplayRow>().rotationSpeed);
+                if (GameManager.invertTurn) transform.Rotate(Vector3.up, 50 * Time.deltaTime * rightRowCollider.GetComponent<DisplayRow>().rotationSpeed);
+                else transform.Rotate(Vector3.down, 50 * Time.deltaTime * rightRowCollider.GetComponent<DisplayRow>().rotationSpeed);
             }
         }
 
+        //else if (cm == -1)
+        //{
+        //    if (turnLeft)
+        //    {
+        //        if (GameManager.invertTurn) transform.Rotate(Vector3.up, 50 * Time.deltaTime * leftRowCollider.GetComponent<DisplayRow>().rotationSpeed);
+        //        else transform.Rotate(Vector3.down, 50 * Time.deltaTime * leftRowCollider.GetComponent<DisplayRow>().rotationSpeed);
+        //    }
+        //}
+
+        //-------------------------------------------------------------------------------------------------------
 
         if (cooldownActivated) RunCooldownTimer();
 

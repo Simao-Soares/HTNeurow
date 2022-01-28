@@ -26,6 +26,7 @@ public class DisplayRow : MonoBehaviour
 
 
 	Rigidbody rowRB;
+	Rigidbody playerRB;
 
 	public float rotationSpeed;
 
@@ -37,6 +38,7 @@ public class DisplayRow : MonoBehaviour
 
 		//waterLevel = transform.position.y + (transform.localScale.y) / 2; //as it stands should be equal to -0.35f
 		rowRB = paddle.GetComponent<Rigidbody>();
+		playerRB = myPlayer.GetComponent<Rigidbody>();
 
 	}
 
@@ -64,10 +66,20 @@ public class DisplayRow : MonoBehaviour
         {
             customText.enabled = true;
 			waterLevel = rowCollider.transform.position.y;
-			if (gameObject.name == "R_RowCollider") _playerScript.turnRight = true;
-			else if (gameObject.name == "L_RowCollider") _playerScript.turnLeft = true;
+
+			//---------------------------acho que nao e preciso nada disto
+			if (gameObject.name == "R_RowCollider")
+			{
+				_playerScript.turnRight = true;
+			}
+			else if (gameObject.name == "L_RowCollider")
+			{
+				_playerScript.turnLeft = true;
+			}
+			//---------------------------
 		}
-    }
+	}
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -76,18 +88,20 @@ public class DisplayRow : MonoBehaviour
 			paddleDepth = waterLevel - rowCollider.transform.position.y;
 			paddleSpeed = rowRB.angularVelocity.z; //------------------------------------doesnt work since the boat is always moving forward (in z)
 
-			if (gameObject.name == "R_RowCollider")
-			{
+			//paddleSpeed = rowRB.angularVelocity.z - playerRB.angularVelocity.z; ---------------------------> TRY THIS
+
+			//if (gameObject.name == "R_RowCollider")
+			//{
 				rotationSpeed = Mathf.Abs(paddleDepth * paddleSpeed);
 				Debug.Log(paddleSpeed);
-			}
+			//}
 
-			if (gameObject.name == "L_RowCollider")
-			{
-				rotationSpeed = -Mathf.Abs(paddleDepth * paddleSpeed);
-				//Debug.Log(paddleSpeed);
-			}
-			}
+			//if (gameObject.name == "L_RowCollider")
+			//{
+			//	rotationSpeed = Mathf.Abs(paddleDepth * paddleSpeed);
+			//	//Debug.Log(paddleSpeed);
+			//}
+		}
 	}	
 
 
@@ -96,6 +110,7 @@ public class DisplayRow : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             customText.enabled = false;
+
 			_playerScript.turnLeft = false;
 			_playerScript.turnRight = false;
 		}
