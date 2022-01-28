@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using Leap.Unity;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject auxTrackerR;
     public GameObject auxTrackerL;
     public GameObject attachtmentHands;
+    public GameObject handModels;
 
     public GameObject hemiAnimHand_R;
     public GameObject hemiAnimHand_L;
@@ -97,13 +98,14 @@ public class GameManager : MonoBehaviour
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
 
-    public static int Gender = -1;       //  1 -> Male
+    public static int Gender =  1;       //  1 -> Male
                                          // -1 -> Female
 
     //public static int Forward = 1;     //  1 -> Auto (always moving forward)
                                          // -1 -> Manual (forward movement based on rowing)
 
-    public static int taskDuration = 30; //------------------------------------------------------------------------------------------------------------------------------------------------- Testing
+
+    public static int taskDuration = 60; //------------------------------------------------------------------------------------------------------------------------------------------------- Testing
 
     public static int trackAxis = -1;      //  0 -> X axis                                                               
                                            //  1 -> Y axis        
@@ -120,7 +122,7 @@ public class GameManager : MonoBehaviour
     public static bool invertTurn = false;
 
     //TASK #1
-    public static int challengeLevel = 1;
+    public static int challengeLevel = 2;
     public static int angleDev = 150;
     public static float maxDistance = 5f;
     public static float maxDistance2 = 10f;
@@ -176,11 +178,17 @@ public class GameManager : MonoBehaviour
             {
                 myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(true);
                 myBCI_Hands_List.BCI_HandModels[0].LeftHand.SetActive(true);
+
+                handModels.GetComponent<HandModelManager>().EnableGroup("MaleMedium");
+                handModels.GetComponent<HandModelManager>().DisableGroup("FemaleMedium");
             }
             else if (Gender == -1) //activate FEMALE hand models
             {
                 myBCI_Hands_List.BCI_HandModels[1].RightHand.SetActive(true);
                 myBCI_Hands_List.BCI_HandModels[1].LeftHand.SetActive(true);
+
+                handModels.GetComponent<HandModelManager>().EnableGroup("FemaleMedium");
+                handModels.GetComponent<HandModelManager>().DisableGroup("MaleMedium");
             }
 
             //BCI
@@ -217,7 +225,7 @@ public class GameManager : MonoBehaviour
                 switch (HemiLimb)
                 {
                     case 0:
-                        attachtmentHands.SetActive(false);
+                        //attachtmentHands.SetActive(false);
 
                         rightPaddleZone.SetActive(false);
                         leftPaddleZone.SetActive(false);

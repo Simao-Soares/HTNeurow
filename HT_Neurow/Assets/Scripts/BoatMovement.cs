@@ -25,7 +25,12 @@ public class BoatMovement : MonoBehaviour
     [HideInInspector] public bool turnRight = false;
 
     public GameObject leftPaddle;
+    public Quaternion leftPaddleInitialRot;
+    public bool leftReleased;
+
     public GameObject rightPaddle;
+    public Quaternion rightPaddleInitialRot;
+    public bool rightReleased;
 
     public GameObject leftRowCollider;
     public GameObject rightRowCollider;
@@ -62,6 +67,12 @@ public class BoatMovement : MonoBehaviour
         L_rowAnimator.SetFloat("Time", 0.7f/spinningTime ); //0.7 was trial and error
         R_rowAnimator.SetFloat("Time", 0.7f/spinningTime );
 
+        //leftPaddleInitialRot = leftPaddle.transform.rotation;
+        leftReleased = false;
+        //rightPaddleInitialRot = rightPaddle.transform.rotation;
+        rightReleased = false;
+
+
 
         selfCorrection = false;
 
@@ -70,6 +81,11 @@ public class BoatMovement : MonoBehaviour
     private void FixedUpdate(){
 
 		int cm = GameManager.ControlMethod;
+
+        Debug.Log(rightReleased);
+
+        if (leftReleased) leftPaddle.transform.localRotation = Quaternion.Lerp(leftPaddle.transform.localRotation, Quaternion.Euler(-30, 0, -90), Time.deltaTime);
+        if (rightReleased) rightPaddle.transform.localRotation = Quaternion.Lerp(rightPaddle.transform.localRotation, Quaternion.Euler(-30, 0, -90), Time.deltaTime);
 
         //------------------------------------------   BCI Turning  -----------------------------------------
 
@@ -101,13 +117,12 @@ public class BoatMovement : MonoBehaviour
             var leftRotSpeed = leftRowCollider.GetComponent<DisplayRow>().rotationSpeed;
             var rightRotSpeed = rightRowCollider.GetComponent<DisplayRow>().rotationSpeed;
 
-            var totalRotSpeed = rightRotSpeed - leftRotSpeed;
+            var totalRotSpeed = leftRotSpeed - rightRotSpeed;
+            
+ 
+            if (GameManager.invertTurn) transform.Rotate(Vector3.up, 100 * Time.deltaTime * totalRotSpeed);
+            else transform.Rotate(Vector3.down, 100 * Time.deltaTime * totalRotSpeed);
 
-            if (turnRight)//acho que isto nao e preciso e em baixo e so substituir por totalRotSpeed
-            {
-                if (GameManager.invertTurn) transform.Rotate(Vector3.up, 50 * Time.deltaTime * rightRowCollider.GetComponent<DisplayRow>().rotationSpeed);
-                else transform.Rotate(Vector3.down, 50 * Time.deltaTime * rightRowCollider.GetComponent<DisplayRow>().rotationSpeed);
-            }
         }
 
         //else if (cm == -1)
@@ -182,6 +197,18 @@ public class BoatMovement : MonoBehaviour
             L_rowAnimator.SetBool("Turning", false);
             R_rowAnimator.SetBool("Turning", false);
         }
+    }
+
+    public void ReleasedPaddle(bool right)
+    {
+        if (right) rightReleased = true;
+        else leftReleased = true;
+    }
+
+    public void GrabedPaddle(bool right)
+    {
+        if (right) rightReleased = false;
+        else leftReleased = false;
     }
 
 

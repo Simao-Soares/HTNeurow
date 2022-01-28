@@ -21,6 +21,8 @@ public class DisplayRow : MonoBehaviour
 	public GameObject paddle;
 
 	public float waterLevel;
+	public float velocityConstant;
+
 	public float paddleDepth = 0;
 	public float paddleSpeed = 0;
 
@@ -66,17 +68,19 @@ public class DisplayRow : MonoBehaviour
         {
             customText.enabled = true;
 			waterLevel = rowCollider.transform.position.y;
+			
 
-			//---------------------------acho que nao e preciso nada disto
-			if (gameObject.name == "R_RowCollider")
-			{
-				_playerScript.turnRight = true;
-			}
-			else if (gameObject.name == "L_RowCollider")
-			{
-				_playerScript.turnLeft = true;
-			}
-			//---------------------------
+
+			////---------------------------acho que nao e preciso nada disto
+			//if (gameObject.name == "R_RowCollider")
+			//{
+			//	_playerScript.turnRight = true;
+			//}
+			//else if (gameObject.name == "L_RowCollider")
+			//{
+			//	_playerScript.turnLeft = true;
+			//}
+			////---------------------------
 		}
 	}
 
@@ -86,21 +90,10 @@ public class DisplayRow : MonoBehaviour
 		if (other.CompareTag("Player"))
 		{
 			paddleDepth = waterLevel - rowCollider.transform.position.y;
-			paddleSpeed = rowRB.angularVelocity.z; //------------------------------------doesnt work since the boat is always moving forward (in z)
+			paddleSpeed = paddle.transform.InverseTransformDirection(rowRB.angularVelocity).y; //------------------------------------ ITS A MESS
 
-			//paddleSpeed = rowRB.angularVelocity.z - playerRB.angularVelocity.z; ---------------------------> TRY THIS
-
-			//if (gameObject.name == "R_RowCollider")
-			//{
-				rotationSpeed = Mathf.Abs(paddleDepth * paddleSpeed);
-				Debug.Log(paddleSpeed);
-			//}
-
-			//if (gameObject.name == "L_RowCollider")
-			//{
-			//	rotationSpeed = Mathf.Abs(paddleDepth * paddleSpeed);
-			//	//Debug.Log(paddleSpeed);
-			//}
+			if (paddleDepth > 0) rotationSpeed = Mathf.Abs(paddleDepth*2); //* paddleSpeed
+			else rotationSpeed = 0;
 		}
 	}	
 
