@@ -32,6 +32,9 @@ public class DisplayRow : MonoBehaviour
 
 	[HideInInspector] public float rotationSpeed;
 
+	[HideInInspector] public float prevWristPos;
+	[HideInInspector] public float currWristPos;
+
 
 
 	void Start(){
@@ -42,12 +45,24 @@ public class DisplayRow : MonoBehaviour
 		wristRB = wristTrackerAUX.GetComponent<Rigidbody>();
 		playerRB = myPlayer.GetComponent<Rigidbody>();
 
+		wristTrackerAUX.transform.position = wristTracker.transform.position;
+		currWristPos = wristTrackerAUX.transform.localPosition.z;
+		prevWristPos = currWristPos;
+
 	}
 
 	void FixedUpdate()
 	{
 		wristTrackerAUX.transform.position = wristTracker.transform.position;
-		paddleSpeed = wristRB.velocity.sqrMagnitude;
+		currWristPos = wristTrackerAUX.transform.localPosition.z;
+
+		var deltaPos = (Mathf.Abs(prevWristPos) - Mathf.Abs(currWristPos));
+		if (deltaPos > 0.001f) paddleSpeed = Mathf.Round((deltaPos / Time.deltaTime) * 10f) / 10f;
+		else paddleSpeed = 0;
+		prevWristPos = currWristPos;
+
+		Debug.Log(paddleSpeed);
+		
 
 	}
 
@@ -58,19 +73,6 @@ public class DisplayRow : MonoBehaviour
         {
             customText.enabled = true;
 			waterLevel = rowCollider.transform.position.y;
-			
-
-
-			////---------------------------acho que nao e preciso nada disto
-			//if (gameObject.name == "R_RowCollider")
-			//{
-			//	_playerScript.turnRight = true;
-			//}
-			//else if (gameObject.name == "L_RowCollider")
-			//{
-			//	_playerScript.turnLeft = true;
-			//}
-			////---------------------------
 		}
 	}
 
@@ -80,9 +82,8 @@ public class DisplayRow : MonoBehaviour
 		if (other.CompareTag("Player"))
 		{
 			paddleDepth = waterLevel - rowCollider.transform.position.y;
-			//paddleSpeed = wristRB.velocity.sqrMagnitude; //------------------------------------------------------------------------------------------
-			Debug.Log(playerRB.velocity);
-			if (paddleDepth > 0) rotationSpeed = Mathf.Abs(paddleDepth*2); //* paddleSpeed
+
+			if (paddleDepth > 0) rotationSpeed = Mathf.Abs(5*paddleDepth*paddleSpeed); 
 			else rotationSpeed = 0;
 		}
 	}	
