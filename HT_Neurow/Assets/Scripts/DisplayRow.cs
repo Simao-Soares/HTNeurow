@@ -18,19 +18,19 @@ public class DisplayRow : MonoBehaviour
 	[HideInInspector] public BoatMovement _playerScript;
 
 	public GameObject rowCollider;
-	public GameObject paddle;
+	public GameObject wristTracker;
+	public GameObject wristTrackerAUX;
 
-	public float waterLevel;
-	public float velocityConstant;
+	[HideInInspector] public float waterLevel;
 
-	public float paddleDepth = 0;
-	public float paddleSpeed = 0;
+	[HideInInspector] public float paddleDepth = 0;
+	[HideInInspector] public float paddleSpeed = 0;
 
 
-	Rigidbody rowRB;
+	Rigidbody wristRB;
 	Rigidbody playerRB;
 
-	public float rotationSpeed;
+	[HideInInspector] public float rotationSpeed;
 
 
 
@@ -39,27 +39,17 @@ public class DisplayRow : MonoBehaviour
 		_playerScript = myPlayer.GetComponent<BoatMovement>();
 
 		//waterLevel = transform.position.y + (transform.localScale.y) / 2; //as it stands should be equal to -0.35f
-		rowRB = paddle.GetComponent<Rigidbody>();
+		wristRB = wristTrackerAUX.GetComponent<Rigidbody>();
 		playerRB = myPlayer.GetComponent<Rigidbody>();
 
 	}
 
-	//void FixedUpdate()
-	//{
-	//	//if(lAux) StartCoroutine(TurnRight());
-	//	//if(rAux) StartCoroutine(TurnLeft());
-	//	if(lAux)
-	//	{
-	//		_playerScript.turnLeft = true;
-	//		lAux=false;
-	//	}
+	void FixedUpdate()
+	{
+		wristTrackerAUX.transform.position = wristTracker.transform.position;
+		paddleSpeed = wristRB.velocity.sqrMagnitude;
 
-	//	if(rAux)
-	//	{
-	//		_playerScript.turnRight = true;
-	//		rAux=false;
-	//	} 
-	//}
+	}
 
 
 
@@ -90,8 +80,8 @@ public class DisplayRow : MonoBehaviour
 		if (other.CompareTag("Player"))
 		{
 			paddleDepth = waterLevel - rowCollider.transform.position.y;
-			paddleSpeed = paddle.transform.InverseTransformDirection(rowRB.angularVelocity).y; //------------------------------------ ITS A MESS
-
+			//paddleSpeed = wristRB.velocity.sqrMagnitude; //------------------------------------------------------------------------------------------
+			Debug.Log(playerRB.velocity);
 			if (paddleDepth > 0) rotationSpeed = Mathf.Abs(paddleDepth*2); //* paddleSpeed
 			else rotationSpeed = 0;
 		}
