@@ -136,9 +136,7 @@ public class PathGame : MonoBehaviour
 
                 //------------------------------------------------------------
 
-                closestPointBoat = FindClosestVectorPoint();
-                
-                ball.transform.position = closestPointBoat;
+
 
 
                 //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
@@ -146,6 +144,8 @@ public class PathGame : MonoBehaviour
                 var AUXfrontAnchor = FindClosestFrontAnchor();
                 var AUXfrontAnchorNorm = new Vector3(-AUXfrontAnchor.y, 0, AUXfrontAnchor.x);
                 ball2.transform.position = AUXfrontAnchorNorm;
+                closestPointBoat = FindClosestVectorPoint();
+                ball.transform.position = closestPointBoat;
 
                 //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 

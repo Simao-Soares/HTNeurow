@@ -51,6 +51,11 @@ public class CoinGame : MonoBehaviour
     private bool isFrozen = false;
     private float pendingFreezeDuration = 0f;
 
+    //BCI Objective generation
+    public float bciDistanceX;
+    public float bciDistanceZ;
+    public int spawnAngle;
+
 
 
 
@@ -66,12 +71,31 @@ public class CoinGame : MonoBehaviour
 
         SetParameters();
 
-        GenerateObjectives();
+        //HT
+        if (GameManager.ControlMethod == -1) GenerateObjectives();
 
         timerIsRunning = true;
-        
+ 
+    }
 
-        
+    void OneObjective()
+    {
+        Vector3 newCoords = Vector3.zero;
+        Transform boatT = boat.transform;
+        var height = 99.5f * Vector3.up;
+
+        //-----------------------------------------------------------------------------------------------------------> add code o receive BCI input
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            newCoords = (boatT.position + boatT.forward * bciDistanceZ + boatT.right * bciDistanceX + height);
+            GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            newCoords = (boatT.position + boatT.forward * bciDistanceZ - boatT.right * bciDistanceX + height);
+            GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
+        }
+       
     }
 
 
@@ -82,14 +106,10 @@ public class CoinGame : MonoBehaviour
         timeRemaining = GameManager.taskDuration;
         coinGameArea = GameManager.playArea * 50;
         numberOfCoins = GameManager.objectiveNum;
-        Coin.transform.localScale = new Vector3 (GameManager.objectiveRad, 100, GameManager.objectiveRad);            //<----------------------------------------------------------------------- TEST IT
+        Coin.transform.localScale = new Vector3 (GameManager.objectiveRad, 100, GameManager.objectiveRad);           
 
         Coin.GetComponent<PickedUp>().shrinkStep = GameManager.objectiveRad * 3;
 
-        //-----------------------------------------
-        //Task2-specific UI elements:
-        //-----------------------------------------
-        //CoinUI.SetActive(true);
 
     }
 
@@ -112,8 +132,20 @@ public class CoinGame : MonoBehaviour
                 //show instructions for instructionsTime seconds when i key is pressed
                 if (Input.GetKeyDown("i")) StartCoroutine(ShowInstructions(instructionsTime)); //not perfect but enough
 
-                auxList = UpdateList();
-                if (auxList != -1) GenerateNewObjective(auxList);
+                //--------------------------------------------------------------------------------------------------------------
+                if (GameManager.ControlMethod == -1)//HT
+                {
+                    auxList = UpdateList();
+                    if (auxList != -1) GenerateNewObjective(auxList);
+                }
+
+                //--------------------------------------------------------------------------------------------------------------
+                else if (GameManager.ControlMethod == 1)//BCI
+                {
+                    OneObjective();
+                }
+
+                //--------------------------------------------------------------------------------------------------------------
             }
             else //TIME IS UP
             {

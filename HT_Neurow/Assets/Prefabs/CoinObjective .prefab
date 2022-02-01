@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7004367013575315656}
   - component: {fileID: 7004367013575315655}
   - component: {fileID: 7004367013575315654}
-  - component: {fileID: 7004367013575315658}
   - component: {fileID: 7004367013575315659}
   m_Layer: 0
   m_Name: 'CoinObjective '
@@ -98,19 +97,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!65 &7004367013575315658
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7004367013575315653}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &7004367013575315659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,3 +124,5 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  shrinkStep: 0
+  player: {fileID: 0}

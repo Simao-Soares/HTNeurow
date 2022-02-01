@@ -25,12 +25,12 @@ public class BoatMovement : MonoBehaviour
     [HideInInspector] public bool turnRight = false;
 
     public GameObject leftPaddle;
-    public Quaternion leftPaddleInitialRot;
-    public bool leftReleased;
+    [HideInInspector] public Quaternion leftPaddleInitialRot;
+    [HideInInspector] public bool leftReleased;
 
     public GameObject rightPaddle;
-    public Quaternion rightPaddleInitialRot;
-    public bool rightReleased;
+    [HideInInspector] public Quaternion rightPaddleInitialRot;
+    [HideInInspector] public bool rightReleased;
 
     public GameObject leftRowCollider;
     public GameObject rightRowCollider;
@@ -81,8 +81,6 @@ public class BoatMovement : MonoBehaviour
     private void FixedUpdate(){
 
 		int cm = GameManager.ControlMethod;
-
-        Debug.Log(rightReleased);
 
         if (leftReleased) leftPaddle.transform.localRotation = Quaternion.Lerp(leftPaddle.transform.localRotation, Quaternion.Euler(-30, 0, -90), Time.deltaTime);
         if (rightReleased) rightPaddle.transform.localRotation = Quaternion.Lerp(rightPaddle.transform.localRotation, Quaternion.Euler(-30, 0, -90), Time.deltaTime);

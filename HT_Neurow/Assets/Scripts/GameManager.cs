@@ -8,13 +8,31 @@ using Leap.Unity;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject zone; //interaction zone
 
     public GameObject Player;
 
+    [Header("Menu Scene Panels and Sliders")]
     public GameObject mainPanel;
     public GameObject optPanel;
     public GameObject choicePanel;
+
+    public Slider timeSlider;
+    public Slider turnAngleSlider;
+    public Slider boatSpeedSlider;
+    public Slider turnSpeedSlider;
+    public Slider motionRangeSlider;
+    public Slider colliderSizeSlider;
+
+    public Slider challengeLevelSlider;
+    public Slider angleDevSlider;
+    public Slider maxDistanceSlider;
+    public Slider maxDistance2Slider;
+    public Slider selfCorrectSlider;
+    public Slider autoCorrectSlider;
+
+    public Slider playAreaSlider;
+    public Slider objectiveNumSlider;
+    public Slider objectiveRadSlider;
 
     [System.Serializable]
     public class BCI_Hands
@@ -29,56 +47,38 @@ public class GameManager : MonoBehaviour
         public BCI_Hands[] BCI_HandModels;
     }
 
+    [Header("BCI Hands and Animators")]
     public BCI_Hands_List myBCI_Hands_List = new BCI_Hands_List();  //List of handPoints
-
-    //Contact zones for Hemiparetic Limb Support
-    public GameObject leftPaddleZone;
-    public GameObject rightPaddleZone;
-
 	public Animator leftPaddleAnim;
 	public Animator rightPaddleAnim;
 
 
-	public GameObject InteractionManager;
-
-    //HT LeapMotion Elements
+    [Header("HT ELEMENTS:")]
+    public GameObject LeapHandController;
+    public GameObject InteractionManager;
+    public GameObject handModels;
+    public GameObject zone; //interaction zone
+    [Header("HT - Impaired Limb Support:")]
     public GameObject auxTrackerR;
     public GameObject auxTrackerL;
     public GameObject attachtmentHands;
-    public GameObject handModels;
-
     public GameObject hemiAnimHand_R;
     public GameObject hemiAnimHand_L;
+    public GameObject leftPaddleZone;
+    public GameObject rightPaddleZone;
 
 
-
-    //General
-    public Slider timeSlider;
-    public Slider turnAngleSlider;
-    public Slider boatSpeedSlider;
-    public Slider turnSpeedSlider;
-    public Slider motionRangeSlider;
-    public Slider colliderSizeSlider;
-
-
-    //Task #1
+    [Header("Task #1 UI and Settings")]
     public GameObject PathUI;
     public GameObject PathElements;
 
-    public Slider challengeLevelSlider;
-    public Slider angleDevSlider;
-    public Slider maxDistanceSlider;
-    public Slider maxDistance2Slider;
-    public Slider selfCorrectSlider;
-    public Slider autoCorrectSlider;
 
-    //Task #2
+
+    [Header("Task #2 UI and Settings")]
     public GameObject CoinUI;
     public GameObject CoinLighting;
 
-    public Slider playAreaSlider;
-    public Slider objectiveNumSlider;
-    public Slider objectiveRadSlider;
+
 
 
 
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
-    public static int ControlMethod = -1;  //static -> instances of GameObject will share this value 
+    public static int ControlMethod = 1;  //static -> instances of GameObject will share this value 
                                            //  1 -> BCI (arrowKeys)
                                            // -1 -> HT (leapMotion)
 
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
     //TASK #2
     public static int playArea = 1;
     public static int objectiveNum = 3;
-    public static float objectiveRad = 1f;
+    public static float objectiveRad = 2f;
 
     //-------------------------------------------------------------------------------------------------------------------
 
@@ -194,6 +194,7 @@ public class GameManager : MonoBehaviour
             //BCI
             if (ControlMethod == 1)
             {
+                LeapHandController.GetComponent<LeapServiceProvider>().enabled = false;
                 InteractionManager.SetActive(false);
                 leftPaddleAnim.enabled = true;
                 rightPaddleAnim.enabled = true;
@@ -211,6 +212,7 @@ public class GameManager : MonoBehaviour
             //HT
             else if (ControlMethod == -1)
             {
+                LeapHandController.GetComponent<LeapServiceProvider>().enabled = true;
                 //deactivate BCI Hand models
                 myBCI_Hands_List.BCI_HandModels[0].RightHand.SetActive(false);
                 myBCI_Hands_List.BCI_HandModels[0].LeftHand.SetActive(false);
@@ -374,12 +376,13 @@ public class GameManager : MonoBehaviour
         string sceneName = currentScene.name;
 
 
-
-        if (Input.GetKey("l")){
-            zone.SetActive(true);
-        }
-        else{
-            zone.SetActive(false);
+        if(sceneName == "RowingSim") { 
+            if (Input.GetKey("l")){
+                zone.SetActive(true);
+            }
+            else{
+                zone.SetActive(false);
+            }
         }
 
 
