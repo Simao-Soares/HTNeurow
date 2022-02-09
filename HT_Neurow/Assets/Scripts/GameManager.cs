@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
     public Slider playAreaSlider;
     public Slider objectiveNumSlider;
     public Slider objectiveRadSlider;
+    public Slider objectivePosZSlider;
+    public Slider objectivePosXSlider;
+    
 
     [System.Serializable]
     public class BCI_Hands
@@ -145,6 +148,9 @@ public class GameManager : MonoBehaviour
     public static int playArea = 1;
     public static int objectiveNum = 3;
     public static float objectiveRad = 2f;
+
+    public static int objectivePosZ = 5;
+    public static int objectivePosX = 3;
 
     //-------------------------------------------------------------------------------------------------------------------
 
@@ -388,6 +394,8 @@ public class GameManager : MonoBehaviour
             playAreaSlider.value = playArea;
             objectiveNumSlider.value = objectiveNum;
             objectiveRadSlider.value = objectiveRad;
+            objectivePosZSlider.value = objectivePosZ;
+            objectivePosXSlider.value = objectivePosX;
         }
 
     }
@@ -571,6 +579,18 @@ public class GameManager : MonoBehaviour
     public void SetObjectiveRad()
     {
         objectiveRad = ((int)objectiveRadSlider.value);
+        updateSettings = true;
+    }
+
+    public void SetObjectivePosZ()
+    {
+        objectivePosZ = ((int)objectivePosZSlider.value);
+        updateSettings = true;
+    }
+
+    public void SetObjectivePosX()
+    {
+        objectivePosX = ((int)objectivePosXSlider.value);
         updateSettings = true;
     }
 

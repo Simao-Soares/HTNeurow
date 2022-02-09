@@ -80,7 +80,7 @@ public class DisplayRow : MonoBehaviour
 		{
 			paddleDepth = waterLevel - rowCollider.transform.position.y;
 
-			if (paddleDepth > 0) rotationSpeed = Mathf.Abs(5*paddleDepth*paddleSpeed); 
+			if (paddleDepth > 0) rotationSpeed = Mathf.Abs(GameManager.turnSense*paddleDepth*paddleSpeed); 
 			else rotationSpeed = 0;
 		}
 	}	

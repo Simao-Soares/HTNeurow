@@ -123,15 +123,6 @@ public class BoatMovement : MonoBehaviour
 
         }
 
-        //else if (cm == -1)
-        //{
-        //    if (turnLeft)
-        //    {
-        //        if (GameManager.invertTurn) transform.Rotate(Vector3.up, 50 * Time.deltaTime * leftRowCollider.GetComponent<DisplayRow>().rotationSpeed);
-        //        else transform.Rotate(Vector3.down, 50 * Time.deltaTime * leftRowCollider.GetComponent<DisplayRow>().rotationSpeed);
-        //    }
-        //}
-
         //-------------------------------------------------------------------------------------------------------
 
         if (cooldownActivated) RunCooldownTimer();

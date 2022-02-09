@@ -54,7 +54,6 @@ public class CoinGame : MonoBehaviour
     //BCI Objective generation
     public float bciDistanceX;
     public float bciDistanceZ;
-    public int spawnAngle;
 
 
 
@@ -76,6 +75,7 @@ public class CoinGame : MonoBehaviour
  
     }
 
+    //BCI
     void OneObjective()
     {
         Vector3 newCoords = Vector3.zero;
@@ -83,12 +83,12 @@ public class CoinGame : MonoBehaviour
         var height = 99.5f * Vector3.up;
 
         //-----------------------------------------------------------------------------------------------------------> add code o receive BCI input
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.E))
         {
             newCoords = (boatT.position + boatT.forward * bciDistanceZ + boatT.right * bciDistanceX + height);
             GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
         }
-        else if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetKeyUp(KeyCode.Q))
         {
             newCoords = (boatT.position + boatT.forward * bciDistanceZ - boatT.right * bciDistanceX + height);
             GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
@@ -104,6 +104,9 @@ public class CoinGame : MonoBehaviour
         timeRemaining = GameManager.taskDuration;
         coinGameArea = GameManager.playArea * 50;
         numberOfCoins = GameManager.objectiveNum;
+        bciDistanceX = GameManager.objectivePosX;
+        bciDistanceZ = GameManager.objectivePosZ;
+
         Coin.transform.localScale = new Vector3 (GameManager.objectiveRad, 100, GameManager.objectiveRad);           
 
         Coin.GetComponent<PickedUp>().shrinkStep = GameManager.objectiveRad * 3;
@@ -116,7 +119,7 @@ public class CoinGame : MonoBehaviour
 
 
 
-    void FixedUpdate()
+    void Update()
     {
         if (timerIsRunning)
         {

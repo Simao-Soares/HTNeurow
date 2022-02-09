@@ -59,7 +59,7 @@ public class PresetFiller : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(editAux);
+        //Debug.Log(editAux);
         if (updateSettings)
         {
             canvas.GetComponent<MenuScript>().updateSettingsAux = true;

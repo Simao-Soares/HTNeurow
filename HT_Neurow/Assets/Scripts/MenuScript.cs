@@ -75,11 +75,14 @@ public class MenuScript : MonoBehaviour
 	public TMP_Text playAreaText;
 	public TMP_Text objectiveNumText;
 	public TMP_Text objectiveRadText;
+	public TMP_Text objectivePosX;
+	public TMP_Text objectivePosZ;
+	
 
 
 
 
-    private void Update()
+	private void Update()
     {
 		if (updateSettingsAux)
 		{
@@ -249,6 +252,8 @@ public class MenuScript : MonoBehaviour
 		playAreaText.text = GameManager.playArea.ToString();
 		objectiveNumText.text = GameManager.objectiveNum.ToString();
 		objectiveRadText.text = GameManager.objectiveRad.ToString();
+		objectivePosX.text = GameManager.objectivePosX.ToString();
+		objectivePosZ.text = GameManager.objectivePosZ.ToString();
 	}
 
 }
