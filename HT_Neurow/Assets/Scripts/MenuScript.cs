@@ -21,36 +21,49 @@ public class MenuScript : MonoBehaviour
     private bool playAux = false;
 	private bool optAux = false;
 	private bool optBackAux = false;
+	[HideInInspector]public bool updateSettingsAux = false;
+	[HideInInspector] public bool editPreset = false;
 
 
 
+	public Toggle editButton;
 
 	//Variables for default game settings
-	public Button controlButtonBCI;
-	public Button controlButtonHT;
-	public Button hemiButtonRight; //default is none selected
-	public Button hemiButtonLeft;
-	public Button genderButtonM;
-	public Button genderButtonF;
+	public Toggle controlButtonBCI;
+	public Toggle controlButtonHT;
+
+	public Toggle hemiButtonRight; //default is none selected
+	public Toggle hemiButtonLeft;
+
+	public Toggle genderButtonM;
+	public Toggle genderButtonF;
+
 	//public Button forwardButtonA;
 	//public Button forwardButtonM;
-	public Button axisButtonX;
-	public Button axisButtonY;
-	public Button axisButtonZ;
-	public Button invertButton;
+
+	public Toggle axisButtonX;
+	public Toggle axisButtonY;
+	public Toggle axisButtonZ;
+
+	public Toggle invertButton;
+
+	public Toggle[] presetButtons;
 
 
 
 
 
 	//Slider Values
-	public TMP_Text durationText;
+	public TMP_InputField durationTextMinutes;
+	public TMP_InputField durationTextSeconds;
+
 	public TMP_Text motionRangeText;
 	public TMP_Text colliderSizeText;
 
 	public TMP_Text turnAngleText;
 	public TMP_Text boatSpeedText;
 	public TMP_Text turnSpeedText;
+	public TMP_Text turnSenseText;
 
 	public TMP_Text challengeLevelText;
 	public TMP_Text angleDevText;
@@ -66,16 +79,18 @@ public class MenuScript : MonoBehaviour
 
 
 
-
-
-
-	private void Update()
+    private void Update()
     {
-
-		if (optPanel.activeSelf) UpdateSettings();
+		if (updateSettingsAux)
+		{
+			UpdateSettings();
+			updateSettingsAux = false;
+		}
 
 		if (optAux) StartCoroutine(Options());
+		
 		if (playAux) StartCoroutine(StartGame());
+
 		if (optBackAux) StartCoroutine(OptBack());
 		
 	}
@@ -126,7 +141,6 @@ public class MenuScript : MonoBehaviour
         
     }
 		
-
     IEnumerator Options(){
 		optCam.SetActive(true);
         mainCam.SetActive(false);
@@ -150,27 +164,56 @@ public class MenuScript : MonoBehaviour
 		
     }
 
+
 	private void UpdateSettings()
 	{
-		if (GameManager.ControlMethod == 1) controlButtonBCI.Select();
-		else controlButtonHT.Select();
 
-		if (GameManager.Gender == 1) genderButtonM.Select();
-		else genderButtonF.Select();
+		if (GameManager.ControlMethod == 1) controlButtonBCI.SetIsOnWithoutNotify(true);
+		else controlButtonHT.SetIsOnWithoutNotify(true);
 
-		if (GameManager.HemiLimb == 1) hemiButtonRight.Select();
-		else if (GameManager.HemiLimb == -1) hemiButtonLeft.Select();
+		if (GameManager.Gender == 1) genderButtonM.SetIsOnWithoutNotify(true);
+		else genderButtonF.SetIsOnWithoutNotify(true);
+
+		if (GameManager.HemiLimb == 1) hemiButtonRight.SetIsOnWithoutNotify(true);
+		else if (GameManager.HemiLimb == -1) hemiButtonLeft.SetIsOnWithoutNotify(true);
 		else if (GameManager.HemiLimb == 2) {
-			hemiButtonLeft.Select();
-			hemiButtonRight.Select();
+			hemiButtonLeft.SetIsOnWithoutNotify(true);
+			hemiButtonRight.SetIsOnWithoutNotify(true);
+		}
+		else if (GameManager.HemiLimb == 0)
+		{
+			hemiButtonLeft.SetIsOnWithoutNotify(false);
+			hemiButtonRight.SetIsOnWithoutNotify(false);
 		}
 
-		if (GameManager.trackAxis == 0) axisButtonX.Select();
-		else if (GameManager.trackAxis == 1) axisButtonY.Select();
-		else if (GameManager.trackAxis == -1) axisButtonZ.Select();
+		if (GameManager.trackAxis == 0) axisButtonX.SetIsOnWithoutNotify(true);
+		else if (GameManager.trackAxis == 1) axisButtonY.SetIsOnWithoutNotify(true);
+		else if (GameManager.trackAxis == -1) axisButtonZ.SetIsOnWithoutNotify(true);
 
-		if (GameManager.invertTurn == true) invertButton.Select();
+		if (GameManager.invertTurn) invertButton.SetIsOnWithoutNotify(true);
 
+		//Debug.Log(GameManager.SelectedPreset);
+		switch (GameManager.SelectedPreset)
+		{
+			case 0:
+				presetButtons[0].SetIsOnWithoutNotify(true);
+				break;
+			case 1:
+				presetButtons[1].SetIsOnWithoutNotify(true);
+				break;
+			case 2:
+				presetButtons[2].SetIsOnWithoutNotify(true);
+				break;
+			case 3:
+				presetButtons[3].SetIsOnWithoutNotify(true);
+				break;
+			case 4:
+				presetButtons[4].SetIsOnWithoutNotify(true);
+				break;
+			case 5:
+				presetButtons[5].SetIsOnWithoutNotify(true);
+				break;
+		}
 
 		//if (GameManager.Forward == 1) forwardButtonA.Select();
 		//else forwardButtonM.Select();
@@ -178,7 +221,15 @@ public class MenuScript : MonoBehaviour
 		var taskTime = GameManager.taskDuration;
 		float minutes = Mathf.FloorToInt(taskTime / 60);
 		float seconds = Mathf.FloorToInt(taskTime % 60);
-		durationText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+		//durationText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+		durationTextMinutes.text = minutes.ToString();
+
+		durationTextSeconds.text = string.Format("{0:00}", seconds);
+
+
+
 
 		motionRangeText.text = GameManager.motionRange.ToString();
 		colliderSizeText.text = GameManager.colliderSize.ToString();
@@ -186,6 +237,7 @@ public class MenuScript : MonoBehaviour
 		turnAngleText.text = GameManager.turnAngle.ToString();
 		boatSpeedText.text = GameManager.boatSpeed.ToString();
 		turnSpeedText.text = GameManager.turnSpeed.ToString();
+		turnSenseText.text = GameManager.turnSense.ToString();
 
 		challengeLevelText.text = GameManager.challengeLevel.ToString();
 		angleDevText.text = GameManager.angleDev.ToString();

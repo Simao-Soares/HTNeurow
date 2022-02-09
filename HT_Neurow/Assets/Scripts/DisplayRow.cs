@@ -61,9 +61,6 @@ public class DisplayRow : MonoBehaviour
 		else paddleSpeed = 0;
 		prevWristPos = currWristPos;
 
-		Debug.Log(paddleSpeed);
-		
-
 	}
 
 

@@ -63,8 +63,6 @@ public class CoinGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-
         instructions.SetActive(false);
         tempScoreUI.SetActive(false);
         auxI = true;

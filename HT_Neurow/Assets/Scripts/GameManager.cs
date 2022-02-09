@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
 
     public GameObject Player;
+    public GameObject canvas;
 
     [Header("Menu Scene Panels and Sliders")]
     public GameObject mainPanel;
@@ -17,9 +18,14 @@ public class GameManager : MonoBehaviour
     public GameObject choicePanel;
 
     public Slider timeSlider;
+    [HideInInspector] public int inputMinutes;
+    [HideInInspector] public int inputSeconds;
+
     public Slider turnAngleSlider;
     public Slider boatSpeedSlider;
     public Slider turnSpeedSlider;
+    public Slider turnSenseSlider;
+
     public Slider motionRangeSlider;
     public Slider colliderSizeSlider;
 
@@ -78,20 +84,25 @@ public class GameManager : MonoBehaviour
     public GameObject CoinUI;
     public GameObject CoinLighting;
 
+    [HideInInspector] public static bool editAuxGM;
 
 
 
 
 
-    //-------------------------------------------------- GAME SETTINGS --------------------------------------------------		 
 
-    public static int TaskChoice = 1;   //  0 -> disabled                                                            
+    //-------------------------------------------------- DEFAULT GAME SETTINGS --------------------------------------------------		 
+    //static -> instances of GameObject will share this value
+
+    public static int TaskChoice = -1;   //  0 -> disabled                                                            
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
-    public static int ControlMethod = -1;  //static -> instances of GameObject will share this value 
-                                           //  1 -> BCI (arrowKeys)
-                                           // -1 -> HT (leapMotion)
+    public static int SelectedPreset = -1; 
+
+    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
+                                          // -1 -> HT (leapMotion)
+
 
     public static int HemiLimb = 0;      //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
@@ -105,7 +116,7 @@ public class GameManager : MonoBehaviour
                                          // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 60; //------------------------------------------------------------------------------------------------------------------------------------------------- Testing
+    public static int taskDuration = 100; 
 
     public static int trackAxis = -1;      //  0 -> X axis                                                               
                                            //  1 -> Y axis        
@@ -119,6 +130,7 @@ public class GameManager : MonoBehaviour
     public static float turnAngle = 20f;
     public static float boatSpeed = 2f;
     public static float turnSpeed = 1f;
+    public static int turnSense = 5;
     public static bool invertTurn = false;
 
     //TASK #1
@@ -137,6 +149,8 @@ public class GameManager : MonoBehaviour
     //-------------------------------------------------------------------------------------------------------------------
 
     public static bool optionsMenuAux = false;
+
+    [HideInInspector] public static bool updateSettings;
 
 
     // Start is called before the first frame update
@@ -309,61 +323,6 @@ public class GameManager : MonoBehaviour
                 Player.GetComponent<CoinGame>().enabled = true;
                 CoinUI.SetActive(true);
             }
-
-            
-
-
-
-            //if (TaskChoice == 1)
-            //{
-
-
-            //    var pathFollow = GetComponent<PathGame>();
-            //    //----------------------------------------
-            //    //Task1-specific Settings:
-            //    //----------------------------------------
-            //    pathFollow.totalTaskTime = taskDuration;
-
-            //    pathFollow.challengeLevel = challengeLevel;
-            //    pathFollow.maxDeviationAngle = angleDev;
-            //    pathFollow.maxDistance = maxDistance;
-            //    pathFollow.maxDistanceNoAngle = maxDistance2;
-            //    pathFollow.selfCorrectTime = selfCorrect;
-            //    pathFollow.correctionSpeed = autoCorrect;
-
-            //    //-----------------------------------------
-            //    //Task2-specific UI elements:
-            //    //-----------------------------------------
-            //    //PathUI.SetActive(true);
-
-
-            //}
-
-            //else if (TaskChoice == -1)
-            //{
-
-            ////CoinLighting.SetActive(true);
-            //var coinCatcher = GetComponent<CoinGame>();
-            ////-----------------------------------------
-            ////Task2-specific Settings:
-            ////-----------------------------------------
-            //coinCatcher.timeRemaining = taskDuration;
-            //coinCatcher.coinGameArea = playArea*200;
-            //coinCatcher.numberOfCoins = objectiveNum;
-            //coinCatcher.coinGameArea = objectiveRad;            //<----------------------------------------------------------------------- TEST IT
-
-            ////-----------------------------------------
-            ////Task2-specific UI elements:
-            ////-----------------------------------------
-            ////CoinUI.SetActive(true);
-
-
-
-            //}
-
-
-
-            //---------------------------------------------------------------------------------------------------------------
         }
     }
 
@@ -372,6 +331,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
+        if (updateSettings)
+        {
+            canvas.GetComponent<MenuScript>().updateSettingsAux = true;
+        }
+        updateSettings = false;
+
+
         // Create a temporary reference to the current scene.
         Scene currentScene = SceneManager.GetActiveScene();
 
@@ -379,7 +347,8 @@ public class GameManager : MonoBehaviour
         string sceneName = currentScene.name;
 
 
-        if(sceneName == "RowingSim") { 
+        if(sceneName == "RowingSim") {
+            
             if (Input.GetKey("l")){
                 zone.SetActive(true);
             }
@@ -389,12 +358,14 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (Input.GetKey("escape")) SceneManager.LoadScene("Menu");      //<-----------------------------------------------------------------------
+        if (Input.GetKey("escape")) SceneManager.LoadScene("Menu");      //<----------------------------------------------------------------------- for Debug Purposes
         if (Input.GetKey("escape") && sceneName == "Menu") Application.Quit();
 
 
         if (optionsMenuAux && sceneName == "Menu")
         {
+            editAuxGM = GetComponent<PresetFiller>().editAux;
+
             //Set inicial slider parameters
             timeSlider.value = taskDuration;
 
@@ -404,6 +375,7 @@ public class GameManager : MonoBehaviour
             turnAngleSlider.value = turnAngle;
             boatSpeedSlider.value = boatSpeed;
             turnSpeedSlider.value = turnSpeed;
+            turnSenseSlider.value = turnSense;
 
 
             challengeLevelSlider.value = challengeLevel;
@@ -418,6 +390,18 @@ public class GameManager : MonoBehaviour
             objectiveRadSlider.value = objectiveRad;
         }
 
+    }
+
+    public void ReadInputMinutes(string input)
+    {
+        inputMinutes = int.Parse(input);
+        SetTime(1);
+    }
+
+    public void ReadInputSeconds(string input)
+    {
+        inputSeconds = int.Parse(input);
+        SetTime(2);
     }
 
 
@@ -435,48 +419,76 @@ public class GameManager : MonoBehaviour
 
     public void SetBCIControlMethod(){
 		ControlMethod = 1;
-	}
+        updateSettings = true;
+    }
 	public void SetHTControlMethod(){
 		ControlMethod = -1;
-	}
+        updateSettings = true;
+    }
     public void SetHemiLimb(int HemiAux)
     {
         switch (HemiLimb)
         {
             case 0:
                 HemiLimb = HemiAux;
+                updateSettings = true;
                 break;
             case 1:
                 HemiLimb = -HemiAux + 1;
+                updateSettings = true;
                 break;
             case -1:
                 HemiLimb = HemiAux + 1;
+                updateSettings = true;
                 break;
             case 2:
                 HemiLimb = - HemiAux;
+                updateSettings = true;
                 break;
         }
     }
     public void SetTrackedAxis(int AxisAux)
     {
         trackAxis = AxisAux;
+        updateSettings = true;
 
     }
     public void SetGender(int GenderAux)
     {
         Gender = GenderAux;
+        updateSettings = true;
     }
-    public void SetTime()
+
+    public void SetTime(int auxTime)
     {
-        taskDuration = (int)(Mathf.Round(timeSlider.value/10f)*10f);
+        //slider
+        if (auxTime == 0) taskDuration = (int)(Mathf.Round(timeSlider.value / 10f) * 10f);
+        //minutesInput
+        else if (auxTime == 1 && inputMinutes<=30)
+        {
+            
+            taskDuration = taskDuration % 60;
+            taskDuration += inputMinutes*60;
+        }
+        //else if (auxTime == 2)
+        //{
+        //    taskDuration -= taskDuration % 60;
+        //    taskDuration += inputSeconds;
+        //}
+        updateSettings = true;
+        //Debug.Log(taskDuration);
+        
     }
+
     public void SetMotionRange()
     {
         motionRange = Mathf.Round(motionRangeSlider.value * 100f) / 100f;
+        updateSettings = true;
     }
     public void SetColliderSize ()
     {
         colliderSize = Mathf.Round(colliderSizeSlider.value * 100f) / 100f;
+        updateSettings = true;
     }
 
     //-----------------------------------------------------------------------
@@ -485,19 +497,28 @@ public class GameManager : MonoBehaviour
     public void SetTurnAngle()
     {
         turnAngle = ((int)turnAngleSlider.value);
+        updateSettings = true;
     }
     public void SetBoatSpeed()
     {
         boatSpeed = Mathf.Round(boatSpeedSlider.value * 10f) / 10f;
+        updateSettings = true;
     }
     public void SetTurnSpeed()
     {
         turnSpeed = ((int)turnSpeedSlider.value);
+        updateSettings = true;
+    }
+    public void SetTurnSense()
+    {
+        turnSense = ((int)turnSenseSlider.value);
+        updateSettings = true;
     }
     public void SetInvertTurn()
     {
         if(invertTurn) invertTurn=false;
         else invertTurn = true;
+        updateSettings = true;
 
     }
     //-----------------------------------------------------------------------
@@ -506,26 +527,32 @@ public class GameManager : MonoBehaviour
     public void SetChallengeLevel()
     {
         challengeLevel = ((int)challengeLevelSlider.value);
+        updateSettings = true;
     }
     public void SetAngleDev()
     {
         angleDev = ((int)angleDevSlider.value);
+        updateSettings = true;
     }
     public void SetMaxDistance()
     {
         maxDistance = ((int)maxDistanceSlider.value);
+        updateSettings = true;
     }
     public void SetMaxDistance2()
     {
         maxDistance2 = ((int)maxDistance2Slider.value);
+        updateSettings = true;
     }
     public void SetSelfCorrectTime()
     {
         selfCorrect = ((int)selfCorrectSlider.value);
+        updateSettings = true;
     }
     public void SetAutoCorrectSpeed()
     {
         autoCorrect = ((int)autoCorrectSlider.value);
+        updateSettings = true;
     }
 
     //-----------------------------------------------------------------------
@@ -534,14 +561,17 @@ public class GameManager : MonoBehaviour
     public void SetPlayAreaSize()
     {
         playArea = ((int)playAreaSlider.value);
+        updateSettings = true;
     }
     public void SetNumberOfObjectives()
     {
         objectiveNum = ((int)objectiveNumSlider.value);
+        updateSettings = true;
     }
     public void SetObjectiveRad()
     {
         objectiveRad = ((int)objectiveRadSlider.value);
+        updateSettings = true;
     }
 
     //------------------------------------------------------------------------------------------------------------------------
