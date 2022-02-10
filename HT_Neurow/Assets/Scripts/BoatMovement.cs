@@ -85,29 +85,30 @@ public class BoatMovement : MonoBehaviour
         if (leftReleased) leftPaddle.transform.localRotation = Quaternion.Lerp(leftPaddle.transform.localRotation, Quaternion.Euler(-30, 0, -90), Time.deltaTime);
         if (rightReleased) rightPaddle.transform.localRotation = Quaternion.Lerp(rightPaddle.transform.localRotation, Quaternion.Euler(-30, 0, -90), Time.deltaTime);
 
-        //------------------------------------------   BCI Turning  -----------------------------------------
-
-        //checks input + if cooldown is over + selected control method corresponds to the input 
-        if (Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1)                                
+        //---------------------------------------   "BCI" debug Turning  --------------------------------------
+        if (GameManager.debugArrowMovement)
         {
-            if (GameManager.invertTurn) Turn(true); //turn to the left side=true
-            else Turn(false);
+            //checks input + if cooldown is over + selected control method corresponds to the input 
+            if (Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1)                                
+            {
+                if (GameManager.invertTurn) Turn(true); //turn to the left side=true
+                else Turn(false);
 
-            cooldownActivated = true;
-            turnLeft = false;
-            R_rowAnimator.SetBool("Turning", true);
+                cooldownActivated = true;
+                turnLeft = false;
+                R_rowAnimator.SetBool("Turning", true);
+            }
+
+            else if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1))
+            {
+                if (GameManager.invertTurn) Turn(false); //turn to the right side=false
+                else Turn(true);
+
+                cooldownActivated = true;
+                turnRight = false;
+                L_rowAnimator.SetBool("Turning", true);
+            }
         }
-
-        else if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1))
-        {
-            if (GameManager.invertTurn) Turn(false); //turn to the right side=false
-            else Turn(true);
-
-            cooldownActivated = true;
-            turnRight = false;
-            L_rowAnimator.SetBool("Turning", true);
-        }
-
         //------------------------------------------   HT Turning  -------------------------------------------
 
         else if (cm == -1)

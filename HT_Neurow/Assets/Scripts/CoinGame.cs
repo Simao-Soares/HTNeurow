@@ -56,6 +56,14 @@ public class CoinGame : MonoBehaviour
     public float bciDistanceZ;
 
 
+    //BCI TURNING
+    [HideInInspector] public Vector3 bciObjectiveLocation;
+    [HideInInspector] public int auxBCIturning = 0;     //0 -> ready to spawn new objective    //-1 -> left      1 -> right
+    [HideInInspector] public bool turnCourotineAux = false;
+    [HideInInspector] public Quaternion bciRotation = Quaternion.identity;
+    [HideInInspector] BoatMovement movementScript;
+
+
 
 
 
@@ -65,37 +73,23 @@ public class CoinGame : MonoBehaviour
         instructions.SetActive(false);
         tempScoreUI.SetActive(false);
         auxI = true;
+        movementScript = GetComponent<BoatMovement>();
 
         SetParameters();
 
         //HT
-        if (GameManager.ControlMethod == -1) GenerateObjectives();
+        if (GameManager.ControlMethod == -1)
+        {
+            GenerateObjectives();
+            movementScript.enabled = true;
+        }
+
+        //BCI
+        //if(GameManager.ControlMethod == 1) movementScript.enabled = false;
 
         timerIsRunning = true;
  
     }
-
-    //BCI
-    void OneObjective()
-    {
-        Vector3 newCoords = Vector3.zero;
-        Transform boatT = boat.transform;
-        var height = 99.5f * Vector3.up;
-
-        //-----------------------------------------------------------------------------------------------------------> add code o receive BCI input
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            newCoords = (boatT.position + boatT.forward * bciDistanceZ + boatT.right * bciDistanceX + height);
-            GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
-        }
-        else if (Input.GetKeyUp(KeyCode.Q))
-        {
-            newCoords = (boatT.position + boatT.forward * bciDistanceZ - boatT.right * bciDistanceX + height);
-            GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
-        }
-       
-    }
-
 
     void SetParameters()
     {
@@ -113,11 +107,6 @@ public class CoinGame : MonoBehaviour
 
 
     }
-
-
-
-
-
 
     void Update()
     {
@@ -143,7 +132,39 @@ public class CoinGame : MonoBehaviour
                 //--------------------------------------------------------------------------------------------------------------
                 else if (GameManager.ControlMethod == 1)//BCI
                 {
-                    OneObjective();
+                    //Turning Towads Objective
+                    if(turnCourotineAux) StartCoroutine(BCITurning(GameManager.turnSpeed, bciRotation));
+
+                    //Spawn Objective
+                    if (auxBCIturning == 0) OneObjective();
+                    else
+                    {
+                        Vector3 vectorToObjective = (bciObjectiveLocation - new Vector3(0, 99.9f - 0.413f, 0)) - transform.position;
+
+
+                        bciRotation = Quaternion.LookRotation(vectorToObjective, new Vector3(0, 1, 0));
+                        float angleToObjective = Vector3.Angle(transform.forward, vectorToObjective);
+
+                        //Check for right user input
+                        if (Input.GetKey(KeyCode.RightArrow) && auxBCIturning == 1 || Input.GetKey(KeyCode.LeftArrow) && auxBCIturning == -1) 
+                        {
+                            turnCourotineAux = true;
+                            movementScript.selfCorrection = true;
+                        }
+                        //Check for wrong user input
+                        else if (Input.GetKey(KeyCode.RightArrow) && auxBCIturning == -1 || Input.GetKey(KeyCode.LeftArrow) && auxBCIturning == 1)
+                        {
+                            Debug.Log("tried to turn to the wrong side");
+                        }
+
+                        //Check for rotation completion
+                        if (angleToObjective < 5f)
+                        {
+                            turnCourotineAux = false;
+                            auxBCIturning = 0;
+                            movementScript.selfCorrection = false;
+                        }
+                    }
                 }
 
                 //--------------------------------------------------------------------------------------------------------------
@@ -164,7 +185,36 @@ public class CoinGame : MonoBehaviour
                 
             }
         }
+    }
 
+    //BCI
+    void OneObjective()
+    {
+        Transform boatT = boat.transform;
+        var height = 99.5f * Vector3.up;
+
+        //-----------------------------------------------------------------------------------------------------------> add code o receive BCI input
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            auxBCIturning = 1;
+            bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ + boatT.right * bciDistanceX + height);
+            GameObject aux = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
+        }
+
+        else if (Input.GetKeyUp(KeyCode.Q))
+        {
+            auxBCIturning = -1;
+            bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ - boatT.right * bciDistanceX + height);
+            GameObject aux = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
+        }
+
+    }
+
+    IEnumerator BCITurning(float speed, Quaternion rotation)
+    {
+        Quaternion current = transform.rotation;
+        transform.localRotation = Quaternion.Lerp(current, rotation, speed * Time.deltaTime);
+        yield return null;
     }
 
     void DisplayTime(float timeToDisplay)
@@ -254,17 +304,6 @@ public class CoinGame : MonoBehaviour
         return (-1);
     }
 
-    //aux function for debugging
-    void PrintList() {
-        for (int i = 0; i < listCoins.Count; i++)
-        {
-            Debug.Log(listCoins[i].CoinID);
-
-        }
-
-    }
-
-
     IEnumerator DoFreeze()
     {
         isFrozen = true;
@@ -277,6 +316,9 @@ public class CoinGame : MonoBehaviour
         isFrozen = false;
         SceneManager.LoadScene("Menu");
     }
+
+
+
 
 
 

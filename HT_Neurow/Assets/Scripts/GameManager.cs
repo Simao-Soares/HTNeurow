@@ -89,8 +89,9 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public static bool editAuxGM;
 
-
-
+    //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
+    public static bool debugArrowMovement = false;
+    //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
 

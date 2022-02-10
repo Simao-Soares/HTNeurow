@@ -6,10 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PathGame : MonoBehaviour
 {
-
-        
-
-
     //PRIMARY ELEMENTS
     public GameObject meshHolder;
     public GameObject pathRenderer;
@@ -136,16 +132,13 @@ public class PathGame : MonoBehaviour
 
                 //------------------------------------------------------------
 
-
-
-
                 //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
 
-                var AUXfrontAnchor = FindClosestFrontAnchor();
-                var AUXfrontAnchorNorm = new Vector3(-AUXfrontAnchor.y, 0, AUXfrontAnchor.x);
-                ball2.transform.position = AUXfrontAnchorNorm;
-                closestPointBoat = FindClosestVectorPoint();
-                ball.transform.position = closestPointBoat;
+                //var AUXfrontAnchor = FindClosestFrontAnchor();
+                //var AUXfrontAnchorNorm = new Vector3(-AUXfrontAnchor.y, 0, AUXfrontAnchor.x);
+                //ball2.transform.position = AUXfrontAnchorNorm;
+                //closestPointBoat = FindClosestVectorPoint();
+                //ball.transform.position = closestPointBoat;
 
                 //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
@@ -204,7 +197,7 @@ public class PathGame : MonoBehaviour
     }
 
 
-    //------------------------  TIMER FUNCTIONS  -----------------      ---------------------------------------> should probably be moved to a different file, since they're common to both tasks
+    //-------------------------  TIMER FUNCTIONS  --------------------------     ---------------------------------------> should probably be moved to a different file, since they're common to both tasks
 
     void DisplayTime(float timeToDisplay)
     {
@@ -237,16 +230,8 @@ public class PathGame : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    //------------------------------------------------------------
+    //----------------------------------------------------------------------
 
-
-    //To the collider
-    //public Vector3 FindClosestPoint(Vector3 point)
-    //{
-    //    var collider = edgeCollider.GetComponent<EdgeCollider2D>();
-    //    Vector3 closestPoint = collider.ClosestPoint(point);
-    //    return closestPoint;                                                                                                                       
-    //}
 
     public void UpdateScore(Vector3 closestPoint)  //Maybe change multipliers
     {
@@ -264,7 +249,7 @@ public class PathGame : MonoBehaviour
     {
         Vector2 closest = Vector2.zero;
         float distance = Mathf.Infinity;
-        Vector2 position = new Vector2(transform.position.x, transform.position.z + 2); //<--------------------------------------------------------- added an offset to prevent perpendicular corrections
+        Vector2 position = new Vector2(transform.position.x, transform.position.z + 3); //<--------------------------------------------------------- added an offset to prevent perpendicular corrections
         foreach (Vector2 anchor in anchorPoints)
         {
             //Debug.Log(anchor);

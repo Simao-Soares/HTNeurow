@@ -9,12 +9,8 @@ public class DisplayRow : MonoBehaviour
 {
     [SerializeField] Text customText;
 
-	//public float rotA;
-	private bool rAux = false;
-	private bool lAux = false;
 	public GameObject myPlayer;
 	
-
 	[HideInInspector] public BoatMovement _playerScript;
 
 	public GameObject rowCollider;
