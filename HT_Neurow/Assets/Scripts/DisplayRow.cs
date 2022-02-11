@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Displays Row + Movement V1
+//Displays Row + Movement V3
 
 public class DisplayRow : MonoBehaviour
 {

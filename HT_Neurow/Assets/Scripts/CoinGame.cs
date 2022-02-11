@@ -62,6 +62,10 @@ public class CoinGame : MonoBehaviour
     [HideInInspector] public bool turnCourotineAux = false;
     [HideInInspector] public Quaternion bciRotation = Quaternion.identity;
     [HideInInspector] BoatMovement movementScript;
+    [HideInInspector] Animator R_rowAnimator;
+    [HideInInspector] Animator L_rowAnimator;
+
+    [HideInInspector] GameObject auxObjInstance;
 
 
 
@@ -85,6 +89,8 @@ public class CoinGame : MonoBehaviour
         }
 
         //BCI
+        R_rowAnimator = movementScript.R_rowAnimator;
+        L_rowAnimator = movementScript.L_rowAnimator;
         //if(GameManager.ControlMethod == 1) movementScript.enabled = false;
 
         timerIsRunning = true;
@@ -139,7 +145,7 @@ public class CoinGame : MonoBehaviour
                     if (auxBCIturning == 0) OneObjective();
                     else
                     {
-                        Vector3 vectorToObjective = (bciObjectiveLocation - new Vector3(0, 99.9f - 0.413f, 0)) - transform.position;
+                        Vector3 vectorToObjective = (bciObjectiveLocation - new Vector3(0, 99.9f - 0.4f, 0)) - transform.position;
 
 
                         bciRotation = Quaternion.LookRotation(vectorToObjective, new Vector3(0, 1, 0));
@@ -149,7 +155,11 @@ public class CoinGame : MonoBehaviour
                         if (Input.GetKey(KeyCode.RightArrow) && auxBCIturning == 1 || Input.GetKey(KeyCode.LeftArrow) && auxBCIturning == -1) 
                         {
                             turnCourotineAux = true;
-                            movementScript.selfCorrection = true;
+                            //movementScript.selfCorrection = true; 
+                            if(GameManager.invertTurn && auxBCIturning == 1) R_rowAnimator.SetBool("Turning", true);
+                            else if(!GameManager.invertTurn && auxBCIturning == 1) L_rowAnimator.SetBool("Turning", true);
+                            else if(GameManager.invertTurn && auxBCIturning == -1) L_rowAnimator.SetBool("Turning", true);
+                            else if (!GameManager.invertTurn && auxBCIturning == -1) R_rowAnimator.SetBool("Turning", true);
                         }
                         //Check for wrong user input
                         else if (Input.GetKey(KeyCode.RightArrow) && auxBCIturning == -1 || Input.GetKey(KeyCode.LeftArrow) && auxBCIturning == 1)
@@ -157,13 +167,27 @@ public class CoinGame : MonoBehaviour
                             Debug.Log("tried to turn to the wrong side");
                         }
 
-                        //Check for rotation completion
-                        if (angleToObjective < 5f)
+                        //Check for rotation completion or if the boat already passed by objective                          
+                        if (angleToObjective < 5f || Vector3.Dot(bciObjectiveLocation - new Vector3(0, 99.9f - 0.4f, 0) - transform.position, transform.forward) < 0.5)
                         {
                             turnCourotineAux = false;
                             auxBCIturning = 0;
-                            movementScript.selfCorrection = false;
+                            //movementScript.selfCorrection = false;
+                            R_rowAnimator.SetBool("Turning", false);
+                            L_rowAnimator.SetBool("Turning", false);
+                            if (Vector3.Dot(bciObjectiveLocation - new Vector3(0, 99.9f - 0.4f, 0) - transform.position, transform.forward) < 0.5) Destroy(auxObjInstance);
                         }
+
+                        ////Check if the boat already passed by objective
+                        //if (Vector3.Dot(bciObjectiveLocation - new Vector3(0, 99.9f - 0.413f, 0) - transform.position, transform.forward) < 0.1)
+                        //{
+                        //    Debug.Log("na retaguarda");
+                        //    turnCourotineAux = false;
+     
+                        //}
+
+
+
                     }
                 }
 
@@ -198,14 +222,14 @@ public class CoinGame : MonoBehaviour
         {
             auxBCIturning = 1;
             bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ + boatT.right * bciDistanceX + height);
-            GameObject aux = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
+            auxObjInstance = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
         }
 
         else if (Input.GetKeyUp(KeyCode.Q))
         {
             auxBCIturning = -1;
             bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ - boatT.right * bciDistanceX + height);
-            GameObject aux = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
+            auxObjInstance = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
         }
 
     }
