@@ -5,7 +5,8 @@ using UnityEngine;
 public class HemiSupport : MonoBehaviour
 {
     public Animator animator;
-    public GameObject animatedModel; //hand model with animator
+    public GameObject animatedFemaleModel;
+    public GameObject animatedMaleModel;
     public GameObject handModel; //opened hand model with hand binder
 
 
@@ -25,6 +26,10 @@ public class HemiSupport : MonoBehaviour
 	private float initPos;
     private float oldPos;
 
+    //Saves the max (or min positions, based on rowing phase)
+    //so that rowing only occurs if the movement exceeds the max (min) position registered thus far
+    private float maxMinAuxPos = 0f;
+
     private float minPos;
     private float maxPos;
 
@@ -37,6 +42,10 @@ public class HemiSupport : MonoBehaviour
     private bool forward = true;
     private bool forwardAux = true;
 
+    //Determines if handModel should be hidden or not (post or pre collision)
+    [HideInInspector] public bool hideHandAux = false;
+    
+
 
 
 
@@ -44,10 +53,11 @@ public class HemiSupport : MonoBehaviour
 
     private void Start()
 	{
-		//initPos = wrist.transform.position.z; //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
-        //oldPos = initPos;
         if (gameObject.name == "HemiZone_L") rightSide = false;
         else if (gameObject.name == "HemiZone_R") rightSide = true;
+
+        animatedMaleModel.SetActive(false);
+        //animatedFemaleModel.SetActive(false);
 
         forwardAux = true;
 
@@ -83,11 +93,11 @@ public class HemiSupport : MonoBehaviour
 //        //------------------------------------------------------------------------------------------
 
         wristAUX.transform.position = wrist.transform.position;
+        Debug.Log(maxMinAuxPos);
+
+        if(hideHandAux && handModel.activeSelf) handModel.SetActive(false);
 
         if (auxTrack){  // && oldPos >= initPos && oldPos <= initPos + maxReach) {   
-
-            Debug.Log(forwardAux);
-
             if (oldPos >= initPos && oldPos <= initPos + maxReach)
             {
                 RotPaddle(oldPos, delta, forward, forwardAux);
@@ -96,11 +106,13 @@ public class HemiSupport : MonoBehaviour
             {
                 forwardAux = false;
                 maxPos = initPos;
+                maxMinAuxPos = initPos + maxReach;
             }
             else if (oldPos <= initPos)
             {
                 forwardAux = true;
                 minPos = initPos+maxReach;
+                maxMinAuxPos = initPos;
             }
             //oldPos = wrist.transform.position.z;
             oldPos = wristAUX.transform.localPosition.z;
@@ -133,8 +145,6 @@ public class HemiSupport : MonoBehaviour
         delta = (currentPos - oldPos);
         deltaRot = (2*delta / maxReach) * 15f;  //dont know why i need the 2* but i'll take it
 
-        //Debug.Log(currentPos - initPos);
-        
 
         if (currentPos > oldPos)
         {
@@ -148,13 +158,12 @@ public class HemiSupport : MonoBehaviour
             //Debug.Log("backward");
         }
 
-        //These 2 if statements are ment to prevent tracking of "jittery" movement that would break the task
-        //it was almost working, it had some bug that prevented it of tracking during phases 3 and 4 of the movement
 
-        //if(forwardAux && currentPos > maxPos)
-        //{
+
+        if(forwardAux && currentPos > maxMinAuxPos)
+        {
             //phase 1
-            if (forward && forwardAux && currentPos <= initPos + maxReach / 2) //&& forwardAux
+            if (forward && currentPos <= initPos + maxReach / 2) 
             {
                 if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
                 else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -164,23 +173,21 @@ public class HemiSupport : MonoBehaviour
             }
 
             //phase 2
-            else if (forward && forwardAux && currentPos > initPos + maxReach / 2) //&& forwardAux
+            else if (forward && currentPos > initPos + maxReach / 2 && currentPos > maxMinAuxPos) 
             {
                 if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
                 else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
 
                 paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-                Debug.Log("p2");
+                Debug.Log("p2");   
             }
+            maxMinAuxPos = currentPos;
+        }
 
-            //maxPos = currentPos;
-
-        //}
-
-        //if (forwardAux && currentPos < minPos)
-        //{
+        if (!forwardAux && currentPos < maxMinAuxPos)
+        {
             //phase 3
-            if (!forward && !forwardAux && currentPos >= initPos + maxReach / 2) //&& !forwardAux
+            if (!forward  && currentPos >= initPos + maxReach / 2) 
             {
                 if (rightSide) target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ - deltaRot);
                 else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -190,7 +197,7 @@ public class HemiSupport : MonoBehaviour
             }
 
             //phase 4
-            else if (!forward && !forwardAux && currentPos < initPos + maxReach / 2) //&& !forwardAux
+            else if (!forward && currentPos < initPos + maxReach / 2) 
             {
                 if (rightSide) target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ - deltaRot);
                 else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
@@ -199,8 +206,8 @@ public class HemiSupport : MonoBehaviour
                 Debug.Log("p4");
             }
 
-            //minPos = currentPos;
-        //}
+            maxMinAuxPos = currentPos;
+        }
     }
 
 
@@ -211,13 +218,25 @@ public class HemiSupport : MonoBehaviour
                  
 		if (other.gameObject.name == "Contact Fingerbone")  //HOW TO DISTINGUISH LEFT FROM RIGHT HAND??    -------------->          IMPLENT TRIGGER WITH ATTACHMENT HANDS Objects
         {
-			handModel.SetActive(false);            //works as long as patient doesnt leave LeapMotion tacking area
-            animatedModel.SetActive(true);
+            hideHandAux = true;       
+
+            if(GameManager.Gender == 1)
+            {
+                //animatedFemaleModel.SetActive(false);
+                animatedMaleModel.SetActive(true);
+            }
+            else
+            {
+                //animatedFemaleModel.SetActive(true);
+                animatedMaleModel.SetActive(false);
+            }
+
+
             animator.SetBool("startGrab", true);
 
             //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
             initPos = wristAUX.transform.localPosition.z;
-            //initPos = wrist.transform.position.z; 
+            maxMinAuxPos = initPos;
 			oldPos = initPos;
 
             minPos = initPos + maxReach;
@@ -239,9 +258,9 @@ public class HemiSupport : MonoBehaviour
 
 
 
-    void TestingGraspAnim()
-    {
-        animatedModel.SetActive(true);
-        animator.SetBool("startGrab", true);
-    }
+    //void TestingGraspAnim()
+    //{
+    //    animatedModel.SetActive(true);
+    //    animator.SetBool("startGrab", true);
+    //}
 }

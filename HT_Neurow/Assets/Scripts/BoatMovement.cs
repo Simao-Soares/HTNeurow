@@ -191,6 +191,9 @@ public class BoatMovement : MonoBehaviour
 
     public void ReleasedPaddle(bool right)
     {
+        var hemi = GameManager.HemiLimb;
+        //Skip this function if hemi support is activated for that side
+        if ((hemi == 1 && right) || (hemi == -1 && !right) || hemi == 2) return; 
         if (right) rightReleased = true;
         else leftReleased = true;
     }

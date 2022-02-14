@@ -104,16 +104,16 @@ public class GameManager : MonoBehaviour
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
-    public static int HemiLimb = 0;      //  0 -> No hemiparethic limb                                                                 
+    public static int HemiLimb = 2;      //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
 
-    public static int Gender =  -1;       //  1 -> Male
+    public static int Gender =  1;       //  1 -> Male
                                          // -1 -> Female
 
     //public static int Forward = 1;     //  1 -> Auto (always moving forward)
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
     public static float boatSpeed = 2f;
     public static float turnSpeed = 1f;
     public static int turnSense = 5;
-    public static bool invertTurn = false;
+    public static bool invertTurn = true;
 
     //TASK #1
     public static int challengeLevel = 2;
@@ -258,29 +258,29 @@ public class GameManager : MonoBehaviour
                         //auxTrackerL.SetActive(false);
 
 
-                        hemiAnimHand_R.SetActive(false);
-                        hemiAnimHand_L.SetActive(false);
+                        //hemiAnimHand_R.SetActive(false);
+                        //hemiAnimHand_L.SetActive(false);
                         break;
 
                     case 1:
                         rightPaddleZone.SetActive(true);
                         auxTrackerR.SetActive(true);
-                        hemiAnimHand_R.SetActive(true);
+                        //hemiAnimHand_R.SetActive(true);
 
                         leftPaddleZone.SetActive(false);
                         auxTrackerL.SetActive(false);
-                        hemiAnimHand_L.SetActive(false);
+                        //hemiAnimHand_L.SetActive(false);
 
                         break;
 
                     case -1:
                         leftPaddleZone.SetActive(true);
                         auxTrackerL.SetActive(true);
-                        hemiAnimHand_L.SetActive(true);
+                        //hemiAnimHand_L.SetActive(true);
 
                         rightPaddleZone.SetActive(false);
                         auxTrackerR.SetActive(false);
-                        hemiAnimHand_R.SetActive(false);
+                        //hemiAnimHand_R.SetActive(false);
                         break;
 
                     case 2:
@@ -289,8 +289,8 @@ public class GameManager : MonoBehaviour
                         auxTrackerR.SetActive(true);
                         auxTrackerL.SetActive(true);
 
-                        hemiAnimHand_R.SetActive(true);
-                        hemiAnimHand_L.SetActive(true);
+                        //hemiAnimHand_R.SetActive(true);
+                        //hemiAnimHand_L.SetActive(true);
                         break;
                 }
 
