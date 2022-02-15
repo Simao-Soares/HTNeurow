@@ -56,6 +56,8 @@ public class HemiSupport : MonoBehaviour
         if (gameObject.name == "HemiZone_L") rightSide = false;
         else if (gameObject.name == "HemiZone_R") rightSide = true;
 
+        transform.localScale = new Vector3(0.35f, GameManager.colliderSize, GameManager.colliderSize);
+
         animatedMaleModel.SetActive(false);
         //animatedFemaleModel.SetActive(false);
 
@@ -93,7 +95,7 @@ public class HemiSupport : MonoBehaviour
 //        //------------------------------------------------------------------------------------------
 
         wristAUX.transform.position = wrist.transform.position;
-        Debug.Log(maxMinAuxPos);
+        Debug.Log(forwardAux);
 
         if(hideHandAux && handModel.activeSelf) handModel.SetActive(false);
 
@@ -102,13 +104,13 @@ public class HemiSupport : MonoBehaviour
             {
                 RotPaddle(oldPos, delta, forward, forwardAux);
             }
-            else if (oldPos >= initPos + maxReach)
+            else if (oldPos >= initPos + maxReach && forwardAux)
             {
                 forwardAux = false;
                 maxPos = initPos;
                 maxMinAuxPos = initPos + maxReach;
             }
-            else if (oldPos <= initPos)
+            else if (oldPos <= initPos && !forwardAux)
             {
                 forwardAux = true;
                 minPos = initPos+maxReach;
@@ -176,7 +178,7 @@ public class HemiSupport : MonoBehaviour
                 else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
 
                 paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-                Debug.Log("p1");
+                //Debug.Log("p1");
             }
 
             //phase 2
@@ -186,7 +188,7 @@ public class HemiSupport : MonoBehaviour
                 else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
 
                 paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-                Debug.Log("p2");   
+                //Debug.Log("p2");   
             }
             maxMinAuxPos = currentPos;
         }
@@ -200,7 +202,7 @@ public class HemiSupport : MonoBehaviour
                 else target = Quaternion.Euler(-30f, currentRotY + (1.5f * deltaRot), currentRotZ + deltaRot);
 
                 paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-                Debug.Log("p3");
+                //Debug.Log("p3");
             }
 
             //phase 4
@@ -210,7 +212,7 @@ public class HemiSupport : MonoBehaviour
                 else target = Quaternion.Euler(-30f, currentRotY - (1.5f * deltaRot), currentRotZ + deltaRot);
 
                 paddle.transform.localRotation = Quaternion.Slerp(paddle.transform.localRotation, target, 500f * Time.deltaTime);
-                Debug.Log("p4");
+                //Debug.Log("p4");
             }
 
             maxMinAuxPos = currentPos;

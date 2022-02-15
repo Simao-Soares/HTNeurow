@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 
 
     public static float motionRange = 0.15f;
-    public static float colliderSize = 0.2f;
+    public static float colliderSize = 0.3f;
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;

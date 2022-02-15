@@ -25,11 +25,11 @@ public class BoatMovement : MonoBehaviour
     [HideInInspector] public bool turnRight = false;
 
     public GameObject leftPaddle;
-    [HideInInspector] public Quaternion leftPaddleInitialRot;
+    [HideInInspector] public Vector3 leftPaddleInitialPos;
     [HideInInspector] public bool leftReleased;
 
     public GameObject rightPaddle;
-    [HideInInspector] public Quaternion rightPaddleInitialRot;
+    [HideInInspector] public Vector3 rightPaddleInitialPos;
     [HideInInspector] public bool rightReleased;
 
     public GameObject leftRowCollider;
@@ -67,9 +67,9 @@ public class BoatMovement : MonoBehaviour
         L_rowAnimator.SetFloat("Time", 0.7f/spinningTime ); //0.7 was trial and error
         R_rowAnimator.SetFloat("Time", 0.7f/spinningTime );
 
-        //leftPaddleInitialRot = leftPaddle.transform.rotation;
+        leftPaddleInitialPos = leftPaddle.transform.localPosition;
         leftReleased = false;
-        //rightPaddleInitialRot = rightPaddle.transform.rotation;
+        rightPaddleInitialPos = rightPaddle.transform.localPosition;
         rightReleased = false;
 
 
@@ -82,8 +82,16 @@ public class BoatMovement : MonoBehaviour
 
 		int cm = GameManager.ControlMethod;
 
-        if (leftReleased) leftPaddle.transform.localRotation = Quaternion.Lerp(leftPaddle.transform.localRotation, Quaternion.Euler(-30, 0, -90), Time.deltaTime);
-        if (rightReleased) rightPaddle.transform.localRotation = Quaternion.Lerp(rightPaddle.transform.localRotation, Quaternion.Euler(-30, 0, -90), Time.deltaTime);
+        if (leftReleased)
+        {
+            leftPaddle.transform.localRotation = Quaternion.Lerp(leftPaddle.transform.localRotation, Quaternion.Euler(0, 0, -90), Time.deltaTime);
+            leftPaddle.transform.localPosition = leftPaddleInitialPos;
+        }
+        if (rightReleased)
+        { 
+            rightPaddle.transform.localRotation = Quaternion.Lerp(rightPaddle.transform.localRotation, Quaternion.Euler(0, 0, -90), Time.deltaTime);
+            rightPaddle.transform.localPosition = rightPaddleInitialPos;
+        }
 
         //---------------------------------------   "BCI" debug Turning  --------------------------------------
         if (GameManager.debugArrowMovement)
