@@ -115,11 +115,18 @@ public class HemiSupport : MonoBehaviour
                 maxMinAuxPos = initPos;
             }
             //oldPos = wrist.transform.position.z;
-            oldPos = wristAUX.transform.localPosition.z;
+            oldPos = CheckAxis();
         }
 
     }
 
+    float CheckAxis()
+    {
+        if (GameManager.trackAxis == -1) return wristAUX.transform.localPosition.z;
+        else if (GameManager.trackAxis == 1) return wristAUX.transform.localPosition.y;
+        else if (GameManager.trackAxis == 0) return wristAUX.transform.localPosition.x;
+        return -10;
+    }
 
 
 
@@ -136,7 +143,7 @@ public class HemiSupport : MonoBehaviour
         //phases 3 and 4 with backward wrist motion => forward = false
 
         //float currentPos = wrist.transform.position.z;
-        float currentPos = wristAUX.transform.localPosition.z;
+        float currentPos = CheckAxis();
         float currentRotY = paddle.transform.localEulerAngles.y;
         float currentRotZ = paddle.transform.localEulerAngles.z;
         
@@ -235,7 +242,7 @@ public class HemiSupport : MonoBehaviour
             animator.SetBool("startGrab", true);
 
             //this will not be optimal, later maybe add a fixed starting position and the patient must reach that position to then start the movement
-            initPos = wristAUX.transform.localPosition.z;
+            initPos = CheckAxis();
             maxMinAuxPos = initPos;
 			oldPos = initPos;
 
