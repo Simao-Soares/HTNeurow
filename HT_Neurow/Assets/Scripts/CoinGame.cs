@@ -9,54 +9,61 @@ using Random = System.Random;
 
 public class CoinGame : MonoBehaviour
 {
-
-    public GameObject instructions;
-    public GameObject tempScoreUI;
-    public GameObject scoreUI;
+    [Header("Main Task Parameters")]
+    public float timeRemaining = 10;
     public float coinGameArea = 400f; // length of the side of playable area
     public float minDistance = 50f;
     public int coinRad = 10;
-
-    public GameObject Coin;
-    public GameObject boat;
-    public GameObject GameOverUI;
-    public GameObject NormalUI;
-
-    public int numberOfCoins;
-    public TMP_Text playerScoreText;
-    public TMP_Text finalScoreText;
-    private int playerScore = 0;
-
+    public int numberOfCoins = 3;
     public float instructionsTime;
 
-    public float timeRemaining = 10;
-    public bool timerIsRunning = false;
+    [Header("Main Task Assets")]
+    public GameObject Coin;
+    public GameObject boat;
 
+    [Header("Main Task UI")]
+    public GameObject instructions;
+    public GameObject tempScoreUI;
+    public GameObject scoreUI;
+    public GameObject GameOverUI;
+    public GameObject NormalUI;
+    public TMP_Text playerScoreText;
+    public TMP_Text finalScoreText;
     public TMP_Text timeText;
 
+    private int playerScore = 0;
 
+    
+
+
+    [HideInInspector] public bool timerIsRunning = false;
     private bool auxI;
-
     public class CoinClass {
         public int CoinID;
         public GameObject CoinObject;
 
     }
     public List<CoinClass> listCoins = new List<CoinClass>();
-
     private int auxList;
 
-    //Screen Freeze Couroutine
+    [Header("Screen Freeze Couroutine")]
     public float freezeDuration = 10f;
     private bool isFrozen = false;
     private float pendingFreezeDuration = 0f;
 
-    //BCI Objective generation
+    [Header("BCI METHOD - objective position")]
     public float bciDistanceX;
     public float bciDistanceZ;
 
 
-    //BCI TURNING
+    [Header("BCI METHOD - UI ")]
+
+    public RawImage bciCross;
+    public RawImage bciLeftArrow;
+    public RawImage bciRightArrow;
+    [HideInInspector] public static bool cross, left, right, hidearrow = false;
+
+
     [HideInInspector] public Vector3 bciObjectiveLocation;
     [HideInInspector] public int auxBCIturning = 0;     //0 -> ready to spawn new objective    //-1 -> left      1 -> right
     [HideInInspector] public bool turnCourotineAux = false;
@@ -64,7 +71,6 @@ public class CoinGame : MonoBehaviour
     [HideInInspector] BoatMovement movementScript;
     [HideInInspector] Animator R_rowAnimator;
     [HideInInspector] Animator L_rowAnimator;
-
     [HideInInspector] GameObject auxObjInstance;
 
 
@@ -91,10 +97,12 @@ public class CoinGame : MonoBehaviour
         //BCI
         R_rowAnimator = movementScript.R_rowAnimator;
         L_rowAnimator = movementScript.L_rowAnimator;
-        //if(GameManager.ControlMethod == 1) movementScript.enabled = false;
+
+        bciCross.enabled = false;
+        bciLeftArrow.enabled = false;
+        bciRightArrow.enabled = false;
 
         timerIsRunning = true;
- 
     }
 
     void SetParameters()
@@ -138,6 +146,10 @@ public class CoinGame : MonoBehaviour
                 //--------------------------------------------------------------------------------------------------------------
                 else if (GameManager.ControlMethod == 1)//BCI
                 {
+                    //Check for BCI input (training)
+                    getStim();
+
+
                     //Turning Towads Objective
                     if(turnCourotineAux) StartCoroutine(BCITurning(GameManager.turnSpeed, bciRotation));
 
@@ -152,7 +164,7 @@ public class CoinGame : MonoBehaviour
                         float angleToObjective = Vector3.Angle(transform.forward, vectorToObjective);
 
                         //Check for right user input
-                        if (Input.GetKey(KeyCode.RightArrow) && auxBCIturning == 1 || Input.GetKey(KeyCode.LeftArrow) && auxBCIturning == -1) 
+                        if ((Input.GetKey(KeyCode.RightArrow) || right) && auxBCIturning == 1 || (Input.GetKey(KeyCode.LeftArrow) || left) && auxBCIturning == -1) 
                         {
                             turnCourotineAux = true;
                             //movementScript.selfCorrection = true; 
@@ -217,15 +229,14 @@ public class CoinGame : MonoBehaviour
         Transform boatT = boat.transform;
         var height = 99.5f * Vector3.up;
 
-        //-----------------------------------------------------------------------------------------------------------> add code o receive BCI input
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.E) || right)
         {
             auxBCIturning = 1;
             bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ + boatT.right * bciDistanceX + height);
             auxObjInstance = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
         }
 
-        else if (Input.GetKeyUp(KeyCode.Q))
+        else if (Input.GetKeyUp(KeyCode.Q) || left)
         {
             auxBCIturning = -1;
             bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ - boatT.right * bciDistanceX + height);
@@ -342,7 +353,89 @@ public class CoinGame : MonoBehaviour
     }
 
 
+    public void getStim()
+    {
+        int stim = Assets.LSL4Unity.Scripts.Examples.ReceiveLSLmarkers.markerint;
 
+        switch (stim)
+        {
+            case 800:
+            case 10: //hide cross
+                bciCross.enabled = false;
+                bciLeftArrow.enabled = false;
+                bciRightArrow.enabled = false;
+                cross = false;
+                left = false;
+                right = false;
+                //hidearrow = false;
+                break;
+
+            case 33282:
+            case 6: //beep
+                bciCross.enabled = true;
+                bciLeftArrow.enabled = false;
+                bciRightArrow.enabled = false;
+                cross = true;
+                left = false;
+                right = false;
+                //hidearrow = false;
+                break;
+
+            case 786:
+            case 5: // show cross
+                bciCross.enabled = true;
+                bciLeftArrow.enabled = false;
+                bciRightArrow.enabled = false;
+                cross = true;
+                left = false;
+                right = false;
+                //hidearrow = false;
+                break;
+
+            case 770:
+            case 8: // right arrow
+                bciCross.enabled = true;
+                bciLeftArrow.enabled = false;
+                bciRightArrow.enabled = true;
+                cross = true;
+                left = false;
+                right = true;
+                //hidearrow = false;
+                break;
+
+            case 769:
+            case 7: // left arrow
+                bciCross.enabled = true;
+                bciLeftArrow.enabled = true;
+                bciRightArrow.enabled = false;
+                cross = true;
+                left = true;
+                right = false;
+                //hidearrow = false;
+                break;
+
+            case 781:
+            case 9: // hide arrow
+                bciCross.enabled = true;
+                bciLeftArrow.enabled = false;
+                bciRightArrow.enabled = false;
+                cross = true;
+                //hidearrow = true;
+                left= false;
+                right= false;
+                break;
+
+            default:
+                bciCross.enabled = false;
+                bciLeftArrow.enabled = false;
+                bciRightArrow.enabled = false;
+                cross = false;
+                left = false;
+                right = false;
+                //hidearrow = false;
+                break;
+        }
+    }
 
 
 

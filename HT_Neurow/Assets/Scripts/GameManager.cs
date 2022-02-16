@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
