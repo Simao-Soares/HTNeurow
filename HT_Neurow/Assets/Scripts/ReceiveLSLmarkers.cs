@@ -59,8 +59,9 @@ namespace Assets.LSL4Unity.Scripts.Examples
 
             lslsignal = newSample[0];
             markerint = (int)lslsignal;
+            Debug.Log("markerint: " + markerint);
             marker = lslsignal.ToString();
-            //
+            
         }
 
         protected override void OnStreamAvailable()

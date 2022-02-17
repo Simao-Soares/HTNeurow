@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Random = System.Random;
-
+using Assets.LSL4Unity.Scripts.Examples;
+using Assets.LSL4Unity.Scripts.AbstractInlets;
 
 public class CoinGame : MonoBehaviour
 {
@@ -58,6 +59,8 @@ public class CoinGame : MonoBehaviour
 
     [Header("BCI METHOD - UI ")]
 
+    public bool training = true; //if false -> online
+
     public RawImage bciCross;
     public RawImage bciLeftArrow;
     public RawImage bciRightArrow;
@@ -97,6 +100,12 @@ public class CoinGame : MonoBehaviour
         //BCI
         R_rowAnimator = movementScript.R_rowAnimator;
         L_rowAnimator = movementScript.L_rowAnimator;
+
+        if (training)
+        {
+            tempScoreUI.SetActive(false);
+            scoreUI.SetActive(false);
+        }
 
         bciCross.enabled = false;
         bciLeftArrow.enabled = false;
@@ -147,6 +156,7 @@ public class CoinGame : MonoBehaviour
                 else if (GameManager.ControlMethod == 1)//BCI
                 {
                     //Check for BCI input (training)
+                    //Debug.Log("GETASTIM!");
                     getStim();
 
 
@@ -164,7 +174,8 @@ public class CoinGame : MonoBehaviour
                         float angleToObjective = Vector3.Angle(transform.forward, vectorToObjective);
 
                         //Check for right user input
-                        if ((Input.GetKey(KeyCode.RightArrow) || right) && auxBCIturning == 1 || (Input.GetKey(KeyCode.LeftArrow) || left) && auxBCIturning == -1) 
+                        if ((Input.GetKey(KeyCode.RightArrow) || (right && hidearrow)) && auxBCIturning == 1 ||
+                            (Input.GetKey(KeyCode.LeftArrow)  || (left && hidearrow))  && auxBCIturning == -1) 
                         {
                             turnCourotineAux = true;
                             //movementScript.selfCorrection = true; 
@@ -189,17 +200,6 @@ public class CoinGame : MonoBehaviour
                             L_rowAnimator.SetBool("Turning", false);
                             if (Vector3.Dot(bciObjectiveLocation - new Vector3(0, 99.9f - 0.4f, 0) - transform.position, transform.forward) < 0.5) Destroy(auxObjInstance);
                         }
-
-                        ////Check if the boat already passed by objective
-                        //if (Vector3.Dot(bciObjectiveLocation - new Vector3(0, 99.9f - 0.413f, 0) - transform.position, transform.forward) < 0.1)
-                        //{
-                        //    Debug.Log("na retaguarda");
-                        //    turnCourotineAux = false;
-     
-                        //}
-
-
-
                     }
                 }
 
@@ -264,7 +264,7 @@ public class CoinGame : MonoBehaviour
 
     IEnumerator ShowInstructions(float time) {
         instructions.SetActive(true);
-        tempScoreUI.SetActive(true);
+        if(!training) tempScoreUI.SetActive(true);
         yield return new WaitForSeconds(time);
         auxI = false;
         instructions.SetActive(false);
@@ -355,7 +355,9 @@ public class CoinGame : MonoBehaviour
 
     public void getStim()
     {
-        int stim = Assets.LSL4Unity.Scripts.Examples.ReceiveLSLmarkers.markerint;
+        //int stim = Assets.LSL4Unity.Scripts.Examples.ReceiveLSLmarkers.markerint;
+        int stim = ReceiveLSLmarkers.markerint;
+        //Debug.Log("STIM: "+ stim);
 
         switch (stim)
         {
@@ -367,7 +369,7 @@ public class CoinGame : MonoBehaviour
                 cross = false;
                 left = false;
                 right = false;
-                //hidearrow = false;
+                hidearrow = false;
                 break;
 
             case 33282:
@@ -378,7 +380,7 @@ public class CoinGame : MonoBehaviour
                 cross = true;
                 left = false;
                 right = false;
-                //hidearrow = false;
+                hidearrow = false;
                 break;
 
             case 786:
@@ -389,7 +391,7 @@ public class CoinGame : MonoBehaviour
                 cross = true;
                 left = false;
                 right = false;
-                //hidearrow = false;
+                hidearrow = false;
                 break;
 
             case 770:
@@ -400,7 +402,7 @@ public class CoinGame : MonoBehaviour
                 cross = true;
                 left = false;
                 right = true;
-                //hidearrow = false;
+                hidearrow = false;
                 break;
 
             case 769:
@@ -411,7 +413,7 @@ public class CoinGame : MonoBehaviour
                 cross = true;
                 left = true;
                 right = false;
-                //hidearrow = false;
+                hidearrow = false;
                 break;
 
             case 781:
@@ -420,9 +422,9 @@ public class CoinGame : MonoBehaviour
                 bciLeftArrow.enabled = false;
                 bciRightArrow.enabled = false;
                 cross = true;
-                //hidearrow = true;
-                left= false;
-                right= false;
+                hidearrow = true;
+                //left= false;
+                //right= false;
                 break;
 
             default:
@@ -432,7 +434,7 @@ public class CoinGame : MonoBehaviour
                 cross = false;
                 left = false;
                 right = false;
-                //hidearrow = false;
+                hidearrow = false;
                 break;
         }
     }

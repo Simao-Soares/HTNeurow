@@ -46,6 +46,7 @@ public class MenuScript : MonoBehaviour
 	public Toggle axisButtonZ;
 
 	public Toggle invertButton;
+	public Toggle bciSpecificButton;
 
 	public Toggle[] presetButtons;
 
@@ -194,6 +195,7 @@ public class MenuScript : MonoBehaviour
 		else if (GameManager.trackAxis == -1) axisButtonZ.SetIsOnWithoutNotify(true);
 
 		if (GameManager.invertTurn) invertButton.SetIsOnWithoutNotify(true);
+		if (GameManager.bciSpecificUI) bciSpecificButton.SetIsOnWithoutNotify(true);
 
 		//Debug.Log(GameManager.SelectedPreset);
 		switch (GameManager.SelectedPreset)
@@ -228,11 +230,7 @@ public class MenuScript : MonoBehaviour
 		//durationText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
 		durationTextMinutes.text = minutes.ToString();
-
 		durationTextSeconds.text = string.Format("{0:00}", seconds);
-
-
-
 
 		motionRangeText.text = GameManager.motionRange.ToString();
 		colliderSizeText.text = GameManager.colliderSize.ToString();

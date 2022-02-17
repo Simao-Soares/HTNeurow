@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
 
-    public static int Gender =  1;       //  1 -> Male
+    public static int Gender =  -1;       //  1 -> Male
                                          // -1 -> Female
 
     //public static int Forward = 1;     //  1 -> Auto (always moving forward)
@@ -153,6 +153,8 @@ public class GameManager : MonoBehaviour
     public static int objectivePosZ = 5;
     public static int objectivePosX = 3;
 
+    public static bool bciSpecificUI = true;
+
     //-------------------------------------------------------------------------------------------------------------------
 
     public static bool optionsMenuAux = false;
@@ -174,14 +176,10 @@ public class GameManager : MonoBehaviour
             mainPanel.SetActive(true);
             optPanel.SetActive(false);
             choicePanel.SetActive(false);
-
-
         }
 
         else if (sceneName == "RowingSim")
         {
-
-
             //------------------------------------------- RowingSim SCENE SETUP ---------------------------------------------
 
             //-----------------------------------------------------------------------
@@ -310,8 +308,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-
-
+            //TASK
             if (TaskChoice == 1)
             {
                 Player.GetComponent<PathGame>().enabled = true;
@@ -338,8 +335,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         if (updateSettings)
         {
             canvas.GetComponent<MenuScript>().updateSettingsAux = true;
@@ -398,7 +393,6 @@ public class GameManager : MonoBehaviour
             objectivePosZSlider.value = objectivePosZ;
             objectivePosXSlider.value = objectivePosX;
         }
-
     }
 
     public void ReadInputMinutes(string input)
@@ -592,6 +586,13 @@ public class GameManager : MonoBehaviour
     public void SetObjectivePosX()
     {
         objectivePosX = ((int)objectivePosXSlider.value);
+        updateSettings = true;
+    }
+
+    public void SetBCISpecificUI()
+    {
+        if (bciSpecificUI) bciSpecificUI = false;
+        else bciSpecificUI = true;
         updateSettings = true;
     }
 

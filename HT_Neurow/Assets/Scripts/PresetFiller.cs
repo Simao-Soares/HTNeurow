@@ -40,6 +40,10 @@ public class PresetFiller : MonoBehaviour
         public int playArea;
         public int objectiveNum;
         public float objectiveRad;
+
+        public int objectivePosZ;
+        public int objectivePosX;
+        public bool bciSpecificUI;
     }
 
     [System.Serializable]
@@ -92,7 +96,6 @@ public class PresetFiller : MonoBehaviour
         else
         {
             Debug.Log("First choose the preset you want to edit");
-
         }
     }
 
@@ -128,6 +131,10 @@ public class PresetFiller : MonoBehaviour
         GameManager.objectiveNum = myPresets.Presets[index].objectiveNum;
         GameManager.objectiveRad = myPresets.Presets[index].objectiveRad;
 
+        GameManager.objectivePosX = myPresets.Presets[index].objectivePosX;
+        GameManager.objectivePosZ = myPresets.Presets[index].objectivePosZ;
+        GameManager.bciSpecificUI = myPresets.Presets[index].bciSpecificUI;
+
         updateSettings = true;
         
     }
@@ -160,6 +167,10 @@ public class PresetFiller : MonoBehaviour
         myPresets.Presets[index].playArea = GameManager.playArea;
         myPresets.Presets[index].objectiveNum = GameManager.objectiveNum;
         myPresets.Presets[index].objectiveRad = GameManager.objectiveRad;
+
+        myPresets.Presets[index].objectivePosX = GameManager.objectivePosX;
+        myPresets.Presets[index].objectivePosZ = GameManager.objectivePosZ;
+        myPresets.Presets[index].bciSpecificUI = GameManager.bciSpecificUI;
 
         updateSettings = true;
 
