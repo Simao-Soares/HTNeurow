@@ -24,10 +24,11 @@ public class PresetFiller : MonoBehaviour
         public float colliderSize;
         public int trackAxis;
 
-        public float turnAngle;
+        
         public float boatSpeed;
-        public float turnSpeed;
-        public int turnSense;    //---------------------------------------------------------------------------------------------------------------------->
+        //public float turnSpeed;
+        //public float turnAngle;
+        public int turnSense;   
         public bool invertTurn;
 
         public int challengeLevel;
@@ -114,9 +115,9 @@ public class PresetFiller : MonoBehaviour
         GameManager.colliderSize = myPresets.Presets[index].colliderSize;
         GameManager.trackAxis = myPresets.Presets[index].trackAxis;
 
-        GameManager.turnAngle = myPresets.Presets[index].turnAngle;
+        //GameManager.turnAngle = myPresets.Presets[index].turnAngle;
+        //GameManager.turnSpeed = myPresets.Presets[index].turnSpeed;
         GameManager.boatSpeed = myPresets.Presets[index].boatSpeed;
-        GameManager.turnSpeed = myPresets.Presets[index].turnSpeed;
         GameManager.turnSense = myPresets.Presets[index].turnSense;
         GameManager.invertTurn = myPresets.Presets[index].invertTurn;
 
@@ -151,9 +152,9 @@ public class PresetFiller : MonoBehaviour
         myPresets.Presets[index].colliderSize = GameManager.colliderSize;
         myPresets.Presets[index].trackAxis = GameManager.trackAxis;
 
-        myPresets.Presets[index].turnAngle = GameManager.turnAngle;
+        //myPresets.Presets[index].turnAngle = GameManager.turnAngle;
+        //myPresets.Presets[index].turnSpeed = GameManager.turnSpeed;
         myPresets.Presets[index].boatSpeed = GameManager.boatSpeed;
-        myPresets.Presets[index].turnSpeed = GameManager.turnSpeed;
         myPresets.Presets[index].turnSense = GameManager.turnSense;
         myPresets.Presets[index].invertTurn = GameManager.invertTurn;
 

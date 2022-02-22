@@ -7,15 +7,14 @@ using TMPro;
 
 public class MenuScript : MonoBehaviour
 {
-    //Variables for camera ao scene transitions
-    public GameObject mainCam;
+	[Header("Camera and Scene transitions")]
+	public GameObject mainCam;
     public GameObject optCam;
 	public GameObject optBackCam;
     public GameObject optPanel;
     public GameObject mainPanel;
 	public GameObject buttons;
 	public GameObject titleElements;
-
 	public GameObject chooseTaskPannel;
 
     private bool playAux = false;
@@ -25,10 +24,8 @@ public class MenuScript : MonoBehaviour
 	[HideInInspector] public bool editPreset = false;
 
 
-
+	[Header("Toggles aka Buttons")]
 	public Toggle editButton;
-
-	//Variables for default game settings
 	public Toggle controlButtonBCI;
 	public Toggle controlButtonHT;
 
@@ -52,9 +49,7 @@ public class MenuScript : MonoBehaviour
 
 
 
-
-
-	//Slider Values
+	[Header("Text elements of sliders")]
 	public TMP_InputField durationTextMinutes;
 	public TMP_InputField durationTextSeconds;
 
@@ -78,8 +73,19 @@ public class MenuScript : MonoBehaviour
 	public TMP_Text objectiveRadText;
 	public TMP_Text objectivePosX;
 	public TMP_Text objectivePosZ;
+
+
 	
 
+	[System.Serializable]
+	public class BlockList
+	{
+		public GameObject[] BlockObj;
+	}
+
+	[Header("Blocking Panels")]
+	public BlockList BCI_BlockList = new BlockList();
+	public BlockList HT_BlockList = new BlockList();
 
 
 
@@ -172,8 +178,34 @@ public class MenuScript : MonoBehaviour
 	private void UpdateSettings()
 	{
 
-		if (GameManager.ControlMethod == 1) controlButtonBCI.SetIsOnWithoutNotify(true);
-		else controlButtonHT.SetIsOnWithoutNotify(true);
+		if (GameManager.ControlMethod == 1)
+		{
+			controlButtonBCI.SetIsOnWithoutNotify(true);
+			//Deactivate locks on BCI Parameters 
+			for (int i = 0; i < BCI_BlockList.BlockObj.Length; i++)
+            {
+				BCI_BlockList.BlockObj[i].SetActive(true);
+			}
+			//Activate locks on HT Parameters 
+			for (int i = 0; i < HT_BlockList.BlockObj.Length; i++)
+			{
+				HT_BlockList.BlockObj[i].SetActive(false);
+			}
+		}
+		else
+		{
+			controlButtonHT.SetIsOnWithoutNotify(true);
+			//Deactivate locks on HT Parameters 
+			for (int i = 0; i < HT_BlockList.BlockObj.Length; i++)
+			{
+				HT_BlockList.BlockObj[i].SetActive(true);
+			}
+			//Activate locks on BCI Parameters 
+			for (int i = 0; i < BCI_BlockList.BlockObj.Length; i++)
+			{
+				BCI_BlockList.BlockObj[i].SetActive(false);
+			}
+		}
 
 		if (GameManager.Gender == 1) genderButtonM.SetIsOnWithoutNotify(true);
 		else genderButtonF.SetIsOnWithoutNotify(true);
