@@ -226,7 +226,7 @@ public class MenuScript : MonoBehaviour
 		else if (GameManager.trackAxis == 1) axisButtonY.SetIsOnWithoutNotify(true);
 		else if (GameManager.trackAxis == -1) axisButtonZ.SetIsOnWithoutNotify(true);
 
-		if (GameManager.invertTurn) invertButton.SetIsOnWithoutNotify(true);
+		if (!GameManager.invertTurn) invertButton.SetIsOnWithoutNotify(true); //instead of changing this value when it was red I just changed it here
 		if (GameManager.bciSpecificUI) bciSpecificButton.SetIsOnWithoutNotify(true);
 
 		//Debug.Log(GameManager.SelectedPreset);
