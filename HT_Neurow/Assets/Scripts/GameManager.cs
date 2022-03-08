@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Leap.Unity;
+using Assets.LSL4Unity.Scripts.Examples;
 
 public class GameManager : MonoBehaviour
 {
@@ -86,8 +87,12 @@ public class GameManager : MonoBehaviour
     [Header("Task #2 UI and Settings")]
     public GameObject CoinUI;
     public GameObject CoinLighting;
+    public GameObject TimeUI;
 
     [HideInInspector] public static bool editAuxGM;
+
+    [Header("LSL")]
+    public GameObject listener;
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
     public static bool debugArrowMovement = false;
@@ -104,41 +109,45 @@ public class GameManager : MonoBehaviour
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
-    public static int HemiLimb = -1;      //  0 -> No hemiparethic limb                                                                 
+    public static int HemiLimb = 0;      //  0 -> No hemiparethic limb                                                                 
                                          //  1 -> Right hemiparethic limb
                                          // -1 -> Left hemiparethic limb
                                          //  2 -> Both
 
-    public static int Gender =  -1;       //  1 -> Male
+    public static int Gender =  1;       //  1 -> Male
                                          // -1 -> Female
 
     //public static int Forward = 1;     //  1 -> Auto (always moving forward)
                                          // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 100; 
-
-    public static int trackAxis = -1;      //  0 -> X axis                                                               
-                                           //  1 -> Y axis        
-                                           // -1 -> Z axis 
+    public static int taskDuration = 10; 
 
 
+    //HEMI SUPPORT
     public static float motionRange = 0.15f;
     public static float colliderSize = 0.3f;
+    public static int trackAxis = -1;      //  0 -> X axis                                                               
+                                           //  1 -> Y axis        
+                                           // -1 -> Z axis
+
+    //LSL OPTIONS
+    public static string streamName = "openvibeMarkers";
+    public static string streamType = "Markers";
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
     public static float boatSpeed = 2f;
     public static float turnSpeed = 1f;
     public static int turnSense = 5;
-    public static bool invertTurn = true;
+    public static bool invertTurn = false;
 
     //TASK #1
-    public static int challengeLevel = 2;
+    public static int challengeLevel = 5;
     public static int angleDev = 150;
     public static float maxDistance = 5f;
     public static float maxDistance2 = 10f;
@@ -147,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     //TASK #2
     public static int playArea = 1;
-    public static int objectiveNum = 3;
+    public static int objectiveNum = 10;
     public static float objectiveRad = 2f;
 
     public static int objectivePosZ = 5;
@@ -213,6 +222,7 @@ public class GameManager : MonoBehaviour
             //BCI
             if (ControlMethod == 1)
             {
+                TimeUI.SetActive(false);
                 LeapHandController.GetComponent<LeapServiceProvider>().enabled = false;
                 InteractionManager.SetActive(false);
                 leftPaddleAnim.enabled = true;
@@ -221,10 +231,13 @@ public class GameManager : MonoBehaviour
                 rightPaddleZone.SetActive(false);
                 leftPaddleZone.SetActive(false);
 
-
                 auxTrackerR.SetActive(false);
                 auxTrackerL.SetActive(false);
                 attachtmentHands.SetActive(false);
+
+                //LSL
+                listener.GetComponent<ReceiveLSLmarkers>().StreamName = streamName;
+                listener.GetComponent<ReceiveLSLmarkers>().StreamType = streamType;
 
             }
 
@@ -327,6 +340,8 @@ public class GameManager : MonoBehaviour
                 Player.GetComponent<CoinGame>().enabled = true;
                 CoinUI.SetActive(true);
             }
+
+
         }
     }
 
@@ -357,6 +372,8 @@ public class GameManager : MonoBehaviour
             else{
                 zone.SetActive(false);
             }
+
+
         }
 
 
@@ -450,12 +467,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    public void SetTrackedAxis(int AxisAux)
-    {
-        trackAxis = AxisAux;
-        updateSettings = true;
 
-    }
     public void SetGender(int GenderAux)
     {
         Gender = GenderAux;
@@ -483,16 +495,43 @@ public class GameManager : MonoBehaviour
         
     }
 
+    //-----------------------------------------------------------------------
+    //Hemi Support Settings:
+    //-----------------------------------------------------------------------
+
     public void SetMotionRange()
     {
         motionRange = Mathf.Round(motionRangeSlider.value * 100f) / 100f;
         updateSettings = true;
+    }
+
+    public void SetTrackedAxis(int AxisAux)
+    {
+        trackAxis = AxisAux;
+        updateSettings = true;
+
     }
     public void SetColliderSize ()
     {
         colliderSize = Mathf.Round(colliderSizeSlider.value * 100f) / 100f;
         updateSettings = true;
     }
+
+
+    //-----------------------------------------------------------------------
+    //LSL Settings:
+    //-----------------------------------------------------------------------
+
+    public void SetStreamName(string input)
+    {
+        streamName = input;
+    }
+
+    public void SetStreamType(string input)
+    {
+        streamType = input;
+    }
+
 
     //-----------------------------------------------------------------------
     //Boat Movement Settings:

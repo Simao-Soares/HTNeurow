@@ -97,7 +97,7 @@ public class BoatMovement : MonoBehaviour
         if (GameManager.debugArrowMovement)
         {
             //checks input + if cooldown is over + selected control method corresponds to the input 
-            if (Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false && cm == 1)                                
+            if (Input.GetKey(KeyCode.RightArrow) && cooldownActivated == false)                                
             {
                 if (GameManager.invertTurn) Turn(true); //turn to the left side=true
                 else Turn(false);
@@ -107,7 +107,7 @@ public class BoatMovement : MonoBehaviour
                 R_rowAnimator.SetBool("Turning", true);
             }
 
-            else if ((Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false && cm == 1))
+            else if (Input.GetKey(KeyCode.LeftArrow) && cooldownActivated == false)
             {
                 if (GameManager.invertTurn) Turn(false); //turn to the right side=false
                 else Turn(true);

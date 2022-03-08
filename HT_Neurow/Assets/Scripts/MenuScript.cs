@@ -7,6 +7,11 @@ using TMPro;
 
 public class MenuScript : MonoBehaviour
 {
+
+	[Header("** for testing purposes **")]
+	public float cameraTransitionsDuration = 3f;
+
+
 	[Header("Camera and Scene transitions")]
 	public GameObject mainCam;
     public GameObject optCam;
@@ -75,8 +80,6 @@ public class MenuScript : MonoBehaviour
 	public TMP_Text objectivePosZ;
 
 
-	
-
 	[System.Serializable]
 	public class BlockList
 	{
@@ -89,7 +92,13 @@ public class MenuScript : MonoBehaviour
 
 
 
-	private void Update()
+
+    private void Start()
+    {
+		UpdateSettings();
+	}
+
+    private void Update()
     {
 		if (updateSettingsAux)
 		{
@@ -140,24 +149,25 @@ public class MenuScript : MonoBehaviour
 
 	IEnumerator StartGame(){
 		buttons.SetActive(false);
-		mainCam.GetComponent<CPC_CameraPath>().PlayPath(3);
+		mainCam.GetComponent<CPC_CameraPath>().PlayPath(cameraTransitionsDuration);
 		playAux = false;
-		yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(cameraTransitionsDuration);
 		titleElements.SetActive(false);
 		yield return new WaitForSeconds(.1f);
 
-		chooseTaskPannel.SetActive(true);
+		if(GameManager.ControlMethod == -1)chooseTaskPannel.SetActive(true);
+		else SceneManager.LoadScene("RowingSim");
 
-        
-    }
+
+	}
 		
     IEnumerator Options(){
 		optCam.SetActive(true);
         mainCam.SetActive(false);
         mainPanel.SetActive(false);
-        optCam.GetComponent<CPC_CameraPath>().PlayPath(3);
+        optCam.GetComponent<CPC_CameraPath>().PlayPath(cameraTransitionsDuration);
 		optAux = false;
-		yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(cameraTransitionsDuration);
 		optPanel.SetActive(true);
     }
 
@@ -165,9 +175,9 @@ public class MenuScript : MonoBehaviour
         optBackCam.SetActive(true);
         optCam.SetActive(false);
 		optPanel.SetActive(false);
-		optBackCam.GetComponent<CPC_CameraPath>().PlayPath(1);
+		optBackCam.GetComponent<CPC_CameraPath>().PlayPath(cameraTransitionsDuration/2);
 		optBackAux = false;
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(cameraTransitionsDuration/2);
         mainPanel.SetActive(true);
 		optBackCam.SetActive(false);
 		mainCam.SetActive(true);
@@ -177,6 +187,7 @@ public class MenuScript : MonoBehaviour
 
 	private void UpdateSettings()
 	{
+		Debug.Log(GameManager.Gender);
 
 		if (GameManager.ControlMethod == 1)
 		{

@@ -24,7 +24,10 @@ public class PresetFiller : MonoBehaviour
         public float colliderSize;
         public int trackAxis;
 
-        
+        public string streamName;
+        public string streamType;
+
+
         public float boatSpeed;
         //public float turnSpeed;
         //public float turnAngle;
@@ -58,7 +61,7 @@ public class PresetFiller : MonoBehaviour
 
     private void Start()
     {
-        //SetPreset(0);
+        SetPreset(0);
     }
 
 
@@ -121,6 +124,9 @@ public class PresetFiller : MonoBehaviour
         GameManager.turnSense = myPresets.Presets[index].turnSense;
         GameManager.invertTurn = myPresets.Presets[index].invertTurn;
 
+        GameManager.streamName = myPresets.Presets[index].streamName;
+        GameManager.streamType = myPresets.Presets[index].streamType;
+
         GameManager.challengeLevel = myPresets.Presets[index].challengeLevel;
         GameManager.angleDev = myPresets.Presets[index].angleDev;
         GameManager.maxDistance = myPresets.Presets[index].maxDistance;
@@ -151,6 +157,9 @@ public class PresetFiller : MonoBehaviour
         myPresets.Presets[index].motionRange = GameManager.motionRange;
         myPresets.Presets[index].colliderSize = GameManager.colliderSize;
         myPresets.Presets[index].trackAxis = GameManager.trackAxis;
+
+        myPresets.Presets[index].streamName = GameManager.streamName;
+        myPresets.Presets[index].streamType = GameManager.streamType;
 
         //myPresets.Presets[index].turnAngle = GameManager.turnAngle;
         //myPresets.Presets[index].turnSpeed = GameManager.turnSpeed;

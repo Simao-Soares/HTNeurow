@@ -7,7 +7,7 @@ TagManager:
   - PlayerPos
   - LeapHands
   - rigidHand
-  - PathArcs
+  - coin
   layers:
   - Default
   - TransparentFX

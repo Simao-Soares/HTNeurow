@@ -19,7 +19,8 @@ public class CoinGame : MonoBehaviour
     public float instructionsTime;
 
     [Header("Main Task Assets")]
-    public GameObject Coin;
+    public GameObject CoinObject; 
+    public GameObject buoy; 
     public GameObject boat;
 
     [Header("Main Task UI")]
@@ -75,6 +76,7 @@ public class CoinGame : MonoBehaviour
     [HideInInspector] Animator R_rowAnimator;
     [HideInInspector] Animator L_rowAnimator;
     [HideInInspector] GameObject auxObjInstance;
+    [HideInInspector] GameObject auxBuoyInstance;
 
 
 
@@ -98,15 +100,14 @@ public class CoinGame : MonoBehaviour
         }
 
         //BCI
-        R_rowAnimator = movementScript.R_rowAnimator;
-        L_rowAnimator = movementScript.L_rowAnimator;
-
-        if (training)
+        if (training && GameManager.ControlMethod == 1)
         {
             tempScoreUI.SetActive(false);
             scoreUI.SetActive(false);
         }
 
+        R_rowAnimator = movementScript.R_rowAnimator;
+        L_rowAnimator = movementScript.L_rowAnimator;
         bciCross.enabled = false;
         bciLeftArrow.enabled = false;
         bciRightArrow.enabled = false;
@@ -124,9 +125,9 @@ public class CoinGame : MonoBehaviour
         bciDistanceX = GameManager.objectivePosX;
         bciDistanceZ = GameManager.objectivePosZ;
 
-        Coin.transform.localScale = new Vector3 (GameManager.objectiveRad, 100, GameManager.objectiveRad);           
+        CoinObject.transform.localScale = new Vector3 (GameManager.objectiveRad, 100, GameManager.objectiveRad);           
 
-        Coin.GetComponent<PickedUp>().shrinkStep = GameManager.objectiveRad * 3;
+        CoinObject.GetComponent<PickedUp>().shrinkStep = GameManager.objectiveRad * 3;
 
 
     }
@@ -137,7 +138,7 @@ public class CoinGame : MonoBehaviour
         {
             if (timeRemaining > 0)
             {
-                timeRemaining -= Time.deltaTime;
+                if(GameManager.ControlMethod == -1) timeRemaining -= Time.deltaTime;
                 DisplayTime(timeRemaining);
 
                 //always show instructions for instructionsTime seconds at the start
@@ -158,7 +159,6 @@ public class CoinGame : MonoBehaviour
                     //Check for BCI input (training)
                     //Debug.Log("GETASTIM!");
                     getStim();
-
 
                     //Turning Towads Objective
                     if(turnCourotineAux) StartCoroutine(BCITurning(GameManager.turnSpeed, bciRotation));
@@ -233,14 +233,16 @@ public class CoinGame : MonoBehaviour
         {
             auxBCIturning = 1;
             bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ + boatT.right * bciDistanceX + height);
-            auxObjInstance = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
+            auxObjInstance = Instantiate(CoinObject, bciObjectiveLocation, Quaternion.identity);
+            auxBuoyInstance = Instantiate(buoy, bciObjectiveLocation - new Vector3(0, 99.5f, 0), Quaternion.Euler(-90, 0, 0));
         }
 
         else if (Input.GetKeyUp(KeyCode.Q) || left)
         {
             auxBCIturning = -1;
             bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ - boatT.right * bciDistanceX + height);
-            auxObjInstance = Instantiate(Coin, bciObjectiveLocation, Quaternion.identity);
+            auxObjInstance = Instantiate(CoinObject, bciObjectiveLocation, Quaternion.identity);
+            auxBuoyInstance = Instantiate(buoy, bciObjectiveLocation - new Vector3(0, 99.5f, 0), Quaternion.Euler(-90, 0, 0));
         }
 
     }
@@ -299,11 +301,12 @@ public class CoinGame : MonoBehaviour
                 {
                     while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance || Vector3.Distance(boat.transform.position, newCoords) < minDistanceToBoat)
                     {                      
-                        newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100.5f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
+                        newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
                     }
                 }
             }
-            GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
+            GameObject aux = Instantiate(CoinObject, newCoords, Quaternion.identity);
+            auxBuoyInstance = Instantiate(buoy, newCoords - new Vector3(0, 99.5f, 0), Quaternion.Euler(-90, 0, 0));
             listCoins[i].CoinObject = aux;
         }
     }
@@ -320,7 +323,8 @@ public class CoinGame : MonoBehaviour
                 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
             }
         }
-        GameObject aux = Instantiate(Coin, newCoords, Quaternion.identity);
+        GameObject aux = Instantiate(CoinObject, newCoords, Quaternion.identity);
+        auxBuoyInstance = Instantiate(buoy, newCoords - new Vector3(0, 99.5f, 0), Quaternion.Euler(-90, 0, 0));
         listCoins[listCoins.Count - 1].CoinObject = aux; //is listCoins.Count-1 the last position of the list? I think so
     }
 
@@ -426,6 +430,12 @@ public class CoinGame : MonoBehaviour
                 //left= false;
                 //right= false;
                 break;
+
+
+            case 32770: // END OF SESSION
+                timeRemaining = 0;
+                break;
+
 
             default:
                 bciCross.enabled = false;
