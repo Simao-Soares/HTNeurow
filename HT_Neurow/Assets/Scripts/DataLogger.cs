@@ -6,6 +6,8 @@ using System.IO;
 public class DataLogger : MonoBehaviour
 {
     string filename = "";
+    public float amsFreq = 1f;
+
 
 
     //Definition of HandPoint class
@@ -65,8 +67,10 @@ public class DataLogger : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate() {
         elapsed += Time.deltaTime;
-        if (elapsed >= 1f) {
-            elapsed = elapsed % 1f;
+        if (elapsed >= amsFreq) {
+            //elapsed = elapsed % 1f;
+            elapsed = 0f;
+
             //OutputTime();   //uncomment to show print time instances
             WriteCSV();
         }

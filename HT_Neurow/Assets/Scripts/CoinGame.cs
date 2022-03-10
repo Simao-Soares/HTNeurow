@@ -78,6 +78,8 @@ public class CoinGame : MonoBehaviour
     [HideInInspector] GameObject auxObjInstance;
     [HideInInspector] GameObject auxBuoyInstance;
 
+    [HideInInspector] public float buoyHeight = 99.7f;
+
 
 
 
@@ -234,7 +236,7 @@ public class CoinGame : MonoBehaviour
             auxBCIturning = 1;
             bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ + boatT.right * bciDistanceX + height);
             auxObjInstance = Instantiate(CoinObject, bciObjectiveLocation, Quaternion.identity);
-            auxBuoyInstance = Instantiate(buoy, bciObjectiveLocation - new Vector3(0, 99.5f, 0), Quaternion.Euler(-90, 0, 0));
+            auxBuoyInstance = Instantiate(buoy, bciObjectiveLocation - new Vector3(0, buoyHeight, 0), Quaternion.Euler(-90, 0, 0));
         }
 
         else if (Input.GetKeyUp(KeyCode.Q) || left)
@@ -242,7 +244,7 @@ public class CoinGame : MonoBehaviour
             auxBCIturning = -1;
             bciObjectiveLocation = (boatT.position + boatT.forward * bciDistanceZ - boatT.right * bciDistanceX + height);
             auxObjInstance = Instantiate(CoinObject, bciObjectiveLocation, Quaternion.identity);
-            auxBuoyInstance = Instantiate(buoy, bciObjectiveLocation - new Vector3(0, 99.5f, 0), Quaternion.Euler(-90, 0, 0));
+            auxBuoyInstance = Instantiate(buoy, bciObjectiveLocation - new Vector3(0, buoyHeight, 0), Quaternion.Euler(-90, 0, 0));
         }
 
     }
@@ -306,7 +308,7 @@ public class CoinGame : MonoBehaviour
                 }
             }
             GameObject aux = Instantiate(CoinObject, newCoords, Quaternion.identity);
-            auxBuoyInstance = Instantiate(buoy, newCoords - new Vector3(0, 99.5f, 0), Quaternion.Euler(-90, 0, 0));
+            auxBuoyInstance = Instantiate(buoy, newCoords - new Vector3(0, buoyHeight, 0), Quaternion.Euler(-90, 0, 0));
             listCoins[i].CoinObject = aux;
         }
     }
@@ -324,7 +326,7 @@ public class CoinGame : MonoBehaviour
             }
         }
         GameObject aux = Instantiate(CoinObject, newCoords, Quaternion.identity);
-        auxBuoyInstance = Instantiate(buoy, newCoords - new Vector3(0, 99.5f, 0), Quaternion.Euler(-90, 0, 0));
+        auxBuoyInstance = Instantiate(buoy, newCoords - new Vector3(0, buoyHeight, 0), Quaternion.Euler(-90, 0, 0));
         listCoins[listCoins.Count - 1].CoinObject = aux; //is listCoins.Count-1 the last position of the list? I think so
     }
 

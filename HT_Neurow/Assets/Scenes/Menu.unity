@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16847147, g: 0.4087921, b: 0.46529207, a: 0.5}
+  m_IndirectSpecularColor: {r: 0.16830166, g: 0.40813223, b: 0.4651968, a: 0.5}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -28866,8 +28866,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 308261938}
   m_HandleRect: {fileID: 308261937}
   m_Direction: 0
-  m_Value: 1.0000001
-  m_Size: 0.63477963
+  m_Value: 1
+  m_Size: 0.6347796
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -30968,18 +30968,18 @@ MonoBehaviour:
   myPresets:
     Presets:
     - description: TestingDefault
-      Gender: -1
-      ControlMethod: 1
+      Gender: 1
+      ControlMethod: -1
       HemiLimb: 0
       motionRange: 0.15
       colliderSize: 0.1
       trackAxis: -1
       streamName: streamName
       streamType: streamType
-      boatSpeed: 2
-      turnSense: 0
+      boatSpeed: 4
+      turnSense: 3
       invertTurn: 0
-      challengeLevel: 2
+      challengeLevel: 3
       angleDev: 150
       maxDistance: 5
       maxDistance2: 10

@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
                                          // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 10; 
+    public static int taskDuration = 100; 
 
 
     //HEMI SUPPORT
