@@ -57,7 +57,8 @@ public class DataLogger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        filename = Application.dataPath + "/dataLog.csv";
+        Debug.Log("Logger On");
+        filename = Application.dataPath + "/DataFiles/Log-" + System.DateTime.Now.ToString("HH-mm") + ".csv";
 		TextWriter tw = new StreamWriter(filename, false);
 		tw.WriteLine("RightPointID, RPosX, RPosY, RPosZ, RRotX, RRotY, RRotZ, , LeftPointID, LPosX, LPosY, LPosZ, LRotX, LRotY, LRotZ");
 
@@ -100,7 +101,7 @@ public class DataLogger : MonoBehaviour
                 auxRotR = myHandPointList.handPoint[i].LeftObject.transform.rotation;
                 auxRotL = myHandPointList.handPoint[i].RightObject.transform.rotation;
 
-                tw.WriteLine(myHandPointList.handPoint[i].RightID + "," +
+                tw.WriteLine(System.DateTime.Now.ToString("HH:mm:ss:fff") + "," + myHandPointList.handPoint[i].RightID + "," +
                              auxPosR.x + "," + auxPosR.y + "," +
                              auxPosR.z + "," + auxRotR.x + "," +
                              auxRotR.y + "," + auxRotR.z + "," + "," +
