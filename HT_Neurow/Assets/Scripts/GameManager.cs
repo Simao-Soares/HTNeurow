@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
     public GameObject listener;
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
-    public static bool debugArrowMovement = false;
+    public static bool debugArrowMovement = true;
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     //TASK #2
     public static int playArea = 1;
-    public static int objectiveNum = 10;
+    public static int objectiveNum = 4;
     public static float objectiveRad = 2f;
 
     public static int objectivePosZ = 5;

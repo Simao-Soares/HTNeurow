@@ -31,6 +31,8 @@ public class DisplayRow : MonoBehaviour
 	[HideInInspector] public float prevWristPos;
 	[HideInInspector] public float currWristPos;
 
+	public Sound rowAudio;
+
 
 
 	void Start(){
@@ -44,6 +46,12 @@ public class DisplayRow : MonoBehaviour
 		wristTrackerAUX.transform.position = wristTracker.transform.position;
 		currWristPos = wristTrackerAUX.transform.localPosition.z;
 		prevWristPos = currWristPos;
+
+
+
+
+
+		rowAudio.source = GetComponent<AudioSource>();
 
 	}
 
@@ -64,7 +72,12 @@ public class DisplayRow : MonoBehaviour
 	void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player"))
         {
-            customText.enabled = true;
+			//Rowing Audio
+			if (gameObject.name == "R_RowCollider") rowAudio.source.panStereo = 0.8f;
+			else rowAudio.source.panStereo = -0.8f;
+			rowAudio.source.Play();
+
+			customText.enabled = true;
 			waterLevel = rowCollider.transform.position.y;
 		}
 	}
