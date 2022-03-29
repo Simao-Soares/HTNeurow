@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
     public GameObject listener;
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
-    public static bool debugArrowMovement = true;
+    public static bool debugArrowMovement = false;
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
@@ -103,13 +103,13 @@ public class GameManager : MonoBehaviour
     //-------------------------------------------------- DEFAULT GAME SETTINGS --------------------------------------------------		 
     //static -> instances of GameObject will share this value
 
-    public static int TaskChoice = -1;   //  0 -> disabled                                                            
+    public static int TaskChoice = 1;   //  0 -> disabled                                                            
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
     public static bool invertTurn = false;
 
     //TASK #1
-    public static int challengeLevel = 5;
+    public static int challengeLevel = 2;
     public static int angleDev = 150;
     public static float maxDistance = 5f;
     public static float maxDistance2 = 10f;
