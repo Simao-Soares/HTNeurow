@@ -6,7 +6,7 @@ using System.IO;
 public class DataLogger : MonoBehaviour
 {
     string filename = "";
-    public float amsFreq = 30f;
+    public float amsFreq = 1f;
     public TextWriter tw;
 
 
@@ -69,13 +69,15 @@ public class DataLogger : MonoBehaviour
         //tw.WriteLine("RightPointID, RPosX, RPosY, RPosZ, RRotX, RRotY, RRotZ, , LeftPointID, LPosX, LPosY, LPosZ, LRotX, LRotY, LRotZ");
 
         tw.WriteLine(", RPosX, RPosY, RPosZ, , LPosX, LPosY, LPosZ"); //for only 1 tracking point per hand
+        tw.Close();
 
     }
 
     // Update is called once per frame
     void FixedUpdate() {
-        //elapsed += Time.deltaTime;
-        //if (elapsed >= 1/amsFreq) {
+        elapsed += Time.deltaTime;
+        //if (elapsed >= 1 / amsFreq)
+        //{
         //    //elapsed = elapsed % 1f;
         //    elapsed = 0f;
 
@@ -103,6 +105,8 @@ public class DataLogger : MonoBehaviour
             Quaternion auxRotR;
             Quaternion auxRotL;
 
+            tw = new StreamWriter(filename, true);
+
 
             for (int i = 0; i < myHandPointList.handPoint.Length ; i++) //2 HandPoints per line, one for each hand
             {
@@ -112,7 +116,7 @@ public class DataLogger : MonoBehaviour
                 auxRotR = myHandPointList.handPoint[i].LeftObject.transform.rotation;
                 auxRotL = myHandPointList.handPoint[i].RightObject.transform.rotation;
 
-                tw.Write(   "," +
+                tw.WriteLine(System.DateTime.Now.ToString("ss.fff") + "," +
                              auxPosR.x + "," + auxPosR.y + "," +
                              auxPosR.z + "," + "," +
                              auxPosL.x + "," + auxPosL.y + "," +
