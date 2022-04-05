@@ -6,7 +6,8 @@ using System.IO;
 public class DataLogger : MonoBehaviour
 {
     string filename = "";
-    public float amsFreq = 1f;
+    public float amsFreq = 30f;
+    public TextWriter tw;
 
 
 
@@ -58,23 +59,30 @@ public class DataLogger : MonoBehaviour
     void Start()
     {
         Debug.Log("Logger On");
-        filename = Application.dataPath + "/DataFiles/Log-" + System.DateTime.Now.ToString("HH-mm") + ".csv";
-		TextWriter tw = new StreamWriter(filename, false);
-		tw.WriteLine("RightPointID, RPosX, RPosY, RPosZ, RRotX, RRotY, RRotZ, , LeftPointID, LPosX, LPosY, LPosZ, LRotX, LRotY, LRotZ");
+        //filename = Application.dataPath + "/DataFiles/Log-" + System.DateTime.Now.ToString("HH-mm") + ".csv";
+    }
 
+    private void Awake()
+    {
+        filename = Application.dataPath + "/DataFiles/Log-" + System.DateTime.Now.ToString("HH-mm") + ".csv";
+        tw = new StreamWriter(filename);
+        //tw.WriteLine("RightPointID, RPosX, RPosY, RPosZ, RRotX, RRotY, RRotZ, , LeftPointID, LPosX, LPosY, LPosZ, LRotX, LRotY, LRotZ");
+
+        tw.WriteLine(", RPosX, RPosY, RPosZ, , LPosX, LPosY, LPosZ"); //for only 1 tracking point per hand
 
     }
 
     // Update is called once per frame
     void FixedUpdate() {
-        elapsed += Time.deltaTime;
-        if (elapsed >= amsFreq) {
-            //elapsed = elapsed % 1f;
-            elapsed = 0f;
+        //elapsed += Time.deltaTime;
+        //if (elapsed >= 1/amsFreq) {
+        //    //elapsed = elapsed % 1f;
+        //    elapsed = 0f;
 
-            //OutputTime();   //uncomment to show print time instances
-            WriteCSV();
-        }
+        //    //OutputTime();   //uncomment to show print time instances
+        //    WriteCSV();
+        //}
+        WriteCSV();
     }
     void OutputTime() {
         Debug.Log(Time.time);
@@ -83,15 +91,18 @@ public class DataLogger : MonoBehaviour
 
     public void WriteCSV()
     {
+
+        
         //there is data to write
-        if(myHandPointList.handPoint.Length > 0)
+        if (myHandPointList.handPoint.Length > 0)
         {
-			TextWriter tw = new StreamWriter(filename, true);
+			//TextWriter tw = new StreamWriter(filename, true);
             
             Vector3 auxPosR;
             Vector3 auxPosL;
             Quaternion auxRotR;
             Quaternion auxRotL;
+
 
             for (int i = 0; i < myHandPointList.handPoint.Length ; i++) //2 HandPoints per line, one for each hand
             {
@@ -101,14 +112,23 @@ public class DataLogger : MonoBehaviour
                 auxRotR = myHandPointList.handPoint[i].LeftObject.transform.rotation;
                 auxRotL = myHandPointList.handPoint[i].RightObject.transform.rotation;
 
-                tw.WriteLine(System.DateTime.Now.ToString("HH:mm:ss:fff") + "," + myHandPointList.handPoint[i].RightID + "," +
+                tw.Write(   "," +
                              auxPosR.x + "," + auxPosR.y + "," +
-                             auxPosR.z + "," + auxRotR.x + "," +
-                             auxRotR.y + "," + auxRotR.z + "," + "," +
-                             myHandPointList.handPoint[i].LeftID + "," +
+                             auxPosR.z + "," + "," +
                              auxPosL.x + "," + auxPosL.y + "," +
-                             auxPosL.z + "," + auxRotL.x + "," +
-                             auxRotL.y + "," + auxRotL.z);
+                             auxPosL.z);
+
+                //tw.WriteLine(System.DateTime.Now.ToString("HH:mm:ss:fff") + "," + myHandPointList.handPoint[i].RightID + "," +
+                //             auxPosR.x + "," + auxPosR.y + "," +
+                //             auxPosR.z + "," + auxRotR.x + "," +
+                //             auxRotR.y + "," + auxRotR.z + "," + "," +
+                //             myHandPointList.handPoint[i].LeftID + "," +
+                //             auxPosL.x + "," + auxPosL.y + "," +
+                //             auxPosL.z + "," + auxRotL.x + "," +
+                //             auxRotL.y + "," + auxRotL.z);
+
+
+
             }
             tw.Close();
         }
