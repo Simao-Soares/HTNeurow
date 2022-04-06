@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
                                          // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 10; 
+    public static int taskDuration = 30; 
 
 
     //HEMI SUPPORT

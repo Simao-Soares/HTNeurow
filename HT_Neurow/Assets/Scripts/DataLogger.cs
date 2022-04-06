@@ -5,9 +5,14 @@ using System.IO;
 
 public class DataLogger : MonoBehaviour
 {
+    public GameObject boat;
     string filename = "";
     public float amsFreq = 1f;
     public TextWriter tw;
+
+    
+    [HideInInspector] public float timeAux; //timeStamp
+    [HideInInspector] public string eventAux;
 
 
 
@@ -58,17 +63,15 @@ public class DataLogger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Logger On");
-        //filename = Application.dataPath + "/DataFiles/Log-" + System.DateTime.Now.ToString("HH-mm") + ".csv";
+        timeAux = 0;
+        eventAux = "NULL";
     }
 
     private void Awake()
     {
         filename = Application.dataPath + "/DataFiles/Log-" + System.DateTime.Now.ToString("HH-mm") + ".csv";
         tw = new StreamWriter(filename);
-        //tw.WriteLine("RightPointID, RPosX, RPosY, RPosZ, RRotX, RRotY, RRotZ, , LeftPointID, LPosX, LPosY, LPosZ, LRotX, LRotY, LRotZ");
-
-        tw.WriteLine(", RPosX, RPosY, RPosZ, , LPosX, LPosY, LPosZ"); //for only 1 tracking point per hand
+        tw.WriteLine(", RPosX, RPosY, RPosZ, , LPosX, LPosY, LPosZ, , BoatPosX, BoatPosY, , Event"); //for only 1 tracking point per hand
         tw.Close();
 
     }
@@ -84,6 +87,7 @@ public class DataLogger : MonoBehaviour
         //    //OutputTime();   //uncomment to show print time instances
         //    WriteCSV();
         //}
+        timeAux += Time.fixedDeltaTime;
         WriteCSV();
     }
     void OutputTime() {
@@ -93,47 +97,25 @@ public class DataLogger : MonoBehaviour
 
     public void WriteCSV()
     {
-
-        
-        //there is data to write
         if (myHandPointList.handPoint.Length > 0)
         {
-			//TextWriter tw = new StreamWriter(filename, true);
-            
             Vector3 auxPosR;
             Vector3 auxPosL;
-            Quaternion auxRotR;
-            Quaternion auxRotL;
-
             tw = new StreamWriter(filename, true);
 
+            //for (int i = 0; i < myHandPointList.handPoint.Length ; i++) //2 HandPoints per line, one for each hand
+            //{
+                auxPosR = myHandPointList.handPoint[0].LeftObject.transform.localPosition;
+                auxPosL = myHandPointList.handPoint[0].RightObject.transform.localPosition;
+                //auxRotR = myHandPointList.handPoint[i].LeftObject.transform.rotation;
+                //auxRotL = myHandPointList.handPoint[i].RightObject.transform.rotation;
 
-            for (int i = 0; i < myHandPointList.handPoint.Length ; i++) //2 HandPoints per line, one for each hand
-            {
-                auxPosR = myHandPointList.handPoint[i].LeftObject.transform.position;
-                auxPosL = myHandPointList.handPoint[i].RightObject.transform.position;
-
-                auxRotR = myHandPointList.handPoint[i].LeftObject.transform.rotation;
-                auxRotL = myHandPointList.handPoint[i].RightObject.transform.rotation;
-
-                tw.WriteLine(System.DateTime.Now.ToString("ss.fff") + "," +
+                tw.WriteLine(timeAux + "," +
                              auxPosR.x + "," + auxPosR.y + "," +
                              auxPosR.z + "," + "," +
                              auxPosL.x + "," + auxPosL.y + "," +
-                             auxPosL.z);
-
-                //tw.WriteLine(System.DateTime.Now.ToString("HH:mm:ss:fff") + "," + myHandPointList.handPoint[i].RightID + "," +
-                //             auxPosR.x + "," + auxPosR.y + "," +
-                //             auxPosR.z + "," + auxRotR.x + "," +
-                //             auxRotR.y + "," + auxRotR.z + "," + "," +
-                //             myHandPointList.handPoint[i].LeftID + "," +
-                //             auxPosL.x + "," + auxPosL.y + "," +
-                //             auxPosL.z + "," + auxRotL.x + "," +
-                //             auxRotL.y + "," + auxRotL.z);
-
-
-
-            }
+                             auxPosL.z + "," + "," + boat.transform.position.x + "," + boat.transform.position.z + "," + "," + eventAux);
+            //}
             tw.Close();
         }
     }
