@@ -17,16 +17,19 @@ public class PickedUp : MonoBehaviour
 
     private bool auxCoinCollision = false;
 
-
+    public Sound coinAudio;
+    
 
     private void Start()
     {
-        //If this sxript is applied to a buoy
+
+        //If this script is applied to a buoy
         if (gameObject.tag != "coin")
         {
             gameObject.GetComponent<CapsuleCollider>().radius = GameManager.objectiveRad/1.8f;
-            greenBuoyLight.SetActive(false);
+            greenBuoyLight.SetActive(false); 
         }
+        else coinAudio.source = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate() {
@@ -39,7 +42,7 @@ public class PickedUp : MonoBehaviour
         float initRadius = gameObject.transform.localScale.x;
         if (gameObject.tag == "coin")
         {
-            for (float i = initRadius; i >= 0; i -= shrinkStep / 100)
+            for (float i = initRadius; i >= 0; i -= shrinkStep / 150)
             {
                 gameObject.transform.localScale = new Vector3(i, 100f, i);
                 yield return null;
@@ -67,21 +70,17 @@ public class PickedUp : MonoBehaviour
                 collider.enabled = false; //fix double points bug
                 BaseEventData eventData = new BaseEventData(EventSystem.current);
                 this.CoinPickup.Invoke(eventData);
-
                 gameObject.GetComponent<Renderer>().material.color = newColor;
+                coinAudio.source.Play();
             }
 
             else
             {
                 buoyLight.SetActive(false);
                 greenBuoyLight.SetActive(true);
+                
             }
-                //buoyLight.GetComponent<Renderer>().material.color = newColor;
-
-            auxCoinCollision = true;
-            
-            
-            
+            auxCoinCollision = true;  
         }
     }
 }
