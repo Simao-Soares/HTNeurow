@@ -65,7 +65,10 @@ public class DisplayRow : MonoBehaviour
 		else paddleSpeed = 0;
 		prevWristPos = currWristPos;
 
-	}
+
+
+
+    }
 
 
 
@@ -122,5 +125,7 @@ public class DisplayRow : MonoBehaviour
 			_playerScript.turnLeft = false;
 			_playerScript.turnRight = false;
 		}
-    }
+
+
+	}
 }

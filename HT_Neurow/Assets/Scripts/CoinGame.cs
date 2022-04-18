@@ -36,6 +36,8 @@ public class CoinGame : MonoBehaviour
     public TMP_Text correctTimerText;
     private Rigidbody rb;
 
+    [HideInInspector] public string assistAux = "NULL"; //read by DataLogger
+
 
 
     [Header("Main Task Assets")]
@@ -198,6 +200,7 @@ public class CoinGame : MonoBehaviour
                     {
                         if (CheckMaxAngleDev())
                         {
+                            assistAux = "NULL";
                             TurnOffArrows();
                             auxCorrection = false;
                             auxSelfCorrect = false;
@@ -208,10 +211,15 @@ public class CoinGame : MonoBehaviour
                             StopCoroutine("SelfCorrection");
                             movementScript.selfCorrection = false;
                         }
-                            
-                        if (auxSelfCorrect) StartCoroutine("SelfCorrection");
+
+                        if (auxSelfCorrect)
+                        {
+                            StartCoroutine("SelfCorrection");
+                            assistAux = "SELF";
+                        }
                         if (auxCorrection)
                         {
+                            assistAux = "AUTO";
                             StopCoroutine("SelfCorrection");
                             StartCoroutine(CorrectionCoroutine(autoCorrectSpeed, correctionRotation));
                             arrowLeft.SetActive(false);

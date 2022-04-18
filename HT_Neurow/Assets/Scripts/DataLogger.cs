@@ -7,7 +7,7 @@ public class DataLogger : MonoBehaviour
 {
     public GameObject boat;
     string filename = "";
-    public float amsFreq = 3f;    //----> 90fps is divided by this
+    public int amsFreq = 3;    //----> 90fps is divided by this
     public TextWriter tw;
 
     
@@ -17,8 +17,9 @@ public class DataLogger : MonoBehaviour
     [HideInInspector] public static string RowR; //startRow, rowing or endRow (RIGHT paddle)
     [HideInInspector] public static string RowL; //startRow, rowing or endRow (LEFT paddle)
 
-    [HideInInspector] public static string taskName;//Task1 or Task2
+    [HideInInspector] public static string taskName; //Task1 or Task2
     [HideInInspector] public static string taskInfo;
+    [HideInInspector] public static string assistInfo; //NULL, SELF, AUTO
 
 
 
@@ -63,15 +64,19 @@ public class DataLogger : MonoBehaviour
     {
         freqAux = 0;
         timeAux = 0;
-        if (GameManager.TaskChoice == 1) taskName = "task1";
-        else taskName = "task2";
+       
         RowR = "NULL";
         RowL = "NULL";
         taskInfo = "NULL";
+
+        
     }
 
     private void Awake()
     {
+        if (GameManager.TaskChoice == 1) taskName = "task1";
+        else taskName = "task2";
+
         filename = Application.dataPath + "/DataFiles/Log-" + System.DateTime.Now.ToString("HH-mm") + ".csv";
         tw = new StreamWriter(filename);
         tw.WriteLine(", RWristPosX, RWristPosY, RWristPosZ, RWristRotX, RWristRotY, RWristRotZ, " +
@@ -93,7 +98,7 @@ public class DataLogger : MonoBehaviour
                      "  LPinkyPosX, LPinkyPosY, LPinkyPosZ, LPinkyRotX, LPinkyRotY, LPinkyRotZ,," +
 
                      "  BoatX, BoatZ, BoatRotY,, " +
-                     "  RowR, RowL ," + taskName);
+                     "  RowR, RowL,," + taskName + ",Assist");
 
 
 
@@ -103,14 +108,23 @@ public class DataLogger : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate() {
-        if(taskName == "task2") taskInfo = boat.GetComponent<CoinGame>().gameEventAux;
-        else taskInfo = boat.GetComponent<PathGame>().gameEventAux;
+        if (taskName == "task2")
+        {
+            taskInfo = boat.GetComponent<CoinGame>().gameEventAux;
+            assistInfo = boat.GetComponent<CoinGame>().assistAux;
+        }
+        else
+        {
+            taskInfo = boat.GetComponent<PathGame>().gameEventAux;
+            assistInfo = boat.GetComponent<PathGame>().assistAux;
+        }
+        
+        //Debug.Log(taskName + " - " + taskInfo);
 
-        Debug.Log(taskName + " - " + taskInfo);
-
-        freqAux++;
         timeAux += Time.fixedDeltaTime;
-        if(freqAux % amsFreq == 0) WriteCSV();
+        if(freqAux == 0) WriteCSV();
+        //if (freqAux < amsFreq) freqAux++;
+        //else freqAux = 0;
     }
     void OutputTime() {
         Debug.Log(Time.time);
@@ -188,40 +202,40 @@ public class DataLogger : MonoBehaviour
 
             tw.WriteLine(timeAux + "," +
                             //WRISTS
-                            auxPosR.x + "," + auxPosR.y + "," + auxPosR.z +
+                            auxPosR.x + "," + auxPosR.y + "," + auxPosR.z + "," +
                             auxRotR.x + "," + auxRotR.y + "," + auxRotR.z + "," + 
                             auxPosL.x + "," + auxPosL.y + "," + auxPosL.z + "," + 
                             auxRotL.x + "," + auxRotL.y + "," + auxRotL.z + "," + "," +
                             //THUMBS
-                            auxPos1R.x + "," + auxPos1R.y + "," + auxPos1R.z +
+                            auxPos1R.x + "," + auxPos1R.y + "," + auxPos1R.z + "," +
                             auxRot1R.x + "," + auxRot1R.y + "," + auxRot1R.z + "," +
                             auxPos1L.x + "," + auxPos1L.y + "," + auxPos1L.z + "," +
                             auxRot1L.x + "," + auxRot1L.y + "," + auxRot1L.z + "," + "," +
                             //INDEXES
-                            auxPos2R.x + "," + auxPos2R.y + "," + auxPos2R.z +
+                            auxPos2R.x + "," + auxPos2R.y + "," + auxPos2R.z + "," +
                             auxRot2R.x + "," + auxRot2R.y + "," + auxRot2R.z + "," +
                             auxPos2L.x + "," + auxPos2L.y + "," + auxPos2L.z + "," +
                             auxRot2L.x + "," + auxRot2L.y + "," + auxRot2L.z + "," + "," +
                             //MIDDLES
-                            auxPos3R.x + "," + auxPos3R.y + "," + auxPos3R.z +
+                            auxPos3R.x + "," + auxPos3R.y + "," + auxPos3R.z + "," +
                             auxRot3R.x + "," + auxRot3R.y + "," + auxRot3R.z + "," +
                             auxPos3L.x + "," + auxPos3L.y + "," + auxPos3L.z + "," +
                             auxRot3L.x + "," + auxRot3L.y + "," + auxRot3L.z + "," + "," +
                             //RINGS
-                            auxPos4R.x + "," + auxPos4R.y + "," + auxPos4R.z +
+                            auxPos4R.x + "," + auxPos4R.y + "," + auxPos4R.z + "," +
                             auxRot4R.x + "," + auxRot4R.y + "," + auxRot4R.z + "," +
                             auxPos4L.x + "," + auxPos4L.y + "," + auxPos4L.z + "," +
                             auxRot4L.x + "," + auxRot4L.y + "," + auxRot4L.z + "," + "," +
                             //PINKIES
-                            auxPos5R.x + "," + auxPos5R.y + "," + auxPos5R.z +
+                            auxPos5R.x + "," + auxPos5R.y + "," + auxPos5R.z + "," +
                             auxRot5R.x + "," + auxRot5R.y + "," + auxRot5R.z + "," +
                             auxPos5L.x + "," + auxPos5L.y + "," + auxPos5L.z + "," +
                             auxRot5L.x + "," + auxRot5L.y + "," + auxRot5L.z + "," + "," +
                             //------------------------------------------------------------
                             //BOAT'S 2D COORDINATES and ROTATION(Y)
-                            boat.transform.position.x + "," + boat.transform.position.z + boat.transform.rotation.y + "," + ","
-                            //ROWING and TASK INFO
-                            + RowR + "," + RowL + "," + "," + taskInfo);
+                            boat.transform.position.x + "," + boat.transform.position.z + "," + boat.transform.rotation.eulerAngles.y+"," + ","
+                            //ROWING + TASK INFO + ASSIST INFO
+                            + RowR + "," + RowL + "," + "," + taskInfo + "," + assistInfo);
 
             tw.Close();
         }

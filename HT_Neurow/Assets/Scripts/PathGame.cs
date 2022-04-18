@@ -88,6 +88,8 @@ public class PathGame : MonoBehaviour
 
     BoatMovement movementScript;
 
+    [HideInInspector] public string assistAux = "NULL"; //read by DataLogger
+
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
     public GameObject ball;
@@ -115,10 +117,12 @@ public class PathGame : MonoBehaviour
         anchorPoints = pathCreator.GetComponent<MyPathGenerator>().anchorPoints;
         vectorPoints = pathCreator.GetComponent<MyPathGenerator>().colliderPoints;
 
-        Debug.Log(vectorPoints.Count);
+        
         //Add new point so that the max distance between vertexes is .5f
         FixVertexList();
-        Debug.Log(vectorPoints.Count);
+
+        
+        
 
     }
 
@@ -150,8 +154,13 @@ public class PathGame : MonoBehaviour
                 playerScoreText.text = ((int)playerScore).ToString();
 
                 if (assistiveMechs) BackOnTrack();
-                if (auxSelfCorrect) StartCoroutine("SelfCorrection");
+                if (auxSelfCorrect)
+                {
+                    StartCoroutine("SelfCorrection");
+                    assistAux = "SELF";
+                }
                 if (auxCorrection) {
+                    assistAux = "AUTO";
                     StopCoroutine("SelfCorrection");
                     StartCoroutine(CorrectionCoroutine(correctionSpeed, correctionRotation));
                     arrowLeft.SetActive(false);
@@ -344,6 +353,7 @@ public class PathGame : MonoBehaviour
             selfCorrectTimer.SetActive(false);
             StopCoroutine("SelfCorrection");
             movementScript.selfCorrection = false;
+            assistAux = "NULL";
         }
         
     }

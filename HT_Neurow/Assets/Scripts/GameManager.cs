@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     public GameObject listener;
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
-    public static bool debugArrowMovement = true;
+    public static bool debugArrowMovement = false;
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
@@ -127,10 +127,10 @@ public class GameManager : MonoBehaviour
                                          // -1 -> Female
 
     //public static int Forward = 1;     //  1 -> Auto (always moving forward)
-                                         // -1 -> Manual (forward movement based on rowing)
+    // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 120;
+    public static int taskDuration = 60;
 
     public static bool assistiveMechs = true; //-> if assistivr mechanisms are enabled or not
 
