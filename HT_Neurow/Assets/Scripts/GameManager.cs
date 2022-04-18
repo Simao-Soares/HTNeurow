@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour
     public Slider playAreaSlider;
     public Slider objectiveNumSlider;
     public Slider objectiveRadSlider;
+
+    public Slider maxDistanceBuoySlider;
+    public Slider selfCorrectBuoySlider;
+    public Slider autoCorrectBuoySlider;
+
     public Slider objectivePosZSlider;
     public Slider objectivePosXSlider;
     
@@ -95,7 +100,7 @@ public class GameManager : MonoBehaviour
     public GameObject listener;
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
-    public static bool debugArrowMovement = false;
+    public static bool debugArrowMovement = true;
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
@@ -109,7 +114,7 @@ public class GameManager : MonoBehaviour
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
@@ -125,7 +130,9 @@ public class GameManager : MonoBehaviour
                                          // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 30; 
+    public static int taskDuration = 120;
+
+    public static bool assistiveMechs = true; //-> if assistivr mechanisms are enabled or not
 
 
     //HEMI SUPPORT
@@ -152,12 +159,16 @@ public class GameManager : MonoBehaviour
     public static float maxDistance = 5f;
     public static float maxDistance2 = 10f;
     public static int selfCorrect = 10;
-    public static float autoCorrect = 5f;
+    public static float autoCorrect = 3f;
 
     //TASK #2
-    public static int playArea = 1;
-    public static int objectiveNum = 4;
+    public static int playArea = 2;
+    public static int objectiveNum = 3;
     public static float objectiveRad = 2f;
+
+    public static float maxDistanceBuoy = 30f;
+    public static int selfCorrectBuoy = 10;
+    public static float autoCorrectBuoy = 3f;
 
     public static int objectivePosZ = 5;
     public static int objectivePosX = 3;
@@ -396,7 +407,6 @@ public class GameManager : MonoBehaviour
             turnSpeedSlider.value = turnSpeed;
             turnSenseSlider.value = turnSense;
 
-
             challengeLevelSlider.value = challengeLevel;
             angleDevSlider.value = angleDev;
             maxDistanceSlider.value = maxDistance;
@@ -407,6 +417,9 @@ public class GameManager : MonoBehaviour
             playAreaSlider.value = playArea;
             objectiveNumSlider.value = objectiveNum;
             objectiveRadSlider.value = objectiveRad;
+            maxDistanceBuoySlider.value = maxDistanceBuoy;
+            selfCorrectBuoySlider.value = selfCorrectBuoy;
+            autoCorrectBuoySlider.value = autoCorrectBuoy;
             objectivePosZSlider.value = objectivePosZ;
             objectivePosXSlider.value = objectivePosX;
         }
@@ -493,6 +506,14 @@ public class GameManager : MonoBehaviour
         updateSettings = true;
         //Debug.Log(taskDuration);
         
+    }
+
+    public void SetAssistiveMechs()
+    {
+        if (assistiveMechs) assistiveMechs = false;
+        else assistiveMechs = true;
+        updateSettings = true;
+
     }
 
     //-----------------------------------------------------------------------
@@ -615,6 +636,23 @@ public class GameManager : MonoBehaviour
         objectiveRad = ((int)objectiveRadSlider.value);
         updateSettings = true;
     }
+
+    public void SetMaxDistanceBuoy()
+    {
+        maxDistanceBuoy = ((int)maxDistanceBuoySlider.value);
+        updateSettings = true;
+    }
+    public void SetSelfCorrectBuoy()
+    {
+        selfCorrectBuoy = ((int)selfCorrectBuoySlider.value);
+        updateSettings = true;
+    }
+    public void SetAutoCorrectBuoy()
+    {
+        autoCorrectBuoy = ((int)autoCorrectBuoySlider.value);
+        updateSettings = true;
+    }
+
 
     public void SetObjectivePosZ()
     {

@@ -61,6 +61,7 @@ public class PickedUp : MonoBehaviour
     private void OnTriggerEnter(Collider collisionInfo) {
         if (collisionInfo.GetComponent<Collider>().tag == "PlayerPos")
         {
+            //player.GetComponent<CoinGame>().gameEventAux = "pickedUp(c)";
             Color newColor = Color.green;
             newColor.a = 0.1f;
 

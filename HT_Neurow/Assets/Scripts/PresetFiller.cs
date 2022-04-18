@@ -18,6 +18,7 @@ public class PresetFiller : MonoBehaviour
 
         public int Gender;
         public int ControlMethod;
+        public bool AssistiveMechs;
         public int HemiLimb;
 
         public float motionRange;
@@ -44,6 +45,10 @@ public class PresetFiller : MonoBehaviour
         public int playArea;
         public int objectiveNum;
         public float objectiveRad;
+
+        public float maxDistanceBuoy;
+        public int selfCorrectBuoy;
+        public float autoCorrectBuoy;
 
         public int objectivePosZ;
         public int objectivePosX;
@@ -112,6 +117,8 @@ public class PresetFiller : MonoBehaviour
 
         GameManager.Gender = myPresets.Presets[index].Gender;
         GameManager.ControlMethod = myPresets.Presets[index].ControlMethod;
+        GameManager.assistiveMechs = myPresets.Presets[index].AssistiveMechs;
+
         GameManager.HemiLimb = myPresets.Presets[index].HemiLimb;
 
         GameManager.motionRange = myPresets.Presets[index].motionRange;
@@ -138,6 +145,10 @@ public class PresetFiller : MonoBehaviour
         GameManager.objectiveNum = myPresets.Presets[index].objectiveNum;
         GameManager.objectiveRad = myPresets.Presets[index].objectiveRad;
 
+        GameManager.maxDistanceBuoy = myPresets.Presets[index].maxDistanceBuoy;
+        GameManager.selfCorrectBuoy = myPresets.Presets[index].selfCorrectBuoy;
+        GameManager.autoCorrectBuoy = myPresets.Presets[index].autoCorrectBuoy;
+
         GameManager.objectivePosX = myPresets.Presets[index].objectivePosX;
         GameManager.objectivePosZ = myPresets.Presets[index].objectivePosZ;
         GameManager.bciSpecificUI = myPresets.Presets[index].bciSpecificUI;
@@ -152,6 +163,7 @@ public class PresetFiller : MonoBehaviour
 
         myPresets.Presets[index].Gender = GameManager.Gender;
         myPresets.Presets[index].ControlMethod = GameManager.ControlMethod;
+        myPresets.Presets[index].AssistiveMechs = GameManager.assistiveMechs;
         myPresets.Presets[index].HemiLimb = GameManager.HemiLimb;
 
         myPresets.Presets[index].motionRange = GameManager.motionRange;
@@ -177,6 +189,10 @@ public class PresetFiller : MonoBehaviour
         myPresets.Presets[index].playArea = GameManager.playArea;
         myPresets.Presets[index].objectiveNum = GameManager.objectiveNum;
         myPresets.Presets[index].objectiveRad = GameManager.objectiveRad;
+
+        myPresets.Presets[index].maxDistanceBuoy = GameManager.maxDistanceBuoy;
+        myPresets.Presets[index].selfCorrectBuoy = GameManager.selfCorrectBuoy;
+        myPresets.Presets[index].autoCorrectBuoy = GameManager.autoCorrectBuoy;
 
         myPresets.Presets[index].objectivePosX = GameManager.objectivePosX;
         myPresets.Presets[index].objectivePosZ = GameManager.objectivePosZ;

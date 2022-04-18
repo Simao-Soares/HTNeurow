@@ -12,11 +12,31 @@ public class CoinGame : MonoBehaviour
 {
     [Header("Main Task Parameters")]
     public float timeRemaining = 10;
-    public float coinGameArea = 400f; // length of the side of playable area
+    public float coinGameArea = 1000f; // length of the side of playable area -- overwritten in SetParameters()
     public float minDistance = 50f;
     public int coinRad = 10;
     public int numberOfCoins = 3;
     public float instructionsTime;
+
+    [Header("Assitive Parameters and UI elements")] // <---------------------------------------------------------------------------------
+    public bool assistiveMechs;
+    public Camera mainCamera;
+    public float maxDistance;
+    public float autoCorrectSpeed;
+    [HideInInspector] public float maxAngleDev;
+    public GameObject arrowRight;
+    public GameObject arrowLeft;
+    public float selfCorrectTime = 10f;
+    public GameObject selfCorrectTimer;
+    [HideInInspector] public bool auxCorrection = false;
+    [HideInInspector] public bool auxSelfCorrect = false;
+    [HideInInspector] public bool stopTimer;
+    public float correctionSpeed = 0.5f;
+    private Quaternion correctionRotation;
+    public TMP_Text correctTimerText;
+    private Rigidbody rb;
+
+
 
     [Header("Main Task Assets")]
     public GameObject CoinObject; 
@@ -33,20 +53,20 @@ public class CoinGame : MonoBehaviour
     public TMP_Text finalScoreText;
     public TMP_Text timeText;
 
-    private int playerScore = 0;
-
-    
-
 
     [HideInInspector] public bool timerIsRunning = false;
+
+    private int playerScore = 0;
     private bool auxI;
+    private int auxList;
+
     public class CoinClass {
         public int CoinID;
         public GameObject CoinObject;
 
     }
     public List<CoinClass> listCoins = new List<CoinClass>();
-    private int auxList;
+    
 
     [Header("Screen Freeze Couroutine")]
     public float freezeDuration = 10f;
@@ -80,6 +100,10 @@ public class CoinGame : MonoBehaviour
 
     [HideInInspector] public float buoyHeight = 99.7f;
 
+    //REGISTER GAME EVENT
+    [HideInInspector] public string gameEventAux;
+    [HideInInspector] public float gameEventDistance;
+
 
 
 
@@ -87,6 +111,7 @@ public class CoinGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         instructions.SetActive(false);
         tempScoreUI.SetActive(false);
         auxI = true;
@@ -97,6 +122,7 @@ public class CoinGame : MonoBehaviour
         //HT
         if (GameManager.ControlMethod == -1)
         {
+            maxAngleDev = mainCamera.fieldOfView; //used by the assistive mechanisms
             GenerateObjectives();
             movementScript.enabled = true;
         }
@@ -120,10 +146,17 @@ public class CoinGame : MonoBehaviour
     void SetParameters()
     {
         //CoinLighting.SetActive(true);
-
+        assistiveMechs = GameManager.assistiveMechs;
         timeRemaining = GameManager.taskDuration;
-        coinGameArea = GameManager.playArea * 50;
+
+        coinGameArea =  50 + 15*(GameManager.playArea-1);
+
         numberOfCoins = GameManager.objectiveNum;
+
+        maxDistance = GameManager.maxDistanceBuoy;
+        selfCorrectTime = GameManager.selfCorrectBuoy;
+        autoCorrectSpeed = GameManager.autoCorrectBuoy/5;
+
         bciDistanceX = GameManager.objectivePosX;
         bciDistanceZ = GameManager.objectivePosZ;
 
@@ -136,6 +169,7 @@ public class CoinGame : MonoBehaviour
 
     void Update()
     {
+        
         if (timerIsRunning)
         {
             if (timeRemaining > 0)
@@ -153,6 +187,39 @@ public class CoinGame : MonoBehaviour
                 {
                     auxList = UpdateList();
                     if (auxList != -1) GenerateNewObjective(auxList);
+
+                    //REGISTER GAME EVENT
+                    gameEventDistance = FindClosestBuoy()[1].x;
+                    if (gameEventDistance <= GameManager.objectiveRad) gameEventAux = "pickedUp"; //no need to rely on collider which could be messy due to capture frequency
+                    else gameEventAux = gameEventDistance.ToString(); //distance to closest buoy
+
+
+                    if (!auxI && assistiveMechs)//start checking for assistive mechanisms only when instructions disapear AND they are enabled
+                    {
+                        if (CheckMaxAngleDev())
+                        {
+                            TurnOffArrows();
+                            auxCorrection = false;
+                            auxSelfCorrect = false;
+                            movementScript.enabled = true;
+
+                            stopTimer = false;
+                            selfCorrectTimer.SetActive(false);
+                            StopCoroutine("SelfCorrection");
+                            movementScript.selfCorrection = false;
+                        }
+                            
+                        if (auxSelfCorrect) StartCoroutine("SelfCorrection");
+                        if (auxCorrection)
+                        {
+                            StopCoroutine("SelfCorrection");
+                            StartCoroutine(CorrectionCoroutine(autoCorrectSpeed, correctionRotation));
+                            arrowLeft.SetActive(false);
+                            arrowRight.SetActive(false);
+                        }
+                    }
+                    
+                   
                 }
 
                 //--------------------------------------------------------------------------------------------------------------
@@ -289,8 +356,6 @@ public class CoinGame : MonoBehaviour
     }
 
     private void GenerateObjectives() {
-        //List<CoinClass> listCoins = new List<CoinClass>();
-        float minDistanceToBoat = Mathf.Sqrt(minDistance * minDistance + 50f * 50f);
 
         for (int i = 0; i < numberOfCoins; i++)
         {
@@ -301,12 +366,16 @@ public class CoinGame : MonoBehaviour
             {
                 for (int j = 0; j < i; j++)        
                 {
-                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance || Vector3.Distance(boat.transform.position, newCoords) < minDistanceToBoat)
+                    while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance || Vector3.Distance(boat.transform.position + new Vector3(0, 100, 0), newCoords) < minDistance)
                     {                      
                         newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
                     }
                 }
             }
+            
+            //Debug.Log(minDistance);
+            //Debug.Log("distance to boat " + Vector3.Distance(boat.transform.position + new Vector3(0, 100, 0), newCoords));
+
             GameObject aux = Instantiate(CoinObject, newCoords, Quaternion.identity);
             auxBuoyInstance = Instantiate(buoy, newCoords - new Vector3(0, buoyHeight, 0), Quaternion.Euler(-90, 0, 0));
             listCoins[i].CoinObject = aux;
@@ -320,7 +389,7 @@ public class CoinGame : MonoBehaviour
         Vector3 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
 
         for (int j = 0; j < listCoins.Count - 1; j++) {
-            while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance)
+            while (Vector3.Distance(listCoins[j].CoinObject.transform.position, newCoords) < minDistance || Vector3.Distance(boat.transform.position + new Vector3(0, 100, 0), newCoords) < minDistance)
             {
                 newCoords = new Vector3(UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2), 100f, UnityEngine.Random.Range(-coinGameArea / 2, coinGameArea / 2));
             }
@@ -357,7 +426,6 @@ public class CoinGame : MonoBehaviour
         isFrozen = false;
         SceneManager.LoadScene("Menu");
     }
-
 
     public void getStim()
     {
@@ -452,5 +520,121 @@ public class CoinGame : MonoBehaviour
     }
 
 
+    //-----------------------------------------------   ASSISTIVE MECHANISMS   -----------------------------------------------
+    public bool CheckMaxAngleDev()
+    {
+        var boatOrientation = boat.transform.forward;
+        var coinHeight = new Vector3(0, 100, 0);
+
+        foreach (CoinClass buoy in listCoins)
+        {
+            var vectorToBuoy =  buoy.CoinObject.transform.position - coinHeight - boat.transform.position;
+            var auxAngle = Vector3.Angle(boatOrientation, vectorToBuoy);
+            if (auxAngle < maxAngleDev-20) return true;
+        }
+
+        //if every buoy is OUT of the player's F.O.V.
+
+        var closestBuoyInfo = FindClosestBuoy();
+        var vectorToClosestBuoy = boat.transform.position - closestBuoyInfo[0];
+        var directionAux = AngleDir(boatOrientation, vectorToClosestBuoy, Vector3.up); //check if buoy is to the left or to the right
+
+        var rowing = movementScript.cooldownActivated; //<----------------------------------------------------------------------------------------------   IDK
+
+        if (closestBuoyInfo[1].x > maxDistance && !rowing && !auxSelfCorrect) //full correction process -> closestBuoyInfo[1].x is where I save the distance to closest buoy
+        {
+            Debug.Log("full correction process ->  distance=" + closestBuoyInfo[1].x);
+            movementScript.selfCorrection = true;
+            selfCorrectTimer.SetActive(true);
+            auxSelfCorrect = true;
+            stopTimer = true;
+        }
+
+        
+        else if (directionAux == 1 || directionAux == 0) arrowLeft.SetActive(true);
+        else if (directionAux == -1 ) arrowRight.SetActive(true);
+
+        return false;
+    }
+
+    public Vector3[] FindClosestBuoy()
+    {
+        Vector3 closest = Vector3.zero;
+        float distance = Mathf.Infinity;
+        //Vector2 position = new Vector2(transform.position.x, transform.position.z);
+
+        foreach (CoinClass buoy in listCoins)
+        {
+            var buoyPos = buoy.CoinObject.transform.position - new Vector3(0, 100, 0);
+            float curDistance = Vector3.Distance(buoyPos, transform.position); 
+            if (curDistance < distance)
+            {
+                closest = buoyPos;
+                distance = curDistance;
+            }
+        }
+        var info = new Vector3[2];
+        info[0] = closest;
+        info[1] = new Vector3(distance, 0, 0);
+        return info;
+    }
+
+    public void TurnOffArrows()
+    {
+        arrowLeft.SetActive(false);
+        arrowRight.SetActive(false);
+    }
+
+
+    float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up) //check if buoy is to the left or to the right of the player
+    {
+        Vector3 perp = Vector3.Cross(fwd, targetDir);
+        float dir = Vector3.Dot(perp, up);
+
+        if (dir > 0f)
+        {
+            return 1f;
+        }
+        else if (dir < 0f)
+        {
+            return -1f;
+        }
+        else
+        {
+            return 0f;
+        }
+    }
+
+    IEnumerator CorrectionCoroutine(float speed, Quaternion rotation)
+    {
+        Quaternion current = transform.rotation;
+        movementScript.enabled = false;
+
+        var closestBuoyInfo = FindClosestBuoy();
+        var vectorToClosestBuoy = closestBuoyInfo[0]- boat.transform.position;
+        rotation = Quaternion.LookRotation(vectorToClosestBuoy, new Vector3(0, 1, 0));
+
+        transform.localRotation = Quaternion.Lerp(current, rotation, speed * Time.deltaTime);
+        yield return null;
+    }
+
+    IEnumerator SelfCorrection()
+    {
+        float currTime = selfCorrectTime;
+
+        while (currTime > 0)
+        {
+            currTime -= Time.deltaTime;
+            correctTimerText.text = ((int)currTime).ToString();
+
+            rb.velocity = Vector3.zero;
+
+            yield return null;
+        }
+        selfCorrectTimer.SetActive(false);
+        //auxSelfCorrect = false;
+        auxCorrection = true;
+        //yield return null;
+    }
 
 }

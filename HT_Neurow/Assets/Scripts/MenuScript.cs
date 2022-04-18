@@ -34,6 +34,8 @@ public class MenuScript : MonoBehaviour
 	public Toggle controlButtonBCI;
 	public Toggle controlButtonHT;
 
+	public Toggle assistiveButton;
+
 	public Toggle hemiButtonRight; //default is none selected
 	public Toggle hemiButtonLeft;
 
@@ -76,6 +78,9 @@ public class MenuScript : MonoBehaviour
 	public TMP_Text playAreaText;
 	public TMP_Text objectiveNumText;
 	public TMP_Text objectiveRadText;
+	public TMP_Text maxDistanceBuoyText;
+	public TMP_Text selfCorrectBuoyText;
+	public TMP_Text autoCorrectBuoyText;
 	public TMP_Text objectivePosX;
 	public TMP_Text objectivePosZ;
 
@@ -89,11 +94,12 @@ public class MenuScript : MonoBehaviour
 	[Header("Blocking Panels")]
 	public BlockList BCI_BlockList = new BlockList();
 	public BlockList HT_BlockList = new BlockList();
+	public BlockList Adaptive_BlockList = new BlockList();
 
 
 
 
-    private void Start()
+	private void Start()
     {
 		UpdateSettings();
 	}
@@ -192,6 +198,7 @@ public class MenuScript : MonoBehaviour
 		if (GameManager.ControlMethod == 1)
 		{
 			controlButtonBCI.SetIsOnWithoutNotify(true);
+
 			//Deactivate locks on BCI Parameters 
 			for (int i = 0; i < BCI_BlockList.BlockObj.Length; i++)
             {
@@ -206,6 +213,7 @@ public class MenuScript : MonoBehaviour
 		else
 		{
 			controlButtonHT.SetIsOnWithoutNotify(true);
+
 			//Deactivate locks on HT Parameters 
 			for (int i = 0; i < HT_BlockList.BlockObj.Length; i++)
 			{
@@ -220,6 +228,23 @@ public class MenuScript : MonoBehaviour
 
 		if (GameManager.Gender == 1) genderButtonM.SetIsOnWithoutNotify(true);
 		else genderButtonF.SetIsOnWithoutNotify(true);
+
+		if (GameManager.assistiveMechs)
+		{
+			assistiveButton.SetIsOnWithoutNotify(true);
+			for (int i = 0; i < Adaptive_BlockList.BlockObj.Length; i++)
+			{
+				Adaptive_BlockList.BlockObj[i].SetActive(false);
+			}
+		}
+		else
+        {
+			assistiveButton.SetIsOnWithoutNotify(false);
+			for (int i = 0; i < Adaptive_BlockList.BlockObj.Length; i++)
+			{
+				Adaptive_BlockList.BlockObj[i].SetActive(true);
+			}
+		}
 
 		if (GameManager.HemiLimb == 1) hemiButtonRight.SetIsOnWithoutNotify(true);
 		else if (GameManager.HemiLimb == -1) hemiButtonLeft.SetIsOnWithoutNotify(true);
@@ -237,8 +262,11 @@ public class MenuScript : MonoBehaviour
 		else if (GameManager.trackAxis == 1) axisButtonY.SetIsOnWithoutNotify(true);
 		else if (GameManager.trackAxis == -1) axisButtonZ.SetIsOnWithoutNotify(true);
 
-		if (!GameManager.invertTurn) invertButton.SetIsOnWithoutNotify(true); //instead of changing this value when it was red I just changed it here
+		if (!GameManager.invertTurn) invertButton.SetIsOnWithoutNotify(true); //instead of changing this value when it was read I just changed it here
+		else invertButton.SetIsOnWithoutNotify(false);
+
 		if (GameManager.bciSpecificUI) bciSpecificButton.SetIsOnWithoutNotify(true);
+		else bciSpecificButton.SetIsOnWithoutNotify(false);
 
 		//Debug.Log(GameManager.SelectedPreset);
 		switch (GameManager.SelectedPreset)
@@ -293,6 +321,11 @@ public class MenuScript : MonoBehaviour
 		playAreaText.text = GameManager.playArea.ToString();
 		objectiveNumText.text = GameManager.objectiveNum.ToString();
 		objectiveRadText.text = GameManager.objectiveRad.ToString();
+
+		maxDistanceBuoyText.text = GameManager.maxDistanceBuoy.ToString();
+		selfCorrectBuoyText.text = GameManager.selfCorrectBuoy.ToString();
+		autoCorrectBuoyText.text = GameManager.autoCorrectBuoy.ToString();
+
 		objectivePosX.text = GameManager.objectivePosX.ToString();
 		objectivePosZ.text = GameManager.objectivePosZ.ToString();
 	}

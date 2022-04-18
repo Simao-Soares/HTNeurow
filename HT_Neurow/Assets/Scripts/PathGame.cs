@@ -19,13 +19,16 @@ public class PathGame : MonoBehaviour
 
     [HideInInspector] public float boatSpeed;
 
+    [HideInInspector] public string gameEventAux;
+
+
     //PRIMARY TASK SETTINGS
     [Range(1, 5)]
     public int challengeLevel;
     public float totalTaskTime = 60f;
     public float scoreMultiplier = 0.1f;
 
-
+    public bool assistiveMechs;
     public float selfCorrectTime = 10f; 
 
 
@@ -41,7 +44,6 @@ public class PathGame : MonoBehaviour
 
     [HideInInspector] public bool auxCorrection = false;
     [HideInInspector] public bool auxSelfCorrect = false;
-
     [HideInInspector] public bool stopTimer;
 
     //SECUNDARY TASK SETTINGS
@@ -127,7 +129,8 @@ public class PathGame : MonoBehaviour
         {
             if (totalTaskTime > 0)
             {
-                if (!stopTimer) totalTaskTime -= Time.deltaTime;
+                //if (!stopTimer) totalTaskTime -= Time.deltaTime;
+                totalTaskTime -= Time.deltaTime; //i dont think the timer should stop because it changes total task time
                 DisplayTime(totalTaskTime);
 
                 //------------------------------------------------------------
@@ -146,7 +149,7 @@ public class PathGame : MonoBehaviour
 
                 playerScoreText.text = ((int)playerScore).ToString();
 
-                BackOnTrack();
+                if (assistiveMechs) BackOnTrack();
                 if (auxSelfCorrect) StartCoroutine("SelfCorrection");
                 if (auxCorrection) {
                     StopCoroutine("SelfCorrection");
@@ -187,7 +190,7 @@ public class PathGame : MonoBehaviour
         challengeLevel = GameManager.challengeLevel; //---------> in MyPathGenerator.cs
 
         totalTaskTime = GameManager.taskDuration;
-
+        assistiveMechs = GameManager.assistiveMechs;
         maxDeviationAngle = GameManager.angleDev;
         maxDistance = GameManager.maxDistance;
         maxDistanceNoAngle = GameManager.maxDistance2;
@@ -196,7 +199,7 @@ public class PathGame : MonoBehaviour
     }
 
 
-    //-------------------------  TIMER FUNCTIONS  --------------------------     ---------------------------------------> should probably be moved to a different file, since they're common to both tasks
+    //-------------------------  TIMER FUNCTIONS  --------------------------     
 
     void DisplayTime(float timeToDisplay)
     {
@@ -235,6 +238,9 @@ public class PathGame : MonoBehaviour
     public void UpdateScore(Vector3 closestPoint)  //Maybe change multipliers
     {
         var distance = Vector3.Distance(transform.position, closestPoint);
+
+        gameEventAux = distance.ToString();
+
         this.distanceText.text = ((int)distance).ToString();
         if(distance <= maxDistance)
         {

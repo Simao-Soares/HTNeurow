@@ -72,13 +72,24 @@ public class DisplayRow : MonoBehaviour
 	void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player"))
         {
-			//Rowing Audio
-			if (gameObject.name == "R_RowCollider") rowAudio.source.panStereo = 0.8f;
-			else rowAudio.source.panStereo = -0.8f;
+			//Rowing directional audio + Rowing event Log
+			if (gameObject.name == "R_RowCollider")
+			{
+				rowAudio.source.panStereo = 0.8f;
+				DataLogger.RowR = "Row Start";
+			}
+
+			else
+			{
+				rowAudio.source.panStereo = -0.8f;
+				DataLogger.RowL = "Row Start";
+			}
+
 			rowAudio.source.Play();
 
 			customText.enabled = true;
 			waterLevel = rowCollider.transform.position.y;
+			
 		}
 	}
 
@@ -89,7 +100,12 @@ public class DisplayRow : MonoBehaviour
 		{
 			paddleDepth = waterLevel - rowCollider.transform.position.y;
 
-			if (paddleDepth > 0) rotationSpeed = Mathf.Abs(GameManager.turnSense*paddleDepth*paddleSpeed); 
+			if (paddleDepth > 0) //not sure if necessary
+			{
+				rotationSpeed = Mathf.Abs(GameManager.turnSense * paddleDepth * paddleSpeed);
+				if (gameObject.name == "R_RowCollider") DataLogger.RowR = (rotationSpeed/GameManager.turnSense).ToString(); //divided by sense to normalize for every parameter choice
+				else DataLogger.RowL = (rotationSpeed / GameManager.turnSense).ToString();
+			} 
 			else rotationSpeed = 0;
 		}
 	}	
@@ -99,8 +115,10 @@ public class DisplayRow : MonoBehaviour
     void OnTriggerExit(Collider other){
         if (other.CompareTag("Player"))
         {
-            customText.enabled = false;
+			if (gameObject.name == "R_RowCollider") DataLogger.RowR = "Row End";
+			else DataLogger.RowL = "Row End";
 
+			customText.enabled = false;
 			_playerScript.turnLeft = false;
 			_playerScript.turnRight = false;
 		}
