@@ -558,9 +558,17 @@ public class CoinGame : MonoBehaviour
             stopTimer = true;
         }
 
-        
-        else if (directionAux == 1 || directionAux == 0) arrowLeft.SetActive(true);
-        else if (directionAux == -1 ) arrowRight.SetActive(true);
+
+        else if (directionAux == 1 || directionAux == 0)
+        {
+            arrowLeft.SetActive(true);
+            arrowRight.SetActive(false);
+        }
+        else if (directionAux == -1)
+        {
+            arrowLeft.SetActive(false);
+            arrowRight.SetActive(true);
+        }
 
         return false;
     }
