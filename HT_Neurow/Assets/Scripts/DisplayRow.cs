@@ -90,7 +90,7 @@ public class DisplayRow : MonoBehaviour
 
 			rowAudio.source.Play();
 
-			customText.enabled = true;
+			//customText.enabled = true;
 			waterLevel = rowCollider.transform.position.y;
 			
 		}
@@ -121,7 +121,7 @@ public class DisplayRow : MonoBehaviour
 			if (gameObject.name == "R_RowCollider") DataLogger.RowR = "Row End";
 			else DataLogger.RowL = "Row End";
 
-			customText.enabled = false;
+			//customText.enabled = false;
 			_playerScript.turnLeft = false;
 			_playerScript.turnRight = false;
 		}

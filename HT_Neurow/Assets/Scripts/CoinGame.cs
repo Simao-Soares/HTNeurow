@@ -169,7 +169,7 @@ public class CoinGame : MonoBehaviour
 
         CoinObject.transform.localScale = new Vector3 (GameManager.objectiveRad, 100, GameManager.objectiveRad);           
 
-        CoinObject.GetComponent<PickedUp>().shrinkStep = GameManager.objectiveRad * 3;
+        CoinObject.GetComponent<PickedUp>().shrinkStep = GameManager.objectiveRad;
 
         newRadius = GameManager.objectiveRad;
 
