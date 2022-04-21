@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using PathCreation.Examples;
 
 public class PathGame : MonoBehaviour
 {
@@ -26,10 +27,14 @@ public class PathGame : MonoBehaviour
     [Range(1, 5)]
     public int challengeLevel;
     public float totalTaskTime = 60f;
-    public float scoreMultiplier = 0.1f;
+    public float scoreMultiplier = 0.05f;
 
     public bool assistiveMechs;
-    public float selfCorrectTime = 10f; 
+    public float selfCorrectTime = 10f;
+
+    public float pathWidth = 3; //INITIAL VALUE
+    public float finalPathWidth = 0.5f; //FINAL VALUE
+    public float shrinkStep; //change per second calculated in the Start method
 
 
     //Test these ranges:
@@ -88,7 +93,9 @@ public class PathGame : MonoBehaviour
 
     BoatMovement movementScript;
 
-    [HideInInspector] public string assistAux = "NULL"; //read by DataLogger
+    //read by DataLogger
+    [HideInInspector] public string assistAux = "NULL"; 
+    [HideInInspector] public float difficultyAux;
 
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
@@ -103,6 +110,7 @@ public class PathGame : MonoBehaviour
     {
         SetParameters();
 
+        shrinkStep = (pathWidth-finalPathWidth)/totalTaskTime;
 
         timerIsRunning = true;
         stopTimer = false;
@@ -137,6 +145,10 @@ public class PathGame : MonoBehaviour
                 totalTaskTime -= Time.deltaTime; //i dont think the timer should stop because it changes total task time
                 DisplayTime(totalTaskTime);
 
+                pathWidth -= shrinkStep * Time.deltaTime;
+                pathRenderer.GetComponent<RoadMeshCreator>().roadWidth = pathWidth;
+                difficultyAux = 1/pathWidth;
+
                 //------------------------------------------------------------
 
                 //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
@@ -152,6 +164,8 @@ public class PathGame : MonoBehaviour
                 UpdateScore(closestPointBoat);
 
                 playerScoreText.text = ((int)playerScore).ToString();
+
+                
 
                 if (assistiveMechs) BackOnTrack();
                 if (auxSelfCorrect)
@@ -241,6 +255,8 @@ public class PathGame : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
+
+
     //----------------------------------------------------------------------
 
 
@@ -250,11 +266,19 @@ public class PathGame : MonoBehaviour
 
         gameEventAux = distance.ToString();
 
-        this.distanceText.text = ((int)distance).ToString();
+        this.distanceText.text = ((int)distance-pathWidth).ToString();
         if(distance <= maxDistance)
         {
-            if (distance > 1f) playerScore += scoreMultiplier / (2 * distance);
-            else playerScore += scoreMultiplier;
+            if (distance > pathWidth)
+            {
+                playerScore += scoreMultiplier / (2 * distance);
+            }
+            else
+            {
+                playerScore += scoreMultiplier;
+                //Debug.Log("MAX MULTIPLIER");
+            }
+                
         }
     }
 
@@ -320,7 +344,7 @@ public class PathGame : MonoBehaviour
 
         float angleTan = Vector3.Angle(boatOrientation, toClosestVectorPoint);
         float angleAnchor = Vector3.Angle(boatOrientation, vectorToAnchor);
-        float distanceBoatToPath = Vector3.Distance(boatPos, closestPointBoat);
+        float distanceBoatToPath = Vector3.Distance(boatPos, closestPointBoat) - pathWidth/2; 
 
 
         if (vectorToAnchor.x > 0) auxCorrectionDirection = true;    //----> to the right

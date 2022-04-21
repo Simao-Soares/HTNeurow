@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     public GameObject listener;
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
-    public static bool debugArrowMovement = false;
+    public static bool debugArrowMovement = true;
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
     //-------------------------------------------------- DEFAULT GAME SETTINGS --------------------------------------------------		 
     //static -> instances of GameObject will share this value
 
-    public static int TaskChoice = -1;   //  0 -> disabled                                                            
+    public static int TaskChoice = 1;   //  0 -> disabled                                                            
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
     // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 60;
+    public static int taskDuration = 30;
 
     public static bool assistiveMechs = true; //-> if assistivr mechanisms are enabled or not
 

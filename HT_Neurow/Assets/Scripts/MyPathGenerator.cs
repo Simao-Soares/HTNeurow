@@ -37,7 +37,7 @@ public class MyPathGenerator : MonoBehaviour
         GenerateAnchorPoints(challengeLevel);
         newVertexPath = GeneratePath(anchorPoints.ToArray(), false);
 
-        //RoadRenderer.GetComponent<RoadMeshCreator>()
+        
 
 
 

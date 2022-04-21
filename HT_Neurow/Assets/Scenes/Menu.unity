@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16830166, g: 0.40813223, b: 0.4651968, a: 0.5}
+  m_IndirectSpecularColor: {r: 0.16847147, g: 0.4087921, b: 0.46529207, a: 0.5}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19970,7 +19970,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11990542}
   m_HandleRect: {fileID: 11990541}
   m_Direction: 0
-  m_Value: 0.9999998
+  m_Value: 1
   m_Size: 0.51431346
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -31766,8 +31766,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 308261938}
   m_HandleRect: {fileID: 308261937}
   m_Direction: 0
-  m_Value: 1.0000002
-  m_Size: 0.52802926
+  m_Value: 1.0000004
+  m_Size: 0.5280293
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -34463,9 +34463,9 @@ MonoBehaviour:
       maxDistance2: 10
       selfCorrect: 10
       autoCorrect: 5
-      playArea: 2
+      playArea: 1
       objectiveNum: 4
-      objectiveRad: 2
+      objectiveRad: 5
       maxDistanceBuoy: 30
       selfCorrectBuoy: 10
       autoCorrectBuoy: 3

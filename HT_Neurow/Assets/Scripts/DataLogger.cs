@@ -20,6 +20,7 @@ public class DataLogger : MonoBehaviour
     [HideInInspector] public static string taskName; //Task1 or Task2
     [HideInInspector] public static string taskInfo;
     [HideInInspector] public static string assistInfo; //NULL, SELF, AUTO
+    [HideInInspector] public static float difficultyInfo; //Task1-> 1/width    Task2-> objective radius;
 
 
 
@@ -98,7 +99,7 @@ public class DataLogger : MonoBehaviour
                      "  LPinkyPosX, LPinkyPosY, LPinkyPosZ, LPinkyRotX, LPinkyRotY, LPinkyRotZ,," +
 
                      "  BoatX, BoatZ, BoatRotY,, " +
-                     "  RowR, RowL,," + taskName + ",Assist");
+                     "  RowR, RowL,," + taskName + ", Difficulty, Assist");
 
 
 
@@ -112,11 +113,13 @@ public class DataLogger : MonoBehaviour
         {
             taskInfo = boat.GetComponent<CoinGame>().gameEventAux;
             assistInfo = boat.GetComponent<CoinGame>().assistAux;
+            difficultyInfo = boat.GetComponent<CoinGame>().difficultyAux;
         }
         else
         {
             taskInfo = boat.GetComponent<PathGame>().gameEventAux;
             assistInfo = boat.GetComponent<PathGame>().assistAux;
+            difficultyInfo = boat.GetComponent<PathGame>().difficultyAux;
         }
         
         //Debug.Log(taskName + " - " + taskInfo);
@@ -235,7 +238,7 @@ public class DataLogger : MonoBehaviour
                             //BOAT'S 2D COORDINATES and ROTATION(Y)
                             boat.transform.position.x + "," + boat.transform.position.z + "," + boat.transform.rotation.eulerAngles.y+"," + ","
                             //ROWING + TASK INFO + ASSIST INFO
-                            + RowR + "," + RowL + "," + "," + taskInfo + "," + assistInfo);
+                            + RowR + "," + RowL + "," + "," + taskInfo + "," + difficultyInfo + "," + assistInfo);
 
             tw.Close();
         }

@@ -13,10 +13,11 @@ public class CoinGame : MonoBehaviour
     [Header("Main Task Parameters")]
     public float timeRemaining = 10;
     public float coinGameArea = 1000f; // length of the side of playable area -- overwritten in SetParameters()
-    public float minDistance = 50f;
+    public float minDistance = 100f;
     public int coinRad = 10;
     public int numberOfCoins = 3;
     public float instructionsTime;
+    public float coinShrinkStep = 0.5f;
 
     [Header("Assitive Parameters and UI elements")] // <---------------------------------------------------------------------------------
     public bool assistiveMechs;
@@ -36,7 +37,11 @@ public class CoinGame : MonoBehaviour
     public TMP_Text correctTimerText;
     private Rigidbody rb;
 
-    [HideInInspector] public string assistAux = "NULL"; //read by DataLogger
+    //read by DataLogger
+    [HideInInspector] public string assistAux = "NULL";
+    [HideInInspector] public float difficultyAux;
+
+    [HideInInspector] public float newRadius;
 
 
 
@@ -166,6 +171,8 @@ public class CoinGame : MonoBehaviour
 
         CoinObject.GetComponent<PickedUp>().shrinkStep = GameManager.objectiveRad * 3;
 
+        newRadius = GameManager.objectiveRad;
+
 
     }
 
@@ -194,6 +201,8 @@ public class CoinGame : MonoBehaviour
                     gameEventDistance = FindClosestBuoy()[1].x;
                     if (gameEventDistance <= GameManager.objectiveRad) gameEventAux = "pickedUp"; //no need to rely on collider which could be messy due to capture frequency
                     else gameEventAux = gameEventDistance.ToString(); //distance to closest buoy
+
+                    difficultyAux = newRadius;
 
 
                     if (!auxI && assistiveMechs)//start checking for assistive mechanisms only when instructions disapear AND they are enabled
@@ -405,6 +414,7 @@ public class CoinGame : MonoBehaviour
         GameObject aux = Instantiate(CoinObject, newCoords, Quaternion.identity);
         auxBuoyInstance = Instantiate(buoy, newCoords - new Vector3(0, buoyHeight, 0), Quaternion.Euler(-90, 0, 0));
         listCoins[listCoins.Count - 1].CoinObject = aux; //is listCoins.Count-1 the last position of the list? I think so
+        ResizeObjetives();
     }
 
     private int UpdateList() {
@@ -653,4 +663,28 @@ public class CoinGame : MonoBehaviour
         //yield return null;
     }
 
+
+
+    //----------------------------------------------   DIFFICULTY PROGRESSION   ----------------------------------------------
+    public void ResizeObjetives()
+    {
+        
+        
+        float newRadiusAux = newRadius - coinShrinkStep;
+        if (newRadiusAux <= 0)
+        {
+            coinShrinkStep = coinShrinkStep / 2;
+            newRadius -= coinShrinkStep;
+        }
+        else newRadius = newRadiusAux;
+
+        foreach (CoinClass coin in listCoins)
+        {
+            coin.CoinObject.transform.localScale = new Vector3(newRadius, 100, newRadius);
+        }
+
+        Debug.Log("radius - " + newRadius);
+        
+
+    }
 }
