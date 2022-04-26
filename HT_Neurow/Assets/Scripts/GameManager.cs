@@ -100,7 +100,11 @@ public class GameManager : MonoBehaviour
     public GameObject listener;
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
-    public static bool debugArrowMovement = false;
+    public static bool debugArrowMovement = true;
+    //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
+
+    //-----------------//-----------------//---------------  TRAINING  -----------------//-----------------//-----------------
+    public static bool training = true;
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
@@ -108,13 +112,13 @@ public class GameManager : MonoBehaviour
     //-------------------------------------------------- DEFAULT GAME SETTINGS --------------------------------------------------		 
     //static -> instances of GameObject will share this value
 
-    public static int TaskChoice = -1;   //  0 -> disabled                                                            
+    public static int TaskChoice = 1;   //  0 -> disabled                                                            
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
@@ -148,7 +152,7 @@ public class GameManager : MonoBehaviour
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 2f;
+    public static float boatSpeed = 4f;
     public static float turnSpeed = 1f;
     public static int turnSense = 5;
     public static bool invertTurn = false;

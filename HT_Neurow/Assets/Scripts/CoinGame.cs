@@ -40,8 +40,10 @@ public class CoinGame : MonoBehaviour
     //read by DataLogger
     [HideInInspector] public string assistAux = "NULL";
     [HideInInspector] public float difficultyAux;
-
     [HideInInspector] public float newRadius;
+
+    //training procedure
+    [HideInInspector] public int buoyIndexAux;
 
 
 
@@ -73,7 +75,44 @@ public class CoinGame : MonoBehaviour
 
     }
     public List<CoinClass> listCoins = new List<CoinClass>();
-    
+
+    [HideInInspector]
+    public float [,] coordsList = new float[,]
+    {
+        {15f, -5f},
+        {25f, 25f},
+        {-25f, -25f},
+        {-20f, 5f},
+        {30f, -15f},
+        {0f, 0f},
+        {40f, 10f},
+        {-20f, 20f},
+        {30f, -10f},
+        {15f, 50f},
+
+        {-30f, 5f},
+        {-10f, -30f},
+        {25f, -10f},
+        {10f, 10f},
+        {-35f, 15f},
+        {0f, -40f},
+        {20f, -30f},
+        {15f, -5f},
+        {25f, 25f},
+        {-25f, -25f},
+
+        {-20f, 5f},
+        {30f, -15f},
+        {0f, 0f},
+        {40f, 10f},
+        {-20f, 20f},
+        {30f, -10f},
+        {15f, 50f},
+        {-30f, 5f},
+        {-10f, -30f},
+        {-25f, -25f}
+    };
+
 
     [Header("Screen Freeze Couroutine")]
     public float freezeDuration = 10f;
@@ -125,12 +164,20 @@ public class CoinGame : MonoBehaviour
         movementScript = GetComponent<BoatMovement>();
 
         SetParameters();
+        buoyIndexAux = 0; //keep up with buoy coords list for training procedure
+
 
         //HT
-        if (GameManager.ControlMethod == -1)
+        if (GameManager.ControlMethod == -1 && !GameManager.training)
         {
             maxAngleDev = mainCamera.fieldOfView; //used by the assistive mechanisms
             GenerateObjectives();
+            movementScript.enabled = true;
+        }
+        else if (GameManager.ControlMethod == -1 && GameManager.training)
+        {
+            maxAngleDev = mainCamera.fieldOfView; //used by the assistive mechanisms
+            GenerateTrainingObjectives();
             movementScript.enabled = true;
         }
 
@@ -195,7 +242,8 @@ public class CoinGame : MonoBehaviour
                 if (GameManager.ControlMethod == -1)//HT
                 {
                     auxList = UpdateList();
-                    if (auxList != -1) GenerateNewObjective(auxList);
+                    if (auxList != -1 && !GameManager.training) GenerateNewObjective(auxList);
+                    else if (auxList != -1 && GameManager.training) GenerateNewTrainingObjective(auxList);
 
                     //REGISTER GAME EVENT
                     gameEventDistance = FindClosestBuoy()[1].x;
@@ -671,7 +719,7 @@ public class CoinGame : MonoBehaviour
         
         
         float newRadiusAux = newRadius - coinShrinkStep;
-        if (newRadiusAux <= 0)
+        if (newRadiusAux <= 0.5f)
         {
             coinShrinkStep = coinShrinkStep / 2;
             newRadius -= coinShrinkStep;
@@ -687,4 +735,40 @@ public class CoinGame : MonoBehaviour
         
 
     }
+
+    //-----------------------------------------------------   TRAINING   -----------------------------------------------------
+
+    public void GenerateTrainingObjectives()
+    {
+        numberOfCoins = 5; //training only has 5 buoys at all times
+        Vector3 normalizedCoords;
+
+        for (int i = 0; i < numberOfCoins; i++)
+        {
+            listCoins.Add(FactoryOfCoin(i));
+            normalizedCoords = new Vector3(coordsList[i,0], 100, coordsList[i,1]);
+            GameObject aux = Instantiate(CoinObject, normalizedCoords, Quaternion.identity);
+            auxBuoyInstance = Instantiate(buoy, normalizedCoords - new Vector3(0, buoyHeight, 0), Quaternion.Euler(-90, 0, 0));
+            listCoins[i].CoinObject = aux;
+            Debug.Log("whatwhat");
+        }
+        buoyIndexAux = numberOfCoins;
+
+    }
+
+    public void GenerateNewTrainingObjective(int newID)
+    {
+        Vector3 normalizedCoords;
+        listCoins.Add(FactoryOfCoin(newID));
+
+        normalizedCoords = new Vector3(coordsList[buoyIndexAux,0], 100, coordsList[buoyIndexAux,1]);
+        GameObject aux = Instantiate(CoinObject, normalizedCoords, Quaternion.identity);
+        auxBuoyInstance = Instantiate(buoy, normalizedCoords - new Vector3(0, buoyHeight, 0), Quaternion.Euler(-90, 0, 0));
+        listCoins[listCoins.Count - 1].CoinObject = aux;
+        buoyIndexAux++;
+        ResizeObjetives();
+    }
+
+
 }
+

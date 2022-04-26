@@ -18,13 +18,16 @@ public class MyPathGenerator : MonoBehaviour
     [HideInInspector] public List<Vector2> colliderPoints = new List<Vector2>();
 
 
+    [HideInInspector]
+    public List<Vector2> fixedAnchorsList;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
 
-         
+        FillTrainingAnchors();
         challengeLevel = GameManager.challengeLevel;
 
         boatSpeed = GameManager.boatSpeed;
@@ -34,10 +37,23 @@ public class MyPathGenerator : MonoBehaviour
 
         pathLength = boatSpeed * totalTaskTime;
 
-        GenerateAnchorPoints(challengeLevel);
-        newVertexPath = GeneratePath(anchorPoints.ToArray(), false);
+        // IN TRAINING 
+        if (GameManager.training)
+        {
+            fixedAnchorsList.Insert(0, Vector2.zero);
+            Debug.Log(fixedAnchorsList[0]);
+            Debug.Log(fixedAnchorsList[1]);
+            Debug.Log(fixedAnchorsList[2]);
+            newVertexPath = GeneratePath(fixedAnchorsList.ToArray(), false);
 
-        
+        }
+        else
+        {
+            GenerateAnchorPoints(challengeLevel);
+            newVertexPath = GeneratePath(anchorPoints.ToArray(), false);
+        }
+
+
 
 
 
@@ -138,14 +154,75 @@ public class MyPathGenerator : MonoBehaviour
                 currentPathLength += Vector2.Distance(anchorPoints[count - 1], anchorPoints[count]);
             }
         }
-
-         
-
-
-        
-
-}
+        Debug.Log(anchorPoints.Count);
+    }
 
 
+    void FillTrainingAnchors()
+    {
+        if (fixedAnchorsList.Count != 0)
+        {
+            fixedAnchorsList.Clear();
+            fixedAnchorsList.TrimExcess();
+        }
 
+        fixedAnchorsList = new List<Vector2>()
+        {
+            new Vector2(10f, 0f),
+            new Vector2(20f, 2f),
+            new Vector2(30f, -2f),
+            new Vector2(40f, 4f),
+            new Vector2(50f, -4f),
+            new Vector2(60f, 8f),
+            new Vector2(70f, -8f),
+            new Vector2(75f, 0f),
+            new Vector2(80f, 8f),
+            new Vector2(100f, -20f),
+
+            //new Vector2(105f, -5f),
+            //new Vector2(110f, 5f),
+            //new Vector2(115f, -10f),
+            //new Vector2(120f, 10f),
+            //new Vector2(125f, 15f),
+            //new Vector2(130f, 25f),
+            //new Vector2(135f, 20f),
+            //new Vector2(140f, 10f),
+            //new Vector2(145f, 5f),
+            //new Vector2(150f, 0f),
+
+            //new Vector2(155f, 0f),
+            //new Vector2(160f, 2f),
+            //new Vector2(165f, -2f),
+            //new Vector2(170f, 4f),
+            //new Vector2(175f, -4f),
+            //new Vector2(180f, -8f),
+            //new Vector2(185f, -2f),
+            //new Vector2(190f, 5f),
+            //new Vector2(195f, 12f),
+            //new Vector2(200f, 3f),
+
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+            //new Vector2(15f, -5f),
+        };
+    }
+    
 }

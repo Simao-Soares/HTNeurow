@@ -193,7 +193,7 @@ public class MenuScript : MonoBehaviour
 
 	private void UpdateSettings()
 	{
-		Debug.Log(GameManager.Gender);
+		//Debug.Log(GameManager.Gender);
 
 		if (GameManager.ControlMethod == 1)
 		{

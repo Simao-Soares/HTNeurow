@@ -37,6 +37,17 @@ public class PickedUp : MonoBehaviour
         
     }
 
+    public void Update()
+    {
+        var rad = player.GetComponent<CoinGame>().newRadius;
+
+        if (gameObject.tag != "coin")
+        {
+            gameObject.GetComponent<CapsuleCollider>().radius =  rad/1.8f;
+
+        }
+    }
+
     IEnumerator ShrinkCoin(){
 
         float initRadius = gameObject.transform.localScale.x;
