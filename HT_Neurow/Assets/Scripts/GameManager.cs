@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys + Q + E)
                                           // -1 -> HT (leapMotion)
 
 
@@ -134,9 +134,9 @@ public class GameManager : MonoBehaviour
     // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 120;
+    public static int taskDuration = 240;
 
-    public static bool assistiveMechs = true; //-> if assistivr mechanisms are enabled or not
+    public static bool assistiveMechs = true; // assistive mechanisms
 
 
     //HEMI SUPPORT
@@ -166,9 +166,9 @@ public class GameManager : MonoBehaviour
     public static float autoCorrect = 3f;
 
     //TASK #2
-    public static int playArea = 2;
-    public static int objectiveNum = 3;
-    public static float objectiveRad = 2f;
+    public static int playArea = 1;
+    public static int objectiveNum = 4;
+    public static float objectiveRad = 10f;
 
     public static float maxDistanceBuoy = 30f;
     public static int selfCorrectBuoy = 10;
