@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     public GameObject listener;
 
     //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
-    public static bool debugArrowMovement = true;
+    public static bool debugArrowMovement = false;
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
     //-----------------//-----------------//---------------  TRAINING  -----------------//-----------------//-----------------
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
 
     public static int SelectedPreset = -1; 
 
-    public static int ControlMethod = 1;  //  1 -> BCI (arrowKeys)
+    public static int ControlMethod = -1;  //  1 -> BCI (arrowKeys)
                                           // -1 -> HT (leapMotion)
 
 
@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
     public static float boatSpeed = 4f;
     public static float turnSpeed = 1f;
     public static int turnSense = 5;
-    public static bool invertTurn = false;
+    public static bool invertTurn = true;
 
     //TASK #1
     public static int challengeLevel = 2;

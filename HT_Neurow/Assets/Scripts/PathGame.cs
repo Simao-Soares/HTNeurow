@@ -109,6 +109,8 @@ public class PathGame : MonoBehaviour
     void Start()
     {
         SetParameters();
+        pathMaterial.color = Color.green;
+        playerScoreText.color = Color.yellow;
 
         shrinkStep = (pathWidth-finalPathWidth)/totalTaskTime;
 
@@ -122,15 +124,20 @@ public class PathGame : MonoBehaviour
         boatSpeed = rb.velocity.magnitude;
         movementScript = GetComponent<BoatMovement>();
 
-        anchorPoints = pathCreator.GetComponent<MyPathGenerator>().anchorPoints;
+        if(!GameManager.training) anchorPoints = pathCreator.GetComponent<MyPathGenerator>().anchorPoints;
+        else anchorPoints = pathCreator.GetComponent<MyPathGenerator>().fixedAnchorsList;
+
+        
+
         vectorPoints = pathCreator.GetComponent<MyPathGenerator>().colliderPoints;
 
         
         //Add new point so that the max distance between vertexes is .5f
         FixVertexList();
 
-        
-        
+
+
+
 
     }
 
@@ -153,10 +160,10 @@ public class PathGame : MonoBehaviour
 
                 //-----------------//-----------------//---------------  DEBUG  -----------------//-----------------//-----------------
 
-                //var AUXfrontAnchor = FindClosestFrontAnchor();
-                //var AUXfrontAnchorNorm = new Vector3(-AUXfrontAnchor.y, 0, AUXfrontAnchor.x);
-                //ball2.transform.position = AUXfrontAnchorNorm;
-                //ball.transform.position = closestPointBoat;
+                var AUXfrontAnchor = FindClosestFrontAnchor();
+                var AUXfrontAnchorNorm = new Vector3(-AUXfrontAnchor.y, 0, AUXfrontAnchor.x);
+                ball2.transform.position = AUXfrontAnchorNorm;
+                ball.transform.position = closestPointBoat;
 
                 //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
@@ -290,7 +297,7 @@ public class PathGame : MonoBehaviour
         Vector2 position = new Vector2(transform.position.x, transform.position.z + 3); //<--------------------------------------------------------- added an offset to prevent perpendicular corrections
         foreach (Vector2 anchor in anchorPoints)
         {
-            //Debug.Log(anchor);
+            
             if (position.y < anchor.x)
             {                                                                          
                 float curDistance = Vector2.Distance(new Vector2(-anchor.y, anchor.x), position);
@@ -367,7 +374,7 @@ public class PathGame : MonoBehaviour
             }
         }
         
-        if (angleAnchor < 5f)
+        if (angleAnchor < 15f)
         {
             auxCorrection = false;
             auxSelfCorrect = false;
@@ -399,8 +406,16 @@ public class PathGame : MonoBehaviour
             currTime -= Time.deltaTime;
             correctTimerText.text = ((int)currTime).ToString();
 
-            if (auxCorrectionDirection) arrowRight.SetActive(true);
-            else arrowLeft.SetActive(true);
+            if (auxCorrectionDirection)
+            {
+                arrowRight.SetActive(true);
+                arrowLeft.SetActive(false);
+            }
+            else
+            {
+                arrowLeft.SetActive(true);
+                arrowRight.SetActive(false);
+            }
 
             rb.velocity = Vector3.zero;
             
@@ -446,6 +461,7 @@ public class PathGame : MonoBehaviour
     void FixVertexList()
     {
         var n = 0;
+        Debug.Log("before fixing " + vectorPoints.Count);
         while (n < vectorPoints.Count-1){ 
             while (Vector2.Distance(vectorPoints[n], vectorPoints[n + 1]) > 0.5f)
             {
@@ -454,5 +470,6 @@ public class PathGame : MonoBehaviour
             }
             n++;
         }
+        Debug.Log("after fixing " + vectorPoints.Count);
     }
 }

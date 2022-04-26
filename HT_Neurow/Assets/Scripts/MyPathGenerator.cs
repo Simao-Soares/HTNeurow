@@ -41,10 +41,8 @@ public class MyPathGenerator : MonoBehaviour
         if (GameManager.training)
         {
             fixedAnchorsList.Insert(0, Vector2.zero);
-            Debug.Log(fixedAnchorsList[0]);
-            Debug.Log(fixedAnchorsList[1]);
-            Debug.Log(fixedAnchorsList[2]);
             newVertexPath = GeneratePath(fixedAnchorsList.ToArray(), false);
+            
 
         }
         else
@@ -179,27 +177,27 @@ public class MyPathGenerator : MonoBehaviour
             new Vector2(80f, 8f),
             new Vector2(100f, -20f),
 
-            //new Vector2(105f, -5f),
-            //new Vector2(110f, 5f),
-            //new Vector2(115f, -10f),
-            //new Vector2(120f, 10f),
-            //new Vector2(125f, 15f),
-            //new Vector2(130f, 25f),
-            //new Vector2(135f, 20f),
-            //new Vector2(140f, 10f),
-            //new Vector2(145f, 5f),
-            //new Vector2(150f, 0f),
+            new Vector2(105f, -5f),
+            new Vector2(120f, 30f),
+            new Vector2(130f, -10f),
+            new Vector2(135f, 20f),
+            new Vector2(140f, 35f),
+            new Vector2(150f, 0f),
+            new Vector2(155f, 20f),
+            new Vector2(170f, 10f),
+            new Vector2(180f, -5f),
+            new Vector2(185f, 15f),
 
-            //new Vector2(155f, 0f),
-            //new Vector2(160f, 2f),
-            //new Vector2(165f, -2f),
-            //new Vector2(170f, 4f),
-            //new Vector2(175f, -4f),
-            //new Vector2(180f, -8f),
-            //new Vector2(185f, -2f),
-            //new Vector2(190f, 5f),
-            //new Vector2(195f, 12f),
-            //new Vector2(200f, 3f),
+            new Vector2(190f, 0f),
+            new Vector2(210f, 40f),
+            new Vector2(230f, -10f),
+            new Vector2(245f, 10f),
+            new Vector2(255f, -10f),
+            new Vector2(265f, 0f),
+            new Vector2(275f, 25f),
+            new Vector2(285f, 5f),
+            new Vector2(300f, 40f),
+            new Vector2(320f, 0f),
 
             //new Vector2(15f, -5f),
             //new Vector2(15f, -5f),
