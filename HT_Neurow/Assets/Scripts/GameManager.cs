@@ -103,8 +103,8 @@ public class GameManager : MonoBehaviour
     public static bool debugArrowMovement = false;
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
-    //-----------------//-----------------//---------------  TRAINING  -----------------//-----------------//-----------------
-    public static bool training = true;
+    //-----------------//-----------------//---------------  PROCEDURE  -----------------//-----------------//-----------------
+    public static bool training = true; //-----------------------
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
 
     public static int taskDuration = 240;
 
-    public static bool assistiveMechs = true; // assistive mechanisms
+    public static bool assistiveMechs = false; // assistive mechanisms
 
 
     //HEMI SUPPORT
@@ -152,13 +152,13 @@ public class GameManager : MonoBehaviour
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 4f;
+    public static float boatSpeed = 5f;
     public static float turnSpeed = 1f;
     public static int turnSense = 5;
     public static bool invertTurn = true;
 
     //TASK #1
-    public static int challengeLevel = 2;
+    public static int challengeLevel = 3;
     public static int angleDev = 150;
     public static float maxDistance = 5f;
     public static float maxDistance2 = 10f;
@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
 
     //TASK #2
     public static int playArea = 1;
-    public static int objectiveNum = 4;
+    public static int objectiveNum = 5;
     public static float objectiveRad = 10f;
 
     public static float maxDistanceBuoy = 30f;
