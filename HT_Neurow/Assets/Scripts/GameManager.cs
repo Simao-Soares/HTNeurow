@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
     //-------------------------------------------------- DEFAULT GAME SETTINGS --------------------------------------------------		 
     //static -> instances of GameObject will share this value
 
-    public static int TaskChoice = 1;   //  0 -> disabled                                                            
+    public static int TaskChoice = -1;   //  0 -> disabled                                                            
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
@@ -134,14 +134,14 @@ public class GameManager : MonoBehaviour
     // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 240;
+    public static int taskDuration = 120;
 
-    public static bool assistiveMechs = false; // assistive mechanisms
+    public static bool assistiveMechs = true; // assistive mechanisms
 
 
     //HEMI SUPPORT
     public static float motionRange = 0.15f;
-    public static float colliderSize = 0.3f;
+    public static float colliderSize = 0.15f;
     public static int trackAxis = -1;      //  0 -> X axis                                                               
                                            //  1 -> Y axis        
                                            // -1 -> Z axis
@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 5f;
+    public static float boatSpeed = 4f;
     public static float turnSpeed = 1f;
     public static int turnSense = 5;
     public static bool invertTurn = true;
