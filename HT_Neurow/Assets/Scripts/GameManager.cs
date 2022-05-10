@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
     //-------------------------------------------------- DEFAULT GAME SETTINGS --------------------------------------------------		 
     //static -> instances of GameObject will share this value
 
-    public static int TaskChoice = -1;   //  0 -> disabled                                                            
+    public static int TaskChoice = 1;   //  0 -> disabled                                                            
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
 
     public static int taskDuration = 240;
 
-    public static bool assistiveMechs = true; // assistive mechanisms
+    public static bool assistiveMechs = false; // assistive mechanisms
 
 
     //HEMI SUPPORT
@@ -152,9 +152,9 @@ public class GameManager : MonoBehaviour
 
     //BOAT MOVEMENT
     public static float turnAngle = 20f;
-    public static float boatSpeed = 6f;
+    public static float boatSpeed = 5f;
     public static float turnSpeed = 1f;
-    public static int turnSense = 5;
+    public static int turnSense = 6;
     public static bool invertTurn = true;
 
     //TASK #1
