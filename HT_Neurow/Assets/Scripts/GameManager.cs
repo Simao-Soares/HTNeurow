@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
     //-----------------//-----------------//---------------  PROCEDURE  -----------------//-----------------//-----------------
-    public static bool training = true; //-----------------------
+    public static bool training = false; //-----------------------
     //-----------------//-----------------//----------------------//-----------------//-----------------//-----------------
 
 
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
     //-------------------------------------------------- DEFAULT GAME SETTINGS --------------------------------------------------		 
     //static -> instances of GameObject will share this value
 
-    public static int TaskChoice = 1;   //  0 -> disabled                                                            
+    public static int TaskChoice = -1;   //  0 -> disabled                                                            
                                         //  1 -> task1 (path)       
                                         // -1 -> task2 (coins)
 
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
     // -1 -> Manual (forward movement based on rowing)
 
 
-    public static int taskDuration = 240;
+    public static int taskDuration = 120;
 
     public static bool assistiveMechs = false; // assistive mechanisms
 
